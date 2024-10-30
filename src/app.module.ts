@@ -4,6 +4,7 @@ import { appConfig, servicesRmqConfig } from './common/config/app.config';
 import { serviceConfig } from 'types/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { RcpExceptionInterceptor } from './common/interceptors/rcp.exception.interceptor';
+import { CategoryModule } from './modules/organization/category/category.module';
 
 @Module({
   imports: [
@@ -13,8 +14,8 @@ import { RcpExceptionInterceptor } from './common/interceptors/rcp.exception.int
       load: [appConfig, serviceConfig, servicesRmqConfig],
       envFilePath: ['.env', '.env.local'],
     }),
+    CategoryModule,
   ],
-  controllers: [],
   providers: [
     {
       provide: APP_INTERCEPTOR,
@@ -22,4 +23,4 @@ import { RcpExceptionInterceptor } from './common/interceptors/rcp.exception.int
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

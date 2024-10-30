@@ -26,7 +26,7 @@ async function bootstrap() {
       stopAtFirstError: true,
       whitelist: true,
       transform: true,
-    }),
+    })
   );
 
   /* SWAGGER */
@@ -36,9 +36,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .addBearerAuth()
     .build();
-  const platformDocument = SwaggerModule.createDocument(app, swaggerConfig, {
-    include: [],
-  });
+  const platformDocument = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('docs', app, platformDocument);
 
   await app.listen(appConfig.port).then(() => {
