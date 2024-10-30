@@ -1,8 +1,6 @@
 import { registerAs } from '@nestjs/config';
 import * as process from 'process';
-
-export const CONFIG_APP_TOKEN = 'app';
-export const CONFIG_SERVICES_RMQ_TOKEN = 'services-rmq';
+import { CONFIG_APP_TOKEN, CONFIG_SERVICES_RMQ_TOKEN } from 'types/config';
 
 export const servicesRmqConfig = registerAs(
   CONFIG_SERVICES_RMQ_TOKEN,
