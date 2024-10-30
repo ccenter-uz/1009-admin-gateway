@@ -1,10 +1,8 @@
 import { FactoryProvider } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
-import {
-  CONFIG_SERVICES_RMQ_TOKEN,
-  ServicesRmqConfig,
-} from '../config/app.config';
+import { ServicesRmqConfig } from '../config/app.config';
+import { CONFIG_SERVICES_RMQ_TOKEN } from 'types/config';
 
 export const ADMIN_CLIENT = 'ADMIN_CLIENT';
 
