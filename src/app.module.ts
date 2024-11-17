@@ -6,6 +6,8 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { RcpExceptionInterceptor } from './common/interceptors/rcp.exception.interceptor';
 import { CategoryModule } from './modules/organization/category/category.module';
 import { SubCategoryModule } from './modules/organization/sub-category/sub-category.module';
+import { SectionModule } from './modules/organization/section/section.module';
+import { SegmentModule } from './modules/organization/segment/segment.module';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { SubCategoryModule } from './modules/organization/sub-category/sub-categ
     }),
     CategoryModule,
     SubCategoryModule,
+    SectionModule,
+    SegmentModule,
   ],
   providers: [
     {
