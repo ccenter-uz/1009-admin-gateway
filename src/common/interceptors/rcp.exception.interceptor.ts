@@ -13,7 +13,7 @@ export class RcpExceptionInterceptor implements NestInterceptor {
     return next.handle().pipe(
       catchError((e) => {
         throw new HttpException(e.response, e.status);
-      }),
+      })
     );
   }
 }
