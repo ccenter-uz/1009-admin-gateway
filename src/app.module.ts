@@ -5,6 +5,7 @@ import { serviceConfig } from 'types/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { RcpExceptionInterceptor } from './common/interceptors/rcp.exception.interceptor';
 import { CategoryModule } from './modules/organization/category/category.module';
+import { SubCategoryModule } from './modules/organization/sub-category/sub-category.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { CategoryModule } from './modules/organization/category/category.module'
       envFilePath: ['.env', '.env.local'],
     }),
     CategoryModule,
+    SubCategoryModule,
   ],
   providers: [
     {
