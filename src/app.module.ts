@@ -8,6 +8,9 @@ import { CategoryModule } from './modules/organization/category/category.module'
 import { SubCategoryModule } from './modules/organization/sub-category/sub-category.module';
 import { SectionModule } from './modules/organization/section/section.module';
 import { SegmentModule } from './modules/organization/segment/segment.module';
+import { MainOrganizationModule } from './modules/organization/main-organization/main-organization.module';
+import { ProductServiceCategoryModule } from './modules/organization/product-servise-category/product-servise-category.module';
+import { ProductServiseSubCategoryModule } from './modules/organization/product-servise-sub-category/sub-category.module';
 
 @Module({
   imports: [
@@ -21,6 +24,9 @@ import { SegmentModule } from './modules/organization/segment/segment.module';
     SubCategoryModule,
     SectionModule,
     SegmentModule,
+    MainOrganizationModule,
+    ProductServiceCategoryModule,
+    ProductServiseSubCategoryModule,
   ],
   providers: [
     {
