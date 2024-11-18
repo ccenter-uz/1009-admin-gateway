@@ -16,13 +16,10 @@ import { CategoryService } from './category.service';
 import {
   ApiBearerAuth,
   ApiBody,
-  ApiOperation,
   ApiParam,
-  ApiResponse,
-  ApiResponseMetadata,
   ApiTags,
 } from '@nestjs/swagger';
-import { ApiResponseType, LanguageRequestDto, ListQueryDto } from 'types/global';
+import {  LanguageRequestDto, ListQueryDto } from 'types/global';
 import {
   CategoryCreateDto,
   CategoryInterfaces,
