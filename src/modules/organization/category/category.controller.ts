@@ -16,12 +16,10 @@ import { CategoryService } from './category.service';
 import {
   ApiBearerAuth,
   ApiBody,
-  ApiOperation,
   ApiParam,
-  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { LanguageRequestDto, ListQueryDto } from 'types/global';
+import {  LanguageRequestDto, ListQueryDto } from 'types/global';
 import {
   CategoryCreateDto,
   CategoryInterfaces,
@@ -32,7 +30,7 @@ import {
 @ApiTags('category')
 @Controller('category')
 export class CategoryController {
-  constructor(private readonly categoryService: CategoryService) {}
+  constructor(private readonly categoryService: CategoryService) { }
 
   @Get()
   @HttpCode(HttpStatus.OK)

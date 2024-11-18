@@ -33,7 +33,7 @@ import {
 @Controller('product-servise-category')
 export class ProductServiceCategoryController {
   constructor(
-    private readonly productServicecategoryService: ProductServiceCategoryService
+    private readonly productServiceCategoryService: ProductServiceCategoryService
   ) {}
 
   @Get()
@@ -41,7 +41,7 @@ export class ProductServiceCategoryController {
   async getListOfCategory(
     @Query() query: ListQueryDto
   ): Promise<ProductServiseCategoryInterfaces.Response[]> {
-    return await this.productServicecategoryService.getListOfCategory(query);
+    return await this.productServiceCategoryService.getListOfCategory(query);
   }
 
   @Get(':id')
@@ -51,7 +51,7 @@ export class ProductServiceCategoryController {
     @Param('id', ParseIntPipe) id: number,
     @Query() query: LanguageRequestDto
   ): Promise<ProductServiseCategoryInterfaces.Response> {
-    return this.productServicecategoryService.getById({ id, ...query });
+    return this.productServiceCategoryService.getById({ id, ...query });
   }
 
   @Post()
@@ -60,7 +60,7 @@ export class ProductServiceCategoryController {
   async create(
     @Body() data: ProductServiseCategoryCreateDto
   ): Promise<ProductServiseCategoryInterfaces.Response> {
-    return this.productServicecategoryService.create(data);
+    return this.productServiceCategoryService.create(data);
   }
 
   @Put(':id')
@@ -70,7 +70,7 @@ export class ProductServiceCategoryController {
     @Param('id', ParseIntPipe) id: number,
     @Body() data: Omit<ProductServiseCategoryUpdateDto, 'id'>
   ): Promise<ProductServiseCategoryInterfaces.Response> {
-    return this.productServicecategoryService.update({ ...data, id });
+    return this.productServiceCategoryService.update({ ...data, id });
   }
 
   @Delete(':id')
@@ -79,7 +79,7 @@ export class ProductServiceCategoryController {
     @Param('id', ParseIntPipe) id: number,
     @Query('delete', ParseBoolPipe) deleteQuery?: boolean
   ): Promise<ProductServiseCategoryInterfaces.Response> {
-    return this.productServicecategoryService.delete({
+    return this.productServiceCategoryService.delete({
       id,
       delete: deleteQuery,
     });
@@ -90,6 +90,6 @@ export class ProductServiceCategoryController {
   async restore(
     @Param('id', ParseIntPipe) id: number
   ): Promise<ProductServiseCategoryInterfaces.Response> {
-    return this.productServicecategoryService.restore({ id });
+    return this.productServiceCategoryService.restore({ id });
   }
 }

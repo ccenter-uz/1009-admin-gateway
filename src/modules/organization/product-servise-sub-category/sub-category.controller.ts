@@ -23,8 +23,8 @@ import {
 } from 'types/organization/product-service-sub-category';
 
 @ApiBearerAuth()
-@ApiTags('prosuct-servise-sub-category')
-@Controller('prosuct-servise-sub-category')
+@ApiTags('product-servise-sub-category')
+@Controller('product-servise-sub-category')
 export class ProductServiseSubCategoryController {
   constructor(
     private readonly productServiseSubCategoryService: ProductServiseSubCategoryService
