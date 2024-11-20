@@ -11,6 +11,7 @@ import { SegmentModule } from './modules/organization/segment/segment.module';
 import { MainOrganizationModule } from './modules/organization/main-organization/main-organization.module';
 import { ProductServiceCategoryModule } from './modules/organization/product-servise-category/product-servise-category.module';
 import { ProductServiseSubCategoryModule } from './modules/organization/product-servise-sub-category/sub-category.module';
+import { DistrictModule } from './modules/organization/district/district.module';
 
 
 @Module({
@@ -28,6 +29,7 @@ import { ProductServiseSubCategoryModule } from './modules/organization/product-
     MainOrganizationModule,
     ProductServiceCategoryModule,
     ProductServiseSubCategoryModule,
+    DistrictModule,
   ],
   providers: [
     {
@@ -36,4 +38,4 @@ import { ProductServiseSubCategoryModule } from './modules/organization/product-
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}
