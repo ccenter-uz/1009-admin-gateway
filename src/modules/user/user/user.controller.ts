@@ -5,12 +5,12 @@ import { UserLogInDto } from 'types/user/user/dto/log-in-user.dto';
 import { UserService } from './user.service';
 
 @ApiBearerAuth()
-@ApiTags('user')
-@Controller('user')
+@ApiTags('auth')
+@Controller('auth')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
+  @Post('log-in')
   @ApiBody({ type: UserLogInDto })
   @HttpCode(HttpStatus.OK)
   async create(

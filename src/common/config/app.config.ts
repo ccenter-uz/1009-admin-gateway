@@ -14,6 +14,10 @@ export const servicesRmqConfig = registerAs(
       exchangeName:
         process.env.ORGANIZATION_RMQ_EXCHANGE_NAME || 'organization',
     },
+    USER: {
+      queueName: process.env.ORGANIZATION_RMQ_QUEUE_NAME || 'user',
+      exchangeName: process.env.ORGANIZATION_RMQ_EXCHANGE_NAME || 'user',
+    },
     CONFIG: {
       host: process.env.RMQ_HOST || 'localhost',
       port: parseInt(process.env.RMQ_PORT) || 5672,
@@ -26,6 +30,7 @@ export const servicesRmqConfig = registerAs(
 export type ServicesRmqConfig = {
   ADMIN: Pick<RMQConfig, 'queueName' | 'exchangeName'>;
   ORGANIZATION: Pick<RMQConfig, 'queueName' | 'exchangeName'>;
+  USER: Pick<RMQConfig, 'queueName' | 'exchangeName'>;
   CONFIG: Omit<RMQConfig, 'queueName' | 'exchangeName'>;
 };
 
