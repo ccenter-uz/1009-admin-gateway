@@ -15,6 +15,7 @@ import { AuthGuard } from './common/guard/auth.guard';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from './modules/user/user/user.module';
 import { AllExceptionsFilter } from './common/filter/exception.filter';
+import { RoleModule } from './modules/user/role/role.module';
 // import { DistrictModule } from './modules/organization/district/district.module';
 
 @Module({
@@ -39,6 +40,7 @@ import { AllExceptionsFilter } from './common/filter/exception.filter';
     // DistrictModule,
 
     UserModule,
+    RoleModule,
   ],
   providers: [
     {
@@ -55,4 +57,4 @@ import { AllExceptionsFilter } from './common/filter/exception.filter';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }

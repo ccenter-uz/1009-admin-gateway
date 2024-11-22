@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private readonly jwtService: JwtService,
     private readonly userService: UserService
-  ) {}
+  ) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
     const path = request.route.path.split('v1')[1];
     const token = request.headers['authorization']?.split(' ')[1];
 
-    if (path === '/auth/log-in') return true;
+    if (path === '/user/log-in') return true;
 
     if (!token) {
       throw new ForbiddenException('No token provided');
