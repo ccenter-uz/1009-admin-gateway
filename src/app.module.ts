@@ -57,4 +57,4 @@ import { RoleModule } from './modules/user/role/role.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}
