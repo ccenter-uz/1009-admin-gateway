@@ -1,4 +1,18 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseBoolPipe, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Logger,
+  Param,
+  ParseBoolPipe,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { UserCreateDto, UserInterfaces, UserUpdateDto } from 'types/user/user';
 import { UserLogInDto } from 'types/user/user/dto/log-in-user.dto';
@@ -9,7 +23,7 @@ import { LanguageRequestDto, ListQueryDto } from 'types/global';
 @ApiTags('user')
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
   @Post('log-in')
   @ApiBody({ type: UserLogInDto })
@@ -41,9 +55,7 @@ export class UserController {
   @Post()
   @ApiBody({ type: UserCreateDto })
   @HttpCode(HttpStatus.CREATED)
-  async create(
-    @Body() data: UserCreateDto
-  ): Promise<UserInterfaces.Response> {
+  async create(@Body() data: UserCreateDto): Promise<UserInterfaces.Response> {
     return this.userService.create(data);
   }
 

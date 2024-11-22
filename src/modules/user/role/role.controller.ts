@@ -8,14 +8,14 @@ import { RoleService } from './role.service';
 @ApiTags('role')
 @Controller('role')
 export class RoleController {
-  constructor(private readonly roleService: RoleService) { }
+  constructor(private readonly roleService: RoleService) {}
 
   @Get()
   @HttpCode(HttpStatus.OK)
   async getListOfRoles(
     @Query() query: ListQueryDto
   ): Promise<RoleInterfaces.Response[]> {
-    return await this.roleService.getListOfCategory(query);
+    return await this.roleService.getListOfRoles(query);
   }
 
   // @Get(':id')

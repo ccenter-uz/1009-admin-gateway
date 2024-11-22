@@ -1,33 +1,49 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { USER } from 'types/config';
 import { ListQueryDto } from 'types/global';
-import { RoleServiceCommands as Commands, RoleInterfaces } from 'types/user/role';
+import {
+  RoleServiceCommands as Commands,
+  RoleInterfaces,
+} from 'types/user/role';
 
 @Injectable()
 export class RoleService {
-  constructor(
-    @Inject(USER) private adminClient: ClientProxy,
-  ) { }
-  async getListOfCategory(
+  private logger = new Logger(RoleService.name);
+
+  constructor(@Inject(USER) private adminClient: ClientProxy) {}
+  async getListOfRoles(
     query: ListQueryDto
   ): Promise<RoleInterfaces.Response[]> {
+    const methodName: string = this.getListOfRoles.name;
+
+    this.logger.debug(`Method: ${methodName} - Request: `, query);
+
+    let response: RoleInterfaces.Response[];
     if (query.all) {
-      return lastValueFrom(
+      response = await lastValueFrom(
         this.adminClient.send<RoleInterfaces.Response[], ListQueryDto>(
           { cmd: Commands.GET_ALL_LIST },
           query
         )
       );
+
+      this.logger.debug(`Method: ${methodName} - Respsonse: `, response);
+
+      return response;
     }
 
-    return lastValueFrom(
+    response = await lastValueFrom(
       this.adminClient.send<RoleInterfaces.Response[], ListQueryDto>(
         { cmd: Commands.GET_LIST_BY_PAGINATION },
         query
       )
     );
+
+    this.logger.debug(`Method: ${methodName} - Respsonse: `, response);
+
+    return response;
   }
 
   // async getById(data: GetOneDto): Promise<UserInterfaces.Response> {

@@ -4,6 +4,7 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  Logger,
   NestInterceptor,
 } from '@nestjs/common';
 import { catchError, Observable } from 'rxjs';
@@ -12,7 +13,12 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class RpcExceptionInterceptor<T> implements NestInterceptor {
-  intercept(context: ExecutionContext, next: CallHandler): Observable<ApiResponseType<T>> {
+  private logger = new Logger(RpcExceptionInterceptor.name);
+
+  intercept(
+    context: ExecutionContext,
+    next: CallHandler
+  ): Observable<ApiResponseType<T>> {
     const ctx = context.switchToHttp();
     const response = ctx.getResponse();
 
@@ -30,6 +36,17 @@ export class RpcExceptionInterceptor<T> implements NestInterceptor {
         // Error response handling
         const status = e.status || HttpStatus.INTERNAL_SERVER_ERROR;
 
+        this.logger.debug(
+          `Intercept: ${{
+            status,
+            result: null,
+            error: {
+              message: e.response?.message || 'Internal server error',
+              details: e?.details || null,
+            },
+          }}`
+        );
+
         throw new HttpException(
           {
             status,
@@ -39,11 +56,9 @@ export class RpcExceptionInterceptor<T> implements NestInterceptor {
               details: e?.details || null,
             },
           },
-          status,
+          status
         );
       })
     );
   }
 }
-
-
