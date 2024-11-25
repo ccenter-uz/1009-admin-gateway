@@ -16,6 +16,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from './modules/user/user/user.module';
 import { AllExceptionsFilter } from './common/filter/exception.filter';
 import { RoleModule } from './modules/user/role/role.module';
+import { NearbyCategoryModule } from './modules/organization/nearby-categoty/nearby-category.module';
+import { NearbyModule } from './modules/organization/nearby/nearby.module';
 // import { DistrictModule } from './modules/organization/district/district.module';
 
 @Module({
@@ -38,6 +40,8 @@ import { RoleModule } from './modules/user/role/role.module';
     ProductServiceCategoryModule,
     ProductServiseSubCategoryModule,
     // DistrictModule,
+    NearbyCategoryModule,
+    NearbyModule,
 
     UserModule,
     RoleModule,
@@ -47,14 +51,14 @@ import { RoleModule } from './modules/user/role/role.module';
       provide: APP_FILTER,
       useClass: AllExceptionsFilter,
     },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: RpcExceptionInterceptor,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: RpcExceptionInterceptor,
+    // },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AuthGuard,
+    // },
   ],
 })
 export class AppModule {}
