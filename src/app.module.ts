@@ -17,6 +17,7 @@ import { UserModule } from './modules/user/user/user.module';
 import { AllExceptionsFilter } from './common/filter/exception.filter';
 import { RoleModule } from './modules/user/role/role.module';
 // import { DistrictModule } from './modules/organization/district/district.module';
+import { PassageModule } from './modules/organization/passage/passage.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { RoleModule } from './modules/user/role/role.module';
 
     UserModule,
     RoleModule,
+    PassageModule,
   ],
   providers: [
     {
