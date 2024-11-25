@@ -79,18 +79,18 @@ export class UserService {
     this.logger.debug(`Method: ${methodName} - Request: `, query);
 
     let response: UserInterfaces.Response[];
-    if (query.all) {
-      response = await lastValueFrom(
-        this.adminClient.send<UserInterfaces.Response[], ListQueryDto>(
-          { cmd: Commands.GET_ALL_LIST },
-          query
-        )
-      );
+    // if (query.all) {
+    //   response = await lastValueFrom(
+    //     this.adminClient.send<UserInterfaces.Response[], ListQueryDto>(
+    //       { cmd: Commands.GET_ALL_LIST },
+    //       query
+    //     )
+    //   );
 
-      this.logger.debug(`Method: ${methodName} - Response if all: `, response);
+    //   this.logger.debug(`Method: ${methodName} - Response if all: `, response);
 
-      return response;
-    }
+    //   return response;
+    // }
 
     response = await lastValueFrom(
       this.adminClient.send<UserInterfaces.Response[], ListQueryDto>(
