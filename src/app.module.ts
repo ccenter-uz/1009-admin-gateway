@@ -18,6 +18,7 @@ import { AllExceptionsFilter } from './common/filter/exception.filter';
 import { RoleModule } from './modules/user/role/role.module';
 import { NearbyCategoryModule } from './modules/organization/nearby-categoty/nearby-category.module';
 import { NearbyModule } from './modules/organization/nearby/nearby.module';
+import { DistrictModule } from './modules/organization/district/district.module';
 // import { DistrictModule } from './modules/organization/district/district.module';
 
 @Module({
@@ -39,7 +40,7 @@ import { NearbyModule } from './modules/organization/nearby/nearby.module';
     MainOrganizationModule,
     ProductServiceCategoryModule,
     ProductServiseSubCategoryModule,
-    // DistrictModule,
+    DistrictModule,
     NearbyCategoryModule,
     NearbyModule,
 
