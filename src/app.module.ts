@@ -23,6 +23,8 @@ import { DistrictModule } from './modules/organization/district/district.module'
 import { PassageModule } from './modules/organization/passage/passage.module';
 import { RegionModule } from './modules/organization/region/region.module';
 import { CityModule } from './modules/organization/city/city.module';
+import { AreaModule } from './modules/organization/area/area.module';
+import { AvenueModule } from './modules/organization/avenue/avenue.module';
 
 @Module({
   imports: [
@@ -52,20 +54,22 @@ import { CityModule } from './modules/organization/city/city.module';
     UserModule,
     RoleModule,
     PassageModule,
+    AreaModule,
+    AvenueModule,
   ],
   providers: [
     {
       provide: APP_FILTER,
       useClass: AllExceptionsFilter,
     },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: RpcExceptionInterceptor,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: RpcExceptionInterceptor,
+    // },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AuthGuard,
+    // },
   ],
 })
 export class AppModule {}
