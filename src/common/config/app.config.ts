@@ -15,8 +15,8 @@ export const servicesRmqConfig = registerAs(
         process.env.ORGANIZATION_RMQ_EXCHANGE_NAME || 'organization',
     },
     USER: {
-      queueName: process.env.ORGANIZATION_RMQ_QUEUE_NAME || 'user',
-      exchangeName: process.env.ORGANIZATION_RMQ_EXCHANGE_NAME || 'user',
+      queueName: process.env.USER_RMQ_QUEUE_NAME || 'user',
+      exchangeName: process.env.USER_RMQ_EXCHANGE_NAME || 'user',
     },
     CONFIG: {
       host: process.env.RMQ_HOST || 'localhost',
