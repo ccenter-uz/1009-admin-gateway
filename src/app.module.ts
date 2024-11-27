@@ -58,14 +58,14 @@ import { CityModule } from './modules/organization/city/city.module';
       provide: APP_FILTER,
       useClass: AllExceptionsFilter,
     },
-    // {
-    //   provide: APP_INTERCEPTOR,
-    //   useClass: RpcExceptionInterceptor,
-    // },
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: AuthGuard,
-    // },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: RpcExceptionInterceptor,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
   ],
 })
 export class AppModule {}
