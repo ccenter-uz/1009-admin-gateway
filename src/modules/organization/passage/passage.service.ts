@@ -4,22 +4,22 @@ import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
 import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
 import {
-  DistrictCreateDto,
-  DistrictUpdateDto,
-  DistrictInterfaces,
-  DistrictServiceCommands as Commands,
-} from 'types/organization/district';
+  PassageCreateDto,
+  PassageUpdateDto,
+  PassageInterfaces,
+  PassageServiceCommands as Commands,
+} from 'types/organization/passage';
 
 @Injectable()
-export class DistrictService {
+export class PassageService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
   async getListOfCategory(
     query: ListQueryDto
-  ): Promise<DistrictInterfaces.Response[]> {
+  ): Promise<PassageInterfaces.Response[]> {
     if (query.all) {
       return lastValueFrom(
-        this.adminClient.send<DistrictInterfaces.Response[], ListQueryDto>(
+        this.adminClient.send<PassageInterfaces.Response[], ListQueryDto>(
           { cmd: Commands.GET_ALL_LIST },
           query
         )
@@ -27,16 +27,16 @@ export class DistrictService {
     }
 
     return lastValueFrom(
-      this.adminClient.send<DistrictInterfaces.Response[], ListQueryDto>(
+      this.adminClient.send<PassageInterfaces.Response[], ListQueryDto>(
         { cmd: Commands.GET_LIST_BY_PAGINATION },
         query
       )
     );
   }
 
-  async getById(data: GetOneDto): Promise<DistrictInterfaces.Response> {
+  async getById(data: GetOneDto): Promise<PassageInterfaces.Response> {
     return lastValueFrom(
-      this.adminClient.send<DistrictInterfaces.Response, GetOneDto>(
+      this.adminClient.send<PassageInterfaces.Response, GetOneDto>(
         { cmd: Commands.GET_BY_ID },
         data
       )
@@ -44,39 +44,39 @@ export class DistrictService {
   }
 
   async create(
-    data: DistrictCreateDto
-  ): Promise<DistrictInterfaces.Response> {
+    data: PassageCreateDto
+  ): Promise<PassageInterfaces.Response> {
     return await lastValueFrom(
       this.adminClient.send<
-        DistrictInterfaces.Response,
-        DistrictInterfaces.Request
+        PassageInterfaces.Response,
+        PassageInterfaces.Request
       >({ cmd: Commands.CREATE }, data)
     );
   }
 
   async update(
-    data: DistrictUpdateDto
-  ): Promise<DistrictInterfaces.Response> {
+    data: PassageUpdateDto
+  ): Promise<PassageInterfaces.Response> {
     return lastValueFrom(
       this.adminClient.send<
-        DistrictInterfaces.Response,
-        DistrictInterfaces.Update
+        PassageInterfaces.Response,
+        PassageInterfaces.Update
       >({ cmd: Commands.UPDATE }, data)
     );
   }
 
-  async delete(data: DeleteDto): Promise<DistrictInterfaces.Response> {
+  async delete(data: DeleteDto): Promise<PassageInterfaces.Response> {
     return lastValueFrom(
-      this.adminClient.send<DistrictInterfaces.Response, DeleteDto>(
+      this.adminClient.send<PassageInterfaces.Response, DeleteDto>(
         { cmd: Commands.DELETE },
         data
       )
     );
   }
 
-  async restore(data: GetOneDto): Promise<DistrictInterfaces.Response> {
+  async restore(data: GetOneDto): Promise<PassageInterfaces.Response> {
     return lastValueFrom(
-      this.adminClient.send<DistrictInterfaces.Response, GetOneDto>(
+      this.adminClient.send<PassageInterfaces.Response, GetOneDto>(
         { cmd: Commands.RESTORE },
         data
       )
