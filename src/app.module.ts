@@ -54,10 +54,10 @@ import { CityModule } from './modules/organization/city/city.module';
     PassageModule,
   ],
   providers: [
-    {
-      provide: APP_FILTER,
-      useClass: AllExceptionsFilter,
-    },
+    // {
+    //   provide: APP_FILTER,
+    //   useClass: AllExceptionsFilter,
+    // },
     {
       provide: APP_INTERCEPTOR,
       useClass: RpcExceptionInterceptor,
