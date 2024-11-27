@@ -33,6 +33,8 @@ export class RpcExceptionInterceptor<T> implements NestInterceptor {
         };
       }),
       catchError((e) => {
+        console.log(e, 'ERRORRR');
+
         // Error response handling
         const status = e.status || HttpStatus.INTERNAL_SERVER_ERROR;
 
