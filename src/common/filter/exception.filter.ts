@@ -19,14 +19,18 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const message = exception.response || 'Internal server error';
 
     this.logger.debug(
-      `Exception Filter: ${{
-        status: 'error',
-        result: null,
-        error: {
-          message: typeof message === 'string' ? message : message['message'],
-          details: typeof message === 'object' ? message : null,
+      `Exception Filter: ${JSON.stringify(
+        {
+          status: 'error',
+          result: null,
+          error: {
+            message: typeof message === 'string' ? message : message['message'],
+            details: typeof message === 'object' ? message : null,
+          },
         },
-      }}`
+        null,
+        2
+      )}`
     );
 
     response.status(status).json({

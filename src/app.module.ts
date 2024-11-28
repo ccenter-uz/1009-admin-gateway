@@ -62,18 +62,18 @@ import { ImpasseModule } from './modules/organization/impasse/impasse.module';
     ImpasseModule
   ],
   providers: [
+    // {
+    //   provide: APP_FILTER,
+    //   useClass: AllExceptionsFilter,
+    // },
     {
-      provide: APP_FILTER,
-      useClass: AllExceptionsFilter,
+      provide: APP_INTERCEPTOR,
+      useClass: RpcExceptionInterceptor,
     },
-    // {
-    //   provide: APP_INTERCEPTOR,
-    //   useClass: RpcExceptionInterceptor,
-    // },
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: AuthGuard,
-    // },
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
   ],
 })
 export class AppModule { }

@@ -33,18 +33,24 @@ export class RpcExceptionInterceptor<T> implements NestInterceptor {
         };
       }),
       catchError((e) => {
+        console.log(e, 'ERRORRR');
+
         // Error response handling
         const status = e.status || HttpStatus.INTERNAL_SERVER_ERROR;
 
         this.logger.debug(
-          `Intercept: ${{
-            status,
-            result: null,
-            error: {
-              message: e.response?.message || 'Internal server error',
-              details: e?.details || null,
+          `Intercept: ${JSON.stringify(
+            {
+              status,
+              result: null,
+              error: {
+                message: e.response?.message || 'Internal server error',
+                details: e?.details || null,
+              },
             },
-          }}`
+            null,
+            2
+          )}`
         );
 
         throw new HttpException(
