@@ -27,6 +27,9 @@ import { AreaModule } from './modules/organization/area/area.module';
 import { AvenueModule } from './modules/organization/avenue/avenue.module';
 import { ResidentialAreaModule } from './modules/organization/residential-area/residential-area.module';
 import { ImpasseModule } from './modules/organization/impasse/impasse.module';
+import { VillageModule } from './modules/organization/village/village.module';
+import { LaneModule } from './modules/organization/lane/lane.module';
+import { StreetModule } from './modules/organization/street/street.module';
 
 @Module({
   imports: [
@@ -59,21 +62,24 @@ import { ImpasseModule } from './modules/organization/impasse/impasse.module';
     AreaModule,
     AvenueModule,
     ResidentialAreaModule,
-    ImpasseModule
+    ImpasseModule,
+    VillageModule,
+    LaneModule,
+    StreetModule
   ],
   providers: [
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
+    },
     // {
-    //   provide: APP_FILTER,
-    //   useClass: AllExceptionsFilter,
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: RpcExceptionInterceptor,
     // },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: RpcExceptionInterceptor,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AuthGuard,
+    // },
   ],
 })
 export class AppModule { }
