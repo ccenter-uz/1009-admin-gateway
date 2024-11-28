@@ -72,14 +72,14 @@ import { StreetModule } from './modules/organization/street/street.module';
       provide: APP_FILTER,
       useClass: AllExceptionsFilter,
     },
-    // {
-    //   provide: APP_INTERCEPTOR,
-    //   useClass: RpcExceptionInterceptor,
-    // },
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: AuthGuard,
-    // },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: RpcExceptionInterceptor,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
   ],
 })
 export class AppModule { }
