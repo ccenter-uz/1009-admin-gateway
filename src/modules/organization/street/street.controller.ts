@@ -6,7 +6,6 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  ParseBoolPipe,
   ParseIntPipe,
   Post,
   Put,
@@ -71,7 +70,7 @@ export class StreetController {
   @HttpCode(HttpStatus.OK)
   async delete(
     @Param('id', ParseIntPipe) id: number,
-    @Query('delete', ParseBoolPipe) deleteQuery?: boolean
+    @Query('delete') deleteQuery?: boolean
   ): Promise<StreetInterfaces.Response> {
     return this.streetService.delete({ id, delete: deleteQuery });
   }

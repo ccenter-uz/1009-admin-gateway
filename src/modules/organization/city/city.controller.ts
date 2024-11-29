@@ -6,7 +6,6 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  ParseBoolPipe,
   ParseIntPipe,
   Post,
   Put,
@@ -67,7 +66,7 @@ export class CityController {
   @HttpCode(HttpStatus.OK)
   async delete(
     @Param('id', ParseIntPipe) id: number,
-    @Query('delete', ParseBoolPipe) deleteQuery?: boolean
+    @Query('delete') deleteQuery?: boolean
   ): Promise<CityInterfaces.Response> {
     return this.subCategoryService.delete({ id, delete: deleteQuery });
   }

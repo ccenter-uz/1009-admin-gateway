@@ -6,7 +6,6 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  ParseBoolPipe,
   ParseIntPipe,
   Post,
   Put,
@@ -69,7 +68,7 @@ export class PassageController {
   @HttpCode(HttpStatus.OK)
   async delete(
     @Param('id', ParseIntPipe) id: number,
-    @Query('delete', ParseBoolPipe) deleteQuery?: boolean
+    @Query('delete') deleteQuery?: boolean
   ): Promise<PassageInterfaces.Response> {
     return this.passageService.delete({ id, delete: deleteQuery });
   }

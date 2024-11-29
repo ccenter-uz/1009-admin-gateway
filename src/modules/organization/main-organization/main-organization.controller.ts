@@ -6,7 +6,6 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  ParseBoolPipe,
   ParseIntPipe,
   Post,
   Put,
@@ -34,7 +33,7 @@ import {
 export class MainOrganizationController {
   constructor(
     private readonly mainOrganizationService: MainOrganizationService
-  ) {}
+  ) { }
 
   @Get()
   @HttpCode(HttpStatus.OK)
@@ -77,7 +76,7 @@ export class MainOrganizationController {
   @HttpCode(HttpStatus.OK)
   async delete(
     @Param('id', ParseIntPipe) id: number,
-    @Query('delete', ParseBoolPipe) deleteQuery?: boolean
+    @Query('delete') deleteQuery?: boolean
   ): Promise<MainOrganizationInterfaces.Response> {
     return this.mainOrganizationService.delete({ id, delete: deleteQuery });
   }

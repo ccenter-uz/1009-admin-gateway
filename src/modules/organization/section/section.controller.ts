@@ -6,7 +6,6 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  ParseBoolPipe,
   ParseIntPipe,
   Post,
   Put,
@@ -16,9 +15,7 @@ import { SectionService } from './section.service';
 import {
   ApiBearerAuth,
   ApiBody,
-  ApiOperation,
   ApiParam,
-  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { LanguageRequestDto, ListQueryDto } from 'types/global';
@@ -75,7 +72,7 @@ export class SectionController {
   @HttpCode(HttpStatus.OK)
   async delete(
     @Param('id', ParseIntPipe) id: number,
-    @Query('delete', ParseBoolPipe) deleteQuery?: boolean
+    @Query('delete') deleteQuery?: boolean
   ): Promise<SectionInterfaces.Response> {
     return this.sectionService.delete({ id, delete: deleteQuery });
   }
