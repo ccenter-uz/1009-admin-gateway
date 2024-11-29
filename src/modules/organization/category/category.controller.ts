@@ -6,7 +6,6 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  ParseBoolPipe,
   ParseIntPipe,
   Post,
   Put,
@@ -19,7 +18,7 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import {  LanguageRequestDto, ListQueryDto } from 'types/global';
+import { LanguageRequestDto, ListQueryDto } from 'types/global';
 import {
   CategoryCreateDto,
   CategoryInterfaces,
@@ -73,7 +72,7 @@ export class CategoryController {
   @HttpCode(HttpStatus.OK)
   async delete(
     @Param('id', ParseIntPipe) id: number,
-    @Query('delete', ParseBoolPipe) deleteQuery?: boolean
+    @Query('delete',) deleteQuery?: boolean
   ): Promise<CategoryInterfaces.Response> {
     return this.categoryService.delete({ id, delete: deleteQuery });
   }

@@ -6,7 +6,6 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  ParseBoolPipe,
   ParseIntPipe,
   Post,
   Put,
@@ -71,7 +70,7 @@ export class LaneController {
   @HttpCode(HttpStatus.OK)
   async delete(
     @Param('id', ParseIntPipe) id: number,
-    @Query('delete', ParseBoolPipe) deleteQuery?: boolean
+    @Query('delete') deleteQuery?: boolean
   ): Promise<LaneInterfaces.Response> {
     return this.laneService.delete({ id, delete: deleteQuery });
   }

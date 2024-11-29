@@ -6,7 +6,6 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  ParseBoolPipe,
   ParseIntPipe,
   Post,
   Put,
@@ -68,7 +67,7 @@ export class NearbyController {
   @HttpCode(HttpStatus.OK)
   async delete(
     @Param('id', ParseIntPipe) id: number,
-    @Query('delete', ParseBoolPipe) deleteQuery?: boolean
+    @Query('delete') deleteQuery?: boolean
   ): Promise<NearbyInterfaces.Response> {
     return this.nearbyService.delete({ id, delete: deleteQuery });
   }
