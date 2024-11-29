@@ -23,6 +23,10 @@ import { DistrictModule } from './modules/organization/district/district.module'
 import { PassageModule } from './modules/organization/passage/passage.module';
 import { RegionModule } from './modules/organization/region/region.module';
 import { CityModule } from './modules/organization/city/city.module';
+import { AreaModule } from './modules/organization/area/area.module';
+import { AvenueModule } from './modules/organization/avenue/avenue.module';
+import { ResidentialAreaModule } from './modules/organization/residential-area/residential-area.module';
+import { ImpasseModule } from './modules/organization/impasse/impasse.module';
 
 @Module({
   imports: [
@@ -52,6 +56,10 @@ import { CityModule } from './modules/organization/city/city.module';
     UserModule,
     RoleModule,
     PassageModule,
+    AreaModule,
+    AvenueModule,
+    ResidentialAreaModule,
+    ImpasseModule
   ],
   providers: [
     // {
@@ -68,4 +76,4 @@ import { CityModule } from './modules/organization/city/city.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }
