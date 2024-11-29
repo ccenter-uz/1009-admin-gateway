@@ -73,7 +73,7 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   async delete(
     @Param('id', ParseIntPipe) id: number,
-    @Query('delete', ParseBoolPipe) deleteQuery?: boolean
+    @Query('delete') deleteQuery?: boolean
   ): Promise<UserInterfaces.Response> {
     return this.userService.delete({ id, delete: deleteQuery });
   }
