@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private readonly jwtService: JwtService,
     private readonly userService: UserService
-  ) { }
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -38,6 +38,8 @@ export class AuthGuard implements CanActivate {
     if (!rolePermissions) {
       throw new ForbiddenException('Access denied');
     }
+
+    request.userId = decoded.userId;
 
     return true;
   }

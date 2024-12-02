@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { MainOrganizationService } from './main-organization.service';
 import {
@@ -33,7 +34,7 @@ import {
 export class MainOrganizationController {
   constructor(
     private readonly mainOrganizationService: MainOrganizationService
-  ) { }
+  ) {}
 
   @Get()
   @HttpCode(HttpStatus.OK)
@@ -57,9 +58,10 @@ export class MainOrganizationController {
   @ApiBody({ type: MainOrganizationCreateDto })
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() data: MainOrganizationCreateDto
+    @Body() data: MainOrganizationCreateDto,
+    @Req() request: Request
   ): Promise<MainOrganizationInterfaces.Response> {
-    return this.mainOrganizationService.create(data);
+    return this.mainOrganizationService.create(data, request['userId']);
   }
 
   @Put(':id')
