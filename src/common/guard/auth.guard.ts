@@ -39,7 +39,8 @@ export class AuthGuard implements CanActivate {
       throw new ForbiddenException('Access denied');
     }
 
-    request.userId = decoded.userId;
+    const user = await this.userService.getById({ id: decoded.userId });
+    request.userNumericId = user.numericId;
 
     return true;
   }

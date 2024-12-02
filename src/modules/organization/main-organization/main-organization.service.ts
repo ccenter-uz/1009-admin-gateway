@@ -13,10 +13,7 @@ import {
 
 @Injectable()
 export class MainOrganizationService {
-  constructor(
-    @Inject(ORGANIZATION) private adminClient: ClientProxy,
-    private readonly userService: UserService
-  ) {}
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
   async getListOfCategory(
     query: ListQueryDto
@@ -49,14 +46,9 @@ export class MainOrganizationService {
 
   async create(
     data: MainOrganizationCreateDto,
-    userId: number
+    userNumericId: string
   ): Promise<MainOrganizationInterfaces.Response> {
-    console.log(userId);
-    const user = await this.userService.getById({ id: userId });
-
-    data = { staffNumber: user.numericId, ...data };
-
-    console.log(data, 'DATA');
+    data = { staffNumber: userNumericId, ...data };
 
     const response = await lastValueFrom(
       this.adminClient.send<
@@ -64,7 +56,6 @@ export class MainOrganizationService {
         MainOrganizationInterfaces.Request
       >({ cmd: Commands.CREATE }, data)
     );
-    console.log(response, 'RES');
 
     return response;
   }

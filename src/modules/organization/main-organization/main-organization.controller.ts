@@ -61,7 +61,7 @@ export class MainOrganizationController {
     @Body() data: MainOrganizationCreateDto,
     @Req() request: Request
   ): Promise<MainOrganizationInterfaces.Response> {
-    return this.mainOrganizationService.create(data, request['userId']);
+    return this.mainOrganizationService.create(data, request['userNumericId']);
   }
 
   @Put(':id')

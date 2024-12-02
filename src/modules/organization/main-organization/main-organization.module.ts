@@ -6,10 +6,7 @@ import { MainOrganizationService } from './main-organization.service';
 import { UserModule } from 'src/modules/user/user/user.module';
 
 @Module({
-  imports: [
-    ClientsModule.registerAsync([initRmqClient(ORGANIZATION)]),
-    UserModule,
-  ],
+  imports: [ClientsModule.registerAsync([initRmqClient(ORGANIZATION)])],
   controllers: [MainOrganizationController],
   providers: [MainOrganizationService],
 })
