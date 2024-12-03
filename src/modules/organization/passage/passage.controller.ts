@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { PassageService } from './passage.service';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
@@ -49,9 +50,10 @@ export class PassageController {
   @ApiBody({ type: PassageCreateDto })
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() data: PassageCreateDto
+    @Body() data: PassageCreateDto,
+    @Req() request: Request
   ): Promise<PassageInterfaces.Response> {
-    return this.passageService.create(data);
+    return this.passageService.create(data, request['userNumericId']);
   }
 
   @Put(':id')

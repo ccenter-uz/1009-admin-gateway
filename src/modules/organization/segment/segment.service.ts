@@ -12,7 +12,7 @@ import {
 
 @Injectable()
 export class SegmentService {
-  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
 
   async getListOfCategory(
     query: ListQueryDto

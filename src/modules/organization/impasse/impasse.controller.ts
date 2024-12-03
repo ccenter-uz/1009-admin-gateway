@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { ImpasseService } from './impasse.service';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
@@ -48,11 +49,12 @@ export class ImpasseController {
   @ApiBody({ type: ImpasseCreateDto })
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() data: ImpasseCreateDto
+    @Body() data: ImpasseCreateDto,
+    @Req() request: Request
   ): Promise<ImpasseInterfaces.Response> {
 
 
-    return this.impasseService.create(data);
+    return this.impasseService.create(data, request['userNumericId']);
   }
 
   @Put(':id')

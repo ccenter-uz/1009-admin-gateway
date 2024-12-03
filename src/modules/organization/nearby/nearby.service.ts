@@ -14,7 +14,7 @@ import {
 @Injectable()
 export class NearbyService {
   private logger = new Logger(NearbyService.name);
-  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
 
   async getListOfCategory(
     query: ListQueryDto
@@ -58,9 +58,9 @@ export class NearbyService {
     return response;
   }
 
-  async create(data: NearbyCreateDto): Promise<NearbyInterfaces.Response> {
+  async create(data: NearbyCreateDto, userNumericId: string): Promise<NearbyInterfaces.Response> {
     const methodName: string = this.create.name;
-
+    data = { staffNumber: userNumericId, ...data };
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(

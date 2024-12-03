@@ -12,7 +12,7 @@ import {
 
 @Injectable()
 export class ProductServiceCategoryService {
-  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
 
   async getListOfCategory(
     query: ListQueryDto
@@ -46,8 +46,9 @@ export class ProductServiceCategoryService {
   }
 
   async create(
-    data: ProductServiseCategoryCreateDto
+    data: ProductServiseCategoryCreateDto, userNumericId: string
   ): Promise<ProductServiseCategoryInterfaces.Response> {
+    data = { staffNumber: userNumericId, ...data };
     return await lastValueFrom(
       this.adminClient.send<
         ProductServiseCategoryInterfaces.Response,

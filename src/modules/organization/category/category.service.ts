@@ -43,7 +43,8 @@ export class CategoryService {
     );
   }
 
-  async create(data: CategoryCreateDto): Promise<CategoryInterfaces.Response> {
+  async create(data: CategoryCreateDto, userNumericId: string): Promise<CategoryInterfaces.Response> {
+    data = { staffNumber: userNumericId, ...data };
     return await lastValueFrom(
       this.adminClient.send<
         CategoryInterfaces.Response,

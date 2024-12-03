@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { ResidentialAreaService } from './residential-area.service';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
@@ -48,11 +49,12 @@ export class ResidentialAreaController {
   @ApiBody({ type: ResidentialAreaCreateDto })
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() data: ResidentialAreaCreateDto
+    @Body() data: ResidentialAreaCreateDto,
+    @Req() request: Request
   ): Promise<ResidentialAreaInterfaces.Response> {
 
 
-    return this.residentialAreaService.create(data);
+    return this.residentialAreaService.create(data, request['userNumericId']);
   }
 
   @Put(':id')

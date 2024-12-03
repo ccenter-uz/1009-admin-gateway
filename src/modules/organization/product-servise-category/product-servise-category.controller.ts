@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { ProductServiceCategoryService } from './product-servise-category.service';
 import {
@@ -57,9 +58,10 @@ export class ProductServiceCategoryController {
   @ApiBody({ type: ProductServiseCategoryCreateDto })
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() data: ProductServiseCategoryCreateDto
+    @Body() data: ProductServiseCategoryCreateDto,
+    @Req() request: Request
   ): Promise<ProductServiseCategoryInterfaces.Response> {
-    return this.productServiceCategoryService.create(data);
+    return this.productServiceCategoryService.create(data, request['userNumericId']);
   }
 
   @Put(':id')

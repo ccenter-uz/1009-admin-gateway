@@ -59,10 +59,10 @@ export class ResidentialAreaService {
   }
 
   async create(
-    data: ResidentialAreaCreateDto
+    data: ResidentialAreaCreateDto, userNumericId: string
   ): Promise<ResidentialAreaInterfaces.Response> {
     const methodName: string = this.getListOfCategory.name;
-
+    data = { staffNumber: userNumericId, ...data };
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(

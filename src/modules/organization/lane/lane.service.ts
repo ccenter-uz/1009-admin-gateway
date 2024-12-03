@@ -59,10 +59,10 @@ export class LaneService {
   }
 
   async create(
-    data: LaneCreateDto
+    data: LaneCreateDto, userNumericId: string
   ): Promise<LaneInterfaces.Response> {
     const methodName: string = this.getListOfCategory.name;
-
+    data = { staffNumber: userNumericId, ...data };
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(
