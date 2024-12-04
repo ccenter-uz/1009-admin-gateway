@@ -11,6 +11,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { AreaService } from './area.service';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
@@ -50,9 +51,10 @@ export class AreaController {
   @ApiBody({ type: AreaCreateDto })
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() data: AreaCreateDto
+    @Body() data: AreaCreateDto,
+    @Req() request: Request
   ): Promise<AreaInterfaces.Response> {
-    return this.areaService.create(data);
+    return this.areaService.create(data, request['userNumericId']);
   }
 
   @Put(':id')

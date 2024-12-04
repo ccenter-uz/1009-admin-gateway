@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { NearbyCategoryService } from './nearby-category.service';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
@@ -48,9 +49,10 @@ export class NearbyCategoryController {
   @ApiBody({ type: NearbyCategoryCreateDto })
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() data: NearbyCategoryCreateDto
+    @Body() data: NearbyCategoryCreateDto,
+    @Req() request: Request
   ): Promise<NearbyCategoryInterfaces.Response> {
-    return this.categoryService.create(data);
+    return this.categoryService.create(data, request['userNumericId']);
   }
 
   @Put(':id')

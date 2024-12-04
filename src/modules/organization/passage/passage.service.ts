@@ -12,7 +12,7 @@ import {
 
 @Injectable()
 export class PassageService {
-  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
 
   async getListOfCategory(
     query: ListQueryDto
@@ -44,8 +44,9 @@ export class PassageService {
   }
 
   async create(
-    data: PassageCreateDto
+    data: PassageCreateDto, userNumericId: string
   ): Promise<PassageInterfaces.Response> {
+    data = { staffNumber: userNumericId, ...data };
     return await lastValueFrom(
       this.adminClient.send<
         PassageInterfaces.Response,

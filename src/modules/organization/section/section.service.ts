@@ -16,7 +16,7 @@ import {
 
 @Injectable()
 export class SectionService {
-  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
 
   async getListOfCategory(
     query: ListQueryDto

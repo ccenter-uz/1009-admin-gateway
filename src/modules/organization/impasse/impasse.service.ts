@@ -58,10 +58,10 @@ export class ImpasseService {
   }
 
   async create(
-    data: ImpasseCreateDto
+    data: ImpasseCreateDto, userNumericId: string
   ): Promise<ImpasseInterfaces.Response> {
     const methodName: string = this.getListOfCategory.name;
-
+    data = { staffNumber: userNumericId, ...data };
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(

@@ -58,10 +58,11 @@ export class AreaService {
   }
 
   async create(
-    data: AreaCreateDto
+    data: AreaCreateDto,
+    userNumericId: string
   ): Promise<AreaInterfaces.Response> {
     const methodName: string = this.getListOfCategory.name;
-
+    data = { staffNumber: userNumericId, ...data };
     this.logger.debug(`Method: ${methodName} - Request: `, data);
     const response = await lastValueFrom(
       this.adminClient.send<

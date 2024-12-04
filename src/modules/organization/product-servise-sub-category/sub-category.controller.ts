@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { ProductServiseSubCategoryService } from './sub-category.service';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
@@ -51,9 +52,10 @@ export class ProductServiseSubCategoryController {
   @ApiBody({ type: ProductServiceSubCategoryCreateDto })
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() data: ProductServiceSubCategoryCreateDto
+    @Body() data: ProductServiceSubCategoryCreateDto,
+    @Req() request: Request
   ): Promise<ProductServiceSubCategoryInterfaces.Response> {
-    return this.productServiseSubCategoryService.create(data);
+    return this.productServiseSubCategoryService.create(data, request['userNumericId']);
   }
 
   @Put(':id')

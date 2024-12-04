@@ -59,12 +59,12 @@ export class AvenueService {
   }
 
   async create(
-    data: AvenueCreateDto
+    data: AvenueCreateDto,
+    userNumericId: string
   ): Promise<AvenueInterfaces.Response> {
     const methodName: string = this.getListOfCategory.name;
-
     this.logger.debug(`Method: ${methodName} - Request: `, data);
-
+    data = { staffNumber: userNumericId, ...data };
     const response = await lastValueFrom(
       this.adminClient.send<
         AvenueInterfaces.Response,

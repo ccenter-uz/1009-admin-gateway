@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { StreetService } from './street.service';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
@@ -49,11 +50,12 @@ export class StreetController {
   @ApiBody({ type: StreetCreateDto })
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() data: StreetCreateDto
+    @Body() data: StreetCreateDto,
+    @Req() request: Request
   ): Promise<StreetInterfaces.Response> {
 
 
-    return this.streetService.create(data);
+    return this.streetService.create(data, request['userNumericId']);
   }
 
   @Put(':id')

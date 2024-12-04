@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { VillageService } from './village.service';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
@@ -49,11 +50,12 @@ export class VillageController {
   @ApiBody({ type: VillageCreateDto })
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() data: VillageCreateDto
+    @Body() data: VillageCreateDto,
+    @Req() request: Request
   ): Promise<VillageInterfaces.Response> {
 
 
-    return this.villageService.create(data);
+    return this.villageService.create(data, request['userNumericId']);
   }
 
   @Put(':id')

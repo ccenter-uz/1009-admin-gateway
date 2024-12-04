@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { NearbyService } from './nearby.service';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
@@ -48,9 +49,10 @@ export class NearbyController {
   @ApiBody({ type: NearbyCreateDto })
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() data: NearbyCreateDto
+    @Body() data: NearbyCreateDto,
+    @Req() request: Request
   ): Promise<NearbyInterfaces.Response> {
-    return this.nearbyService.create(data);
+    return this.nearbyService.create(data, request['userNumericId']);
   }
 
   @Put(':id')

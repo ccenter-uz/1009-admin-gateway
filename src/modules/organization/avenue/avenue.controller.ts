@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { AvenueService } from './avenue.service';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
@@ -49,11 +50,12 @@ export class AvenueController {
   @ApiBody({ type: AvenueCreateDto })
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() data: AvenueCreateDto
+    @Body() data: AvenueCreateDto,
+    @Req() request: Request
   ): Promise<AvenueInterfaces.Response> {
-    
-    
-    return this.avenueService.create(data);
+
+
+    return this.avenueService.create(data, request['userNumericId']);
   }
 
   @Put(':id')

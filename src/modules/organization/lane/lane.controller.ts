@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { LaneService } from './lane.service';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
@@ -49,11 +50,12 @@ export class LaneController {
   @ApiBody({ type: LaneCreateDto })
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() data: LaneCreateDto
+    @Body() data: LaneCreateDto,
+    @Req() request: Request
   ): Promise<LaneInterfaces.Response> {
 
 
-    return this.laneService.create(data);
+    return this.laneService.create(data, request['userNumericId']);
   }
 
   @Put(':id')

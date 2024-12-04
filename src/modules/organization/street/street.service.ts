@@ -59,10 +59,10 @@ export class StreetService {
   }
 
   async create(
-    data: StreetCreateDto
+    data: StreetCreateDto, userNumericId: string
   ): Promise<StreetInterfaces.Response> {
     const methodName: string = this.getListOfCategory.name;
-
+    data = { staffNumber: userNumericId, ...data };
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(

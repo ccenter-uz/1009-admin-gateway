@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import {
@@ -53,9 +54,10 @@ export class CategoryController {
   @ApiBody({ type: CategoryCreateDto })
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() data: CategoryCreateDto
+    @Body() data: CategoryCreateDto,
+    @Req() request: Request
   ): Promise<CategoryInterfaces.Response> {
-    return this.categoryService.create(data);
+    return this.categoryService.create(data, request['userNumericId']);
   }
 
   @Put(':id')

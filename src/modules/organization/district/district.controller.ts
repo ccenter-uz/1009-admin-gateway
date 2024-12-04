@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { DistrictService } from './district.service';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
@@ -49,9 +50,10 @@ export class DistrictController {
   @ApiBody({ type: DistrictCreateDto })
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() data: DistrictCreateDto
+    @Body() data: DistrictCreateDto,
+    @Req() request: Request
   ): Promise<DistrictInterfaces.Response> {
-    return this.districtService.create(data);
+    return this.districtService.create(data, request['userNumericId']);
   }
 
   @Put(':id')
