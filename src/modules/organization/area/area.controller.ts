@@ -6,7 +6,6 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  
   ParseIntPipe,
   Post,
   Put,
@@ -27,7 +26,7 @@ import {
 @ApiTags('area')
 @Controller('area')
 export class AreaController {
-  constructor(private readonly areaService: AreaService) { }
+  constructor(private readonly areaService: AreaService) {}
 
   @Get()
   @HttpCode(HttpStatus.OK)

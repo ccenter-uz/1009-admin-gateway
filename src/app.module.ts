@@ -65,7 +65,7 @@ import { StreetModule } from './modules/organization/street/street.module';
     ImpasseModule,
     VillageModule,
     LaneModule,
-    StreetModule
+    StreetModule,
   ],
   providers: [
     {
@@ -82,4 +82,4 @@ import { StreetModule } from './modules/organization/street/street.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

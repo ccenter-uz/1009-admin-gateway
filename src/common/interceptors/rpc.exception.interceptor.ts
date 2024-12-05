@@ -21,49 +21,35 @@ export class RpcExceptionInterceptor<T> implements NestInterceptor {
   ): Observable<ApiResponseType<T>> {
     const ctx = context.switchToHttp();
     const response = ctx.getResponse();
-
+    console.log('INTER !!');
     return next.handle().pipe(
       map((data) => {
         // Successful response
         const status = response?.statusCode || HttpStatus.OK;
-        return {
+        console.log(data, 'DATA');
+
+        if (data?.error) {
+          console.log(typeof data.error.error[0], 'TYPEOF');
+
+          return {
+            status: data.error.code,
+            result: null,
+            error: {
+              message:
+                typeof data.error.error == 'object'
+                  ? data.error.error[0]
+                  : data.error.error,
+            },
+          };
+        }
+
+        /* {
           status,
           result: data,
           error: null,
-        };
-      }),
-      catchError((e) => {
-        console.log(e, 'ERRORRR');
+        }; */
 
-        // Error response handling
-        const status = e.status || HttpStatus.INTERNAL_SERVER_ERROR;
-
-        this.logger.debug(
-          `Intercept: ${JSON.stringify(
-            {
-              status,
-              result: null,
-              error: {
-                message: e.response?.message || 'Internal server error',
-                details: e?.details || null,
-              },
-            },
-            null,
-            2
-          )}`
-        );
-
-        throw new HttpException(
-          {
-            status,
-            result: null,
-            error: {
-              message: e.response?.message || 'Internal server error',
-              details: e?.details || null,
-            },
-          },
-          status
-        );
+        throw Error('error');
       })
     );
   }
