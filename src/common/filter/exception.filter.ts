@@ -16,7 +16,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
     let status = exception.status || HttpStatus.INTERNAL_SERVER_ERROR;
-    console.log(exception.status, 'STAT');
 
     const message = exception.message || 'Internal server error';
 

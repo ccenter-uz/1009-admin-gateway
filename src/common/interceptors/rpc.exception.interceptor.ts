@@ -21,16 +21,13 @@ export class RpcExceptionInterceptor<T> implements NestInterceptor {
   ): Observable<ApiResponseType<T>> {
     const ctx = context.switchToHttp();
     const response = ctx.getResponse();
-    console.log('INTER !!');
+
     return next.handle().pipe(
       map((data) => {
         // Successful response
         const status = response?.statusCode || HttpStatus.OK;
-        console.log(data, 'DATA');
 
         if (data?.error) {
-          console.log(typeof data.error.error[0], 'TYPEOF');
-
           return {
             status: data.error.code,
             result: null,
@@ -43,13 +40,11 @@ export class RpcExceptionInterceptor<T> implements NestInterceptor {
           };
         }
 
-        /* {
+        return {
           status,
           result: data,
           error: null,
-        }; */
-
-        throw Error('error');
+        };
       })
     );
   }
