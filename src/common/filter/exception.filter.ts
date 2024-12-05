@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Logger,
 } from '@nestjs/common';
+import { TokenExpiredError } from '@nestjs/jwt';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -14,11 +15,14 @@ export class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
-    const status = exception.status || HttpStatus.INTERNAL_SERVER_ERROR;
+    let status = exception.status || HttpStatus.INTERNAL_SERVER_ERROR;
+    console.log(exception.status, 'STAT');
 
-    const message = exception.response || 'Internal server error';
-    console.log(123);
-    
+    const message = exception.message || 'Internal server error';
+
+    if (exception instanceof TokenExpiredError)
+      status = HttpStatus.UNAUTHORIZED;
+
     this.logger.debug(
       `Exception Filter: ${JSON.stringify(
         {
@@ -26,7 +30,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
           result: null,
           error: {
             message: typeof message === 'string' ? message : message['message'],
-            details: typeof message === 'object' ? message : null,
           },
         },
         null,
@@ -35,11 +38,10 @@ export class AllExceptionsFilter implements ExceptionFilter {
     );
 
     response.status(status).json({
-      status: 'error',
+      status: status,
       result: null,
       error: {
         message: typeof message === 'string' ? message : message['message'],
-        details: typeof message === 'object' ? message : null,
       },
     });
   }

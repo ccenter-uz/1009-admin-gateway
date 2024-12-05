@@ -141,20 +141,24 @@ export class UserService {
   }
 
   async update(data: UserUpdateDto): Promise<UserInterfaces.Response> {
-    const methodName: string = this.update.name;
+    try {
+      const methodName: string = this.update.name;
 
-    this.logger.debug(`Method: ${methodName} - Request: `, data);
+      this.logger.debug(`Method: ${methodName} - Request: `, data);
 
-    const response: UserInterfaces.Response = await lastValueFrom(
-      this.adminClient.send<UserInterfaces.Response, UserInterfaces.Update>(
-        { cmd: Commands.UPDATE },
-        data
-      )
-    );
+      const response: UserInterfaces.Response = await lastValueFrom(
+        this.adminClient.send<UserInterfaces.Response, UserInterfaces.Update>(
+          { cmd: Commands.UPDATE },
+          data
+        )
+      );
 
-    this.logger.debug(`Method: ${methodName} - Response: `, response);
+      this.logger.debug(`Method: ${methodName} - Response: `, response);
 
-    return response;
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async delete(data: DeleteDto): Promise<UserInterfaces.Response> {

@@ -13,13 +13,12 @@ import {
 @Injectable()
 export class AreaService {
   private logger = new Logger(AreaService.name);
-  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
   async getListOfCategory(
     query: ListQueryDto
   ): Promise<AreaInterfaces.Response[]> {
     const methodName: string = this.getListOfCategory.name;
-
 
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
     if (query.all) {
@@ -65,26 +64,24 @@ export class AreaService {
     data = { staffNumber: userNumericId, ...data };
     this.logger.debug(`Method: ${methodName} - Request: `, data);
     const response = await lastValueFrom(
-      this.adminClient.send<
-        AreaInterfaces.Response,
-        AreaInterfaces.Request
-      >({ cmd: Commands.CREATE }, data)
+      this.adminClient.send<AreaInterfaces.Response, AreaInterfaces.Request>(
+        { cmd: Commands.CREATE },
+        data
+      )
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
     return response;
   }
 
-  async update(
-    data: AreaUpdateDto
-  ): Promise<AreaInterfaces.Response> {
+  async update(data: AreaUpdateDto): Promise<AreaInterfaces.Response> {
     const methodName: string = this.getListOfCategory.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
     const response = lastValueFrom(
-      this.adminClient.send<
-        AreaInterfaces.Response,
-        AreaInterfaces.Update
-      >({ cmd: Commands.UPDATE }, data)
+      this.adminClient.send<AreaInterfaces.Response, AreaInterfaces.Update>(
+        { cmd: Commands.UPDATE },
+        data
+      )
     );
 
     this.logger.debug(`Method: ${methodName} - Response: `, response);
