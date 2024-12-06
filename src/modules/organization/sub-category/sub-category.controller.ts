@@ -18,6 +18,7 @@ import { LanguageRequestDto, ListQueryDto } from 'types/global';
 
 import {
   SubCategoryCreateDto,
+  SubCategoryFilterDto,
   SubCategoryInterfaces,
   SubCategoryUpdateDto,
 } from 'types/organization/sub-category';
@@ -31,7 +32,7 @@ export class SubCategoryController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getListOfCategory(
-    @Query() query: ListQueryDto
+    @Query() query: SubCategoryFilterDto
   ): Promise<SubCategoryInterfaces.Response[]> {
     return await this.subCategoryService.getListOfCategory(query);
   }

@@ -7,15 +7,16 @@ import {
   SubCategoryCreateDto,
   SubCategoryUpdateDto,
   SubCategoryServiceCommands as Commands,
+  SubCategoryFilterDto,
 } from 'types/organization/sub-category';
 import { SubCategoryInterfaces } from 'types/organization/sub-category';
 
 @Injectable()
 export class SubCategoryService {
-  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
   async getListOfCategory(
-    query: ListQueryDto
+    query: SubCategoryFilterDto
   ): Promise<SubCategoryInterfaces.Response[]> {
     if (query.all) {
       return lastValueFrom(
@@ -44,7 +45,8 @@ export class SubCategoryService {
   }
 
   async create(
-    data: SubCategoryCreateDto, userNumericId: string
+    data: SubCategoryCreateDto,
+    userNumericId: string
   ): Promise<SubCategoryInterfaces.Response> {
     data = { staffNumber: userNumericId, ...data };
     return await lastValueFrom(
