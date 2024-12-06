@@ -9,13 +9,14 @@ import {
   ProductServiceSubCategoryServiceCommands as Commands,
   ProductServiceSubCategoryInterfaces
 } from 'types/organization/product-service-sub-category';
+import { ProductServiceSubCategoryFilterDto } from 'types/organization/product-service-sub-category/dto/filter-product-service-sub-category.dto';
 
 @Injectable()
 export class ProductServiseSubCategoryService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
 
   async getListOfCategory(
-    query: ListQueryDto
+    query: ProductServiceSubCategoryFilterDto
   ): Promise<ProductServiceSubCategoryInterfaces.Response[]> {
     if (query.all) {
       return lastValueFrom(
