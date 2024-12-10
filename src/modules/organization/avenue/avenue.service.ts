@@ -13,29 +13,18 @@ import {
 @Injectable()
 export class AvenueService {
   private logger = new Logger(AvenueService.name);
-  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
   async getListOfCategory(
     query: ListQueryDto
   ): Promise<AvenueInterfaces.Response[]> {
-
     const methodName: string = this.getListOfCategory.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
-    if (query.all) {
-      const response = lastValueFrom(
-        this.adminClient.send<AvenueInterfaces.Response[], ListQueryDto>(
-          { cmd: Commands.GET_ALL_LIST },
-          query
-        )
-      );
-      this.logger.debug(`Method: ${methodName} - Response: `, response);
-      return response;
-    }
 
     const response = lastValueFrom(
       this.adminClient.send<AvenueInterfaces.Response[], ListQueryDto>(
-        { cmd: Commands.GET_LIST_BY_PAGINATION },
+        { cmd: Commands.GET_ALL_LIST },
         query
       )
     );
@@ -75,18 +64,16 @@ export class AvenueService {
     return response;
   }
 
-  async update(
-    data: AvenueUpdateDto
-  ): Promise<AvenueInterfaces.Response> {
+  async update(data: AvenueUpdateDto): Promise<AvenueInterfaces.Response> {
     const methodName: string = this.getListOfCategory.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = lastValueFrom(
-      this.adminClient.send<
-        AvenueInterfaces.Response,
-        AvenueInterfaces.Update
-      >({ cmd: Commands.UPDATE }, data)
+      this.adminClient.send<AvenueInterfaces.Response, AvenueInterfaces.Update>(
+        { cmd: Commands.UPDATE },
+        data
+      )
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
     return response;

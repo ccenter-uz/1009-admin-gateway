@@ -22,24 +22,14 @@ export class NearbyCategoryService {
     const methodName: string = this.getListOfCategory.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
-    if (query.all) {
-      const response = await lastValueFrom(
-        this.adminClient.send<
-          NearbyCategoryInterfaces.Response[],
-          ListQueryDto
-        >({ cmd: Commands.GET_ALL_LIST }, query)
-      );
-      this.logger.debug(`Method: ${methodName} - Response: `, response);
-      return response;
-    }
+
     const response = await lastValueFrom(
       this.adminClient.send<NearbyCategoryInterfaces.Response[], ListQueryDto>(
-        { cmd: Commands.GET_LIST_BY_PAGINATION },
+        { cmd: Commands.GET_ALL_LIST },
         query
       )
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
-
     return response;
   }
 
@@ -59,7 +49,8 @@ export class NearbyCategoryService {
   }
 
   async create(
-    data: NearbyCategoryCreateDto, userNumericId: string
+    data: NearbyCategoryCreateDto,
+    userNumericId: string
   ): Promise<NearbyCategoryInterfaces.Response> {
     const methodName: string = this.create.name;
     data = { staffNumber: userNumericId, ...data };

@@ -13,7 +13,7 @@ import {
 @Injectable()
 export class ImpasseService {
   private logger = new Logger(ImpasseService.name);
-  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
   async getListOfCategory(
     query: ListQueryDto
@@ -21,20 +21,10 @@ export class ImpasseService {
     const methodName: string = this.getListOfCategory.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
-    if (query.all) {
-      const response = lastValueFrom(
-        this.adminClient.send<ImpasseInterfaces.Response[], ListQueryDto>(
-          { cmd: Commands.GET_ALL_LIST },
-          query
-        )
-      );
-      this.logger.debug(`Method: ${methodName} - Response: `, response);
-      return response;
-    }
 
     const response = lastValueFrom(
       this.adminClient.send<ImpasseInterfaces.Response[], ListQueryDto>(
-        { cmd: Commands.GET_LIST_BY_PAGINATION },
+        { cmd: Commands.GET_ALL_LIST },
         query
       )
     );
@@ -58,7 +48,8 @@ export class ImpasseService {
   }
 
   async create(
-    data: ImpasseCreateDto, userNumericId: string
+    data: ImpasseCreateDto,
+    userNumericId: string
   ): Promise<ImpasseInterfaces.Response> {
     const methodName: string = this.getListOfCategory.name;
     data = { staffNumber: userNumericId, ...data };
@@ -74,9 +65,7 @@ export class ImpasseService {
     return response;
   }
 
-  async update(
-    data: ImpasseUpdateDto
-  ): Promise<ImpasseInterfaces.Response> {
+  async update(data: ImpasseUpdateDto): Promise<ImpasseInterfaces.Response> {
     const methodName: string = this.getListOfCategory.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);

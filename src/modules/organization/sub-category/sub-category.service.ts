@@ -18,18 +18,9 @@ export class SubCategoryService {
   async getListOfCategory(
     query: SubCategoryFilterDto
   ): Promise<SubCategoryInterfaces.Response[]> {
-    if (query.all) {
-      return lastValueFrom(
-        this.adminClient.send<SubCategoryInterfaces.Response[], ListQueryDto>(
-          { cmd: Commands.GET_ALL_LIST },
-          query
-        )
-      );
-    }
-
     return lastValueFrom(
       this.adminClient.send<SubCategoryInterfaces.Response[], ListQueryDto>(
-        { cmd: Commands.GET_LIST_BY_PAGINATION },
+        { cmd: Commands.GET_ALL_LIST },
         query
       )
     );

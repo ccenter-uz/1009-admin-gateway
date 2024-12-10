@@ -12,25 +12,16 @@ import {
 
 @Injectable()
 export class ProductServiceCategoryService {
-  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
   async getListOfCategory(
     query: ListQueryDto
   ): Promise<ProductServiseCategoryInterfaces.Response[]> {
-    if (query.all) {
-      return lastValueFrom(
-        this.adminClient.send<
-          ProductServiseCategoryInterfaces.Response[],
-          ListQueryDto
-        >({ cmd: Commands.GET_ALL_LIST }, query)
-      );
-    }
-
     return lastValueFrom(
       this.adminClient.send<
         ProductServiseCategoryInterfaces.Response[],
         ListQueryDto
-      >({ cmd: Commands.GET_LIST_BY_PAGINATION }, query)
+      >({ cmd: Commands.GET_ALL_LIST }, query)
     );
   }
 
@@ -46,7 +37,8 @@ export class ProductServiceCategoryService {
   }
 
   async create(
-    data: ProductServiseCategoryCreateDto, userNumericId: string
+    data: ProductServiseCategoryCreateDto,
+    userNumericId: string
   ): Promise<ProductServiseCategoryInterfaces.Response> {
     data = { staffNumber: userNumericId, ...data };
     return await lastValueFrom(

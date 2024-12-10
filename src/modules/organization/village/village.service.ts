@@ -13,29 +13,18 @@ import {
 @Injectable()
 export class VillageService {
   private logger = new Logger(VillageService.name);
-  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
   async getListOfCategory(
     query: ListQueryDto
   ): Promise<VillageInterfaces.Response[]> {
-
     const methodName: string = this.getListOfCategory.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
-    if (query.all) {
-      const response = lastValueFrom(
-        this.adminClient.send<VillageInterfaces.Response[], ListQueryDto>(
-          { cmd: Commands.GET_ALL_LIST },
-          query
-        )
-      );
-      this.logger.debug(`Method: ${methodName} - Response: `, response);
-      return response;
-    }
 
     const response = lastValueFrom(
       this.adminClient.send<VillageInterfaces.Response[], ListQueryDto>(
-        { cmd: Commands.GET_LIST_BY_PAGINATION },
+        { cmd: Commands.GET_ALL_LIST },
         query
       )
     );
@@ -59,7 +48,8 @@ export class VillageService {
   }
 
   async create(
-    data: VillageCreateDto, userNumericId: string
+    data: VillageCreateDto,
+    userNumericId: string
   ): Promise<VillageInterfaces.Response> {
     const methodName: string = this.getListOfCategory.name;
     data = { staffNumber: userNumericId, ...data };
@@ -75,9 +65,7 @@ export class VillageService {
     return response;
   }
 
-  async update(
-    data: VillageUpdateDto
-  ): Promise<VillageInterfaces.Response> {
+  async update(data: VillageUpdateDto): Promise<VillageInterfaces.Response> {
     const methodName: string = this.getListOfCategory.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
