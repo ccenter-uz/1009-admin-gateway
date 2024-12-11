@@ -13,12 +13,7 @@ import {
   Req,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
-import {
-  ApiBearerAuth,
-  ApiBody,
-  ApiParam,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { LanguageRequestDto, ListQueryDto } from 'types/global';
 import {
   CategoryCreateDto,
@@ -30,14 +25,14 @@ import {
 @ApiTags('category')
 @Controller('category')
 export class CategoryController {
-  constructor(private readonly categoryService: CategoryService) { }
+  constructor(private readonly categoryService: CategoryService) {}
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<CategoryInterfaces.Response[]> {
-    return await this.categoryService.getListOfCategory(query);
+    return await this.categoryService.getAll(query);
   }
 
   @Get(':id')
@@ -74,7 +69,7 @@ export class CategoryController {
   @HttpCode(HttpStatus.OK)
   async delete(
     @Param('id', ParseIntPipe) id: number,
-    @Query('delete',) deleteQuery?: boolean
+    @Query('delete') deleteQuery?: boolean
   ): Promise<CategoryInterfaces.Response> {
     return this.categoryService.delete({ id, delete: deleteQuery });
   }

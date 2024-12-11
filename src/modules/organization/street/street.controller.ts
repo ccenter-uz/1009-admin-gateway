@@ -26,14 +26,14 @@ import {
 @ApiTags('street')
 @Controller('street')
 export class StreetController {
-  constructor(private readonly streetService: StreetService) { }
+  constructor(private readonly streetService: StreetService) {}
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<StreetInterfaces.Response[]> {
-    return await this.streetService.getListOfCategory(query);
+    return await this.streetService.getAll(query);
   }
 
   @Get(':id')
@@ -53,8 +53,6 @@ export class StreetController {
     @Body() data: StreetCreateDto,
     @Req() request: Request
   ): Promise<StreetInterfaces.Response> {
-
-
     return this.streetService.create(data, request['userNumericId']);
   }
 

@@ -25,14 +25,16 @@ import {
 @ApiTags('residential-area')
 @Controller('residential-area')
 export class ResidentialAreaController {
-  constructor(private readonly residentialAreaService: ResidentialAreaService) { }
+  constructor(
+    private readonly residentialAreaService: ResidentialAreaService
+  ) {}
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<ResidentialAreaInterfaces.Response[]> {
-    return await this.residentialAreaService.getListOfCategory(query);
+    return await this.residentialAreaService.getAll(query);
   }
 
   @Get(':id')
@@ -52,8 +54,6 @@ export class ResidentialAreaController {
     @Body() data: ResidentialAreaCreateDto,
     @Req() request: Request
   ): Promise<ResidentialAreaInterfaces.Response> {
-
-
     return this.residentialAreaService.create(data, request['userNumericId']);
   }
 

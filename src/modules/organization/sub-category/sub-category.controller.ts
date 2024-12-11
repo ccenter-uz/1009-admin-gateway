@@ -31,10 +31,10 @@ export class SubCategoryController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: SubCategoryFilterDto
   ): Promise<SubCategoryInterfaces.Response[]> {
-    return await this.subCategoryService.getListOfCategory(query);
+    return await this.subCategoryService.getAll(query);
   }
 
   @Get(':id')

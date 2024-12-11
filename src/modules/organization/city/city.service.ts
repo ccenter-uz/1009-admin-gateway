@@ -9,26 +9,16 @@ import {
   CityInterfaces,
   CityServiceCommands as Commands,
 } from 'types/organization/city';
+import { CityFilterDto } from 'types/organization/city/dto/filter-city.dto';
 
 @Injectable()
 export class CityService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
-    query: ListQueryDto
-  ): Promise<CityInterfaces.Response[]> {
-    if (query.all) {
-      return lastValueFrom(
-        this.adminClient.send<CityInterfaces.Response[], ListQueryDto>(
-          { cmd: Commands.GET_ALL_LIST },
-          query
-        )
-      );
-    }
-
+  async getAll(query: CityFilterDto): Promise<CityInterfaces.Response[]> {
     return lastValueFrom(
-      this.adminClient.send<CityInterfaces.Response[], ListQueryDto>(
-        { cmd: Commands.GET_LIST_BY_PAGINATION },
+      this.adminClient.send<CityInterfaces.Response[], CityFilterDto>(
+        { cmd: Commands.GET_ALL_LIST },
         query
       )
     );

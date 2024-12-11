@@ -13,18 +13,17 @@ import {
   Req,
 } from '@nestjs/common';
 import { SectionService } from './section.service';
-import {
-  ApiBearerAuth,
-  ApiBody,
-  ApiParam,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { LanguageRequestDto, ListQueryDto } from 'types/global';
 import {
   CategoryCreateDto,
   CategoryUpdateDto,
 } from 'types/organization/category';
-import { SectionCreateDto, SectionInterfaces, SectionUpdateDto } from 'types/organization/section';
+import {
+  SectionCreateDto,
+  SectionInterfaces,
+  SectionUpdateDto,
+} from 'types/organization/section';
 
 @ApiBearerAuth()
 @ApiTags('section')
@@ -34,10 +33,10 @@ export class SectionController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<SectionInterfaces.Response[]> {
-    return await this.sectionService.getListOfCategory(query);
+    return await this.sectionService.getAll(query);
   }
 
   @Get(':id')

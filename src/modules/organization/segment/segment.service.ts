@@ -12,23 +12,12 @@ import {
 
 @Injectable()
 export class SegmentService {
-  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
-    query: ListQueryDto
-  ): Promise<SegmentInterfaces.Response[]> {
-    if (query.all) {
-      return lastValueFrom(
-        this.adminClient.send<SegmentInterfaces.Response[], ListQueryDto>(
-          { cmd: Commands.GET_ALL_LIST },
-          query
-        )
-      );
-    }
-
+  async getAll(query: ListQueryDto): Promise<SegmentInterfaces.Response[]> {
     return lastValueFrom(
       this.adminClient.send<SegmentInterfaces.Response[], ListQueryDto>(
-        { cmd: Commands.GET_LIST_BY_PAGINATION },
+        { cmd: Commands.GET_ALL_LIST },
         query
       )
     );

@@ -26,14 +26,14 @@ import {
 @ApiTags('avenue')
 @Controller('avenue')
 export class AvenueController {
-  constructor(private readonly avenueService: AvenueService) { }
+  constructor(private readonly avenueService: AvenueService) {}
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<AvenueInterfaces.Response[]> {
-    return await this.avenueService.getListOfCategory(query);
+    return await this.avenueService.getAll(query);
   }
 
   @Get(':id')
@@ -53,8 +53,6 @@ export class AvenueController {
     @Body() data: AvenueCreateDto,
     @Req() request: Request
   ): Promise<AvenueInterfaces.Response> {
-
-
     return this.avenueService.create(data, request['userNumericId']);
   }
 

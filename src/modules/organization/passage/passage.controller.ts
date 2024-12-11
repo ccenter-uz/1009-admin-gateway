@@ -26,14 +26,14 @@ import {
 @ApiTags('passage')
 @Controller('passage')
 export class PassageController {
-  constructor(private readonly passageService: PassageService) { }
+  constructor(private readonly passageService: PassageService) {}
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<PassageInterfaces.Response[]> {
-    return await this.passageService.getListOfCategory(query);
+    return await this.passageService.getAll(query);
   }
 
   @Get(':id')
