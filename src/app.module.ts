@@ -41,7 +41,7 @@ import { StreetModule } from './modules/organization/street/street.module';
     }),
     JwtModule.register({
       secret: 'secret-key', // Replace with your secret key
-      signOptions: { expiresIn: '1h' }, // Token expires in 1 hour
+      signOptions: { expiresIn: '24h' }, // Token expires in 1 hour
     }),
     CategoryModule,
     SubCategoryModule,
