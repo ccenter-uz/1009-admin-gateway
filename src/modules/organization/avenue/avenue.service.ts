@@ -15,10 +15,8 @@ export class AvenueService {
   private logger = new Logger(AvenueService.name);
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
-    query: ListQueryDto
-  ): Promise<AvenueInterfaces.Response[]> {
-    const methodName: string = this.getListOfCategory.name;
+  async getAll(query: ListQueryDto): Promise<AvenueInterfaces.Response[]> {
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
 
@@ -33,7 +31,7 @@ export class AvenueService {
   }
 
   async getById(data: GetOneDto): Promise<AvenueInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -51,7 +49,7 @@ export class AvenueService {
     data: AvenueCreateDto,
     userNumericId: string
   ): Promise<AvenueInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
     this.logger.debug(`Method: ${methodName} - Request: `, data);
     data = { staffNumber: userNumericId, ...data };
     const response = await lastValueFrom(
@@ -65,7 +63,7 @@ export class AvenueService {
   }
 
   async update(data: AvenueUpdateDto): Promise<AvenueInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -80,7 +78,7 @@ export class AvenueService {
   }
 
   async delete(data: DeleteDto): Promise<AvenueInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -95,7 +93,7 @@ export class AvenueService {
   }
 
   async restore(data: GetOneDto): Promise<AvenueInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 

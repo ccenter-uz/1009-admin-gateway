@@ -38,10 +38,10 @@ export class ProductServiceCategoryController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<ProductServiseCategoryInterfaces.Response[]> {
-    return await this.productServiceCategoryService.getListOfCategory(query);
+    return await this.productServiceCategoryService.getAll(query);
   }
 
   @Get(':id')
@@ -61,7 +61,10 @@ export class ProductServiceCategoryController {
     @Body() data: ProductServiseCategoryCreateDto,
     @Req() request: Request
   ): Promise<ProductServiseCategoryInterfaces.Response> {
-    return this.productServiceCategoryService.create(data, request['userNumericId']);
+    return this.productServiceCategoryService.create(
+      data,
+      request['userNumericId']
+    );
   }
 
   @Put(':id')

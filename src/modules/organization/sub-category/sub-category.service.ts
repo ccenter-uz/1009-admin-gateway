@@ -15,7 +15,7 @@ import { SubCategoryInterfaces } from 'types/organization/sub-category';
 export class SubCategoryService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
+  async getAll(
     query: SubCategoryFilterDto
   ): Promise<SubCategoryInterfaces.Response[]> {
     return lastValueFrom(

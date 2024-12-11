@@ -14,9 +14,7 @@ import {
 export class CityService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
-    query: ListQueryDto
-  ): Promise<CityInterfaces.Response[]> {
+  async getAll(query: ListQueryDto): Promise<CityInterfaces.Response[]> {
     return lastValueFrom(
       this.adminClient.send<CityInterfaces.Response[], ListQueryDto>(
         { cmd: Commands.GET_ALL_LIST },

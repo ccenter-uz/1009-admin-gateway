@@ -14,9 +14,7 @@ import {
 export class PassageService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
-    query: ListQueryDto
-  ): Promise<PassageInterfaces.Response[]> {
+  async getAll(query: ListQueryDto): Promise<PassageInterfaces.Response[]> {
     return lastValueFrom(
       this.adminClient.send<PassageInterfaces.Response[], ListQueryDto>(
         { cmd: Commands.GET_ALL_LIST },

@@ -14,7 +14,7 @@ import {
 export class ProductServiceCategoryService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
+  async getAll(
     query: ListQueryDto
   ): Promise<ProductServiseCategoryInterfaces.Response[]> {
     return lastValueFrom(

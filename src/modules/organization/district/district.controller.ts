@@ -30,10 +30,10 @@ export class DistrictController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<DistrictInterfaces.Response[]> {
-    return await this.districtService.getListOfCategory(query);
+    return await this.districtService.getAll(query);
   }
 
   @Get(':id')

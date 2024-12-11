@@ -29,10 +29,10 @@ export class CityController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<CityInterfaces.Response[]> {
-    return await this.subCategoryService.getListOfCategory(query);
+    return await this.subCategoryService.getAll(query);
   }
 
   // @Get(':id')

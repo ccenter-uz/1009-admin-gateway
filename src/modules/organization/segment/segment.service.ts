@@ -14,9 +14,7 @@ import {
 export class SegmentService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
-    query: ListQueryDto
-  ): Promise<SegmentInterfaces.Response[]> {
+  async getAll(query: ListQueryDto): Promise<SegmentInterfaces.Response[]> {
     return lastValueFrom(
       this.adminClient.send<SegmentInterfaces.Response[], ListQueryDto>(
         { cmd: Commands.GET_ALL_LIST },

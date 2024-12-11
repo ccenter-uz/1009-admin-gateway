@@ -15,10 +15,8 @@ export class LaneService {
   private logger = new Logger(LaneService.name);
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
-    query: ListQueryDto
-  ): Promise<LaneInterfaces.Response[]> {
-    const methodName: string = this.getListOfCategory.name;
+  async getAll(query: ListQueryDto): Promise<LaneInterfaces.Response[]> {
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
 
@@ -33,7 +31,7 @@ export class LaneService {
   }
 
   async getById(data: GetOneDto): Promise<LaneInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -51,7 +49,7 @@ export class LaneService {
     data: LaneCreateDto,
     userNumericId: string
   ): Promise<LaneInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
     data = { staffNumber: userNumericId, ...data };
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -66,7 +64,7 @@ export class LaneService {
   }
 
   async update(data: LaneUpdateDto): Promise<LaneInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -81,7 +79,7 @@ export class LaneService {
   }
 
   async delete(data: DeleteDto): Promise<LaneInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -96,7 +94,7 @@ export class LaneService {
   }
 
   async restore(data: GetOneDto): Promise<LaneInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 

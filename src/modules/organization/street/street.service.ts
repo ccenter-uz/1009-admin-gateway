@@ -15,10 +15,8 @@ export class StreetService {
   private logger = new Logger(StreetService.name);
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
-    query: ListQueryDto
-  ): Promise<StreetInterfaces.Response[]> {
-    const methodName: string = this.getListOfCategory.name;
+  async getAll(query: ListQueryDto): Promise<StreetInterfaces.Response[]> {
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
 
@@ -33,7 +31,7 @@ export class StreetService {
   }
 
   async getById(data: GetOneDto): Promise<StreetInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -51,7 +49,7 @@ export class StreetService {
     data: StreetCreateDto,
     userNumericId: string
   ): Promise<StreetInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
     data = { staffNumber: userNumericId, ...data };
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -66,7 +64,7 @@ export class StreetService {
   }
 
   async update(data: StreetUpdateDto): Promise<StreetInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -81,7 +79,7 @@ export class StreetService {
   }
 
   async delete(data: DeleteDto): Promise<StreetInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -96,7 +94,7 @@ export class StreetService {
   }
 
   async restore(data: GetOneDto): Promise<StreetInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 

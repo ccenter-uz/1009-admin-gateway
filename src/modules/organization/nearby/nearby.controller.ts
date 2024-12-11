@@ -18,7 +18,7 @@ import { LanguageRequestDto, ListQueryDto } from 'types/global';
 import {
   NearbyCreateDto,
   NearbyUpdateDto,
-  NearbyInterfaces
+  NearbyInterfaces,
 } from 'types/organization/nearby';
 
 @ApiBearerAuth()
@@ -29,10 +29,10 @@ export class NearbyController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<NearbyInterfaces.Response[]> {
-    return await this.nearbyService.getListOfCategory(query);
+    return await this.nearbyService.getAll(query);
   }
 
   @Get(':id')

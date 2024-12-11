@@ -14,9 +14,7 @@ import {
 export class RegionService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
-    query: ListQueryDto
-  ): Promise<RegionInterfaces.Response[]> {
+  async getAll(query: ListQueryDto): Promise<RegionInterfaces.Response[]> {
     return lastValueFrom(
       this.adminClient.send<RegionInterfaces.Response[], ListQueryDto>(
         { cmd: Commands.GET_ALL_LIST },

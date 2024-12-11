@@ -26,14 +26,14 @@ import {
 @ApiTags('village')
 @Controller('village')
 export class VillageController {
-  constructor(private readonly villageService: VillageService) { }
+  constructor(private readonly villageService: VillageService) {}
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<VillageInterfaces.Response[]> {
-    return await this.villageService.getListOfCategory(query);
+    return await this.villageService.getAll(query);
   }
 
   @Get(':id')
@@ -53,8 +53,6 @@ export class VillageController {
     @Body() data: VillageCreateDto,
     @Req() request: Request
   ): Promise<VillageInterfaces.Response> {
-
-
     return this.villageService.create(data, request['userNumericId']);
   }
 

@@ -29,10 +29,10 @@ export class NearbyCategoryController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<NearbyCategoryInterfaces.Response[]> {
-    return await this.categoryService.getListOfCategory(query);
+    return await this.categoryService.getAll(query);
   }
 
   @Get(':id')

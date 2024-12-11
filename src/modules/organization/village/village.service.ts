@@ -15,10 +15,8 @@ export class VillageService {
   private logger = new Logger(VillageService.name);
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
-    query: ListQueryDto
-  ): Promise<VillageInterfaces.Response[]> {
-    const methodName: string = this.getListOfCategory.name;
+  async getAll(query: ListQueryDto): Promise<VillageInterfaces.Response[]> {
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
 
@@ -33,7 +31,7 @@ export class VillageService {
   }
 
   async getById(data: GetOneDto): Promise<VillageInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -51,7 +49,7 @@ export class VillageService {
     data: VillageCreateDto,
     userNumericId: string
   ): Promise<VillageInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
     data = { staffNumber: userNumericId, ...data };
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -66,7 +64,7 @@ export class VillageService {
   }
 
   async update(data: VillageUpdateDto): Promise<VillageInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -81,7 +79,7 @@ export class VillageService {
   }
 
   async delete(data: DeleteDto): Promise<VillageInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -96,7 +94,7 @@ export class VillageService {
   }
 
   async restore(data: GetOneDto): Promise<VillageInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 

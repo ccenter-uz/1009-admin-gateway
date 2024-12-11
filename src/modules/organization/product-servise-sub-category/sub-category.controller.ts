@@ -33,10 +33,10 @@ export class ProductServiseSubCategoryController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ProductServiceSubCategoryFilterDto
   ): Promise<ProductServiceSubCategoryInterfaces.Response[]> {
-    return await this.productServiseSubCategoryService.getListOfCategory(query);
+    return await this.productServiseSubCategoryService.getAll(query);
   }
 
   @Get(':id')
@@ -56,7 +56,10 @@ export class ProductServiseSubCategoryController {
     @Body() data: ProductServiceSubCategoryCreateDto,
     @Req() request: Request
   ): Promise<ProductServiceSubCategoryInterfaces.Response> {
-    return this.productServiseSubCategoryService.create(data, request['userNumericId']);
+    return this.productServiseSubCategoryService.create(
+      data,
+      request['userNumericId']
+    );
   }
 
   @Put(':id')

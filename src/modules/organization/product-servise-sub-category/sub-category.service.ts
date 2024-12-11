@@ -15,7 +15,7 @@ import { ProductServiceSubCategoryFilterDto } from 'types/organization/product-s
 export class ProductServiseSubCategoryService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
+  async getAll(
     query: ProductServiceSubCategoryFilterDto
   ): Promise<ProductServiceSubCategoryInterfaces.Response[]> {
     return lastValueFrom(

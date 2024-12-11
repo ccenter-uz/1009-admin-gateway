@@ -16,10 +16,10 @@ export class NearbyCategoryService {
   private logger = new Logger(NearbyCategoryService.name);
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
+  async getAll(
     query: ListQueryDto
   ): Promise<NearbyCategoryInterfaces.Response[]> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
 

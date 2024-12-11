@@ -14,9 +14,7 @@ import {
 export class DistrictService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
-    query: ListQueryDto
-  ): Promise<DistrictInterfaces.Response[]> {
+  async getAll(query: ListQueryDto): Promise<DistrictInterfaces.Response[]> {
     return lastValueFrom(
       this.adminClient.send<DistrictInterfaces.Response[], ListQueryDto>(
         { cmd: Commands.GET_ALL_LIST },
