@@ -9,14 +9,15 @@ import {
   DistrictInterfaces,
   DistrictServiceCommands as Commands,
 } from 'types/organization/district';
+import { DistrictFilterDto } from 'types/organization/district/dto/filter-district.dto';
 
 @Injectable()
 export class DistrictService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getAll(query: ListQueryDto): Promise<DistrictInterfaces.Response[]> {
+  async getAll(query: DistrictFilterDto): Promise<DistrictInterfaces.Response[]> {
     return lastValueFrom(
-      this.adminClient.send<DistrictInterfaces.Response[], ListQueryDto>(
+      this.adminClient.send<DistrictInterfaces.Response[], DistrictFilterDto>(
         { cmd: Commands.GET_ALL_LIST },
         query
       )

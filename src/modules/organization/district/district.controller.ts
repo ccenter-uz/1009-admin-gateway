@@ -21,6 +21,7 @@ import {
   DistrictUpdateDto,
   DistrictInterfaces,
 } from 'types/organization/district';
+import { DistrictFilterDto } from 'types/organization/district/dto/filter-district.dto';
 
 @ApiBearerAuth()
 @ApiTags('district')
@@ -31,7 +32,7 @@ export class DistrictController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Query() query: DistrictFilterDto
   ): Promise<DistrictInterfaces.Response[]> {
     return await this.districtService.getAll(query);
   }

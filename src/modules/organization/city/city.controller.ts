@@ -20,6 +20,7 @@ import {
   CityUpdateDto,
   CityInterfaces,
 } from 'types/organization/city';
+import { CityFilterDto } from 'types/organization/city/dto/filter-city.dto';
 
 @ApiBearerAuth()
 @ApiTags('city')
@@ -30,7 +31,7 @@ export class CityController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Query() query: CityFilterDto
   ): Promise<CityInterfaces.Response[]> {
     return await this.subCategoryService.getAll(query);
   }
