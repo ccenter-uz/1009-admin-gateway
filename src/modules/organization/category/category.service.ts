@@ -9,14 +9,17 @@ import {
   CategoryUpdateDto,
   CategoryServiceCommands as Commands,
 } from 'types/organization/category';
+import { CategoryFilterDto } from 'types/organization/category/dto/filter-category.dto';
 
 @Injectable()
 export class CategoryService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getAll(query: ListQueryDto): Promise<CategoryInterfaces.Response[]> {
+  async getAll(
+    query: CategoryFilterDto
+  ): Promise<CategoryInterfaces.Response[]> {
     return lastValueFrom(
-      this.adminClient.send<CategoryInterfaces.Response[], ListQueryDto>(
+      this.adminClient.send<CategoryInterfaces.Response[], CategoryFilterDto>(
         { cmd: Commands.GET_ALL_LIST },
         query
       )

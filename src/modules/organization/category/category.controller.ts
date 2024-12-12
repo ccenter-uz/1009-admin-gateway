@@ -20,6 +20,7 @@ import {
   CategoryInterfaces,
   CategoryUpdateDto,
 } from 'types/organization/category';
+import { CategoryFilterDto } from 'types/organization/category/dto/filter-category.dto';
 
 @ApiBearerAuth()
 @ApiTags('category')
@@ -30,7 +31,7 @@ export class CategoryController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Query() query: CategoryFilterDto
   ): Promise<CategoryInterfaces.Response[]> {
     return await this.categoryService.getAll(query);
   }
