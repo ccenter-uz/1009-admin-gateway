@@ -57,3 +57,8 @@ export type AppConfig = {
   port: number;
   cors_domains: string;
 };
+
+export const JwtConfig = {
+  secretKey: process.env.SECRET_KEY || 'secret_key',
+  expiresIn: process.env.EXPIRES_IN || '1d',
+};

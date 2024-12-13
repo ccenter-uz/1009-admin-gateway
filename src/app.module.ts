@@ -1,6 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { appConfig, servicesRmqConfig } from './common/config/app.config';
+import {
+  appConfig,
+  JwtConfig,
+  servicesRmqConfig,
+} from './common/config/app.config';
 import { serviceConfig } from 'types/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { RpcExceptionInterceptor } from './common/interceptors/rpc.exception.interceptor';
@@ -40,8 +44,8 @@ import { StreetModule } from './modules/organization/street/street.module';
       envFilePath: ['.env', '.env.local'],
     }),
     JwtModule.register({
-      secret: 'secret-key',
-      signOptions: { expiresIn: '1d' },
+      secret: JwtConfig.secretKey,
+      signOptions: { expiresIn: JwtConfig.expiresIn },
     }),
     CategoryModule,
     SubCategoryModule,
