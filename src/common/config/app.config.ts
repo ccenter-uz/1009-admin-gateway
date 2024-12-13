@@ -59,6 +59,6 @@ export type AppConfig = {
 };
 
 export const JwtConfig = {
-  secretKey: process.env.SECRET_KEY || 'secret_key',
+  secretKey: process.env.SECRET_KEY || 'secret-key',
   expiresIn: process.env.EXPIRES_IN || '1d',
 };
