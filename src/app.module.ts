@@ -40,8 +40,8 @@ import { StreetModule } from './modules/organization/street/street.module';
       envFilePath: ['.env', '.env.local'],
     }),
     JwtModule.register({
-      secret: 'secret-key', // Replace with your secret key
-      signOptions: { expiresIn: '24h' }, // Token expires in 1 hour
+      secret: 'secret-key',
+      signOptions: { expiresIn: '1d' },
     }),
     CategoryModule,
     SubCategoryModule,
