@@ -30,6 +30,8 @@ import { ImpasseModule } from './modules/organization/impasse/impasse.module';
 import { VillageModule } from './modules/organization/village/village.module';
 import { LaneModule } from './modules/organization/lane/lane.module';
 import { StreetModule } from './modules/organization/street/street.module';
+import { OrganizationModule } from './modules/organization/organization/organization.module';
+import { GoogleCloudStorageModule } from './modules/file-upload/google-cloud-storage.module';
 
 @Module({
   imports: [
@@ -55,7 +57,6 @@ import { StreetModule } from './modules/organization/street/street.module';
     DistrictModule,
     NearbyCategoryModule,
     NearbyModule,
-
     UserModule,
     RoleModule,
     PassageModule,
@@ -66,6 +67,8 @@ import { StreetModule } from './modules/organization/street/street.module';
     VillageModule,
     LaneModule,
     StreetModule,
+    OrganizationModule,
+    GoogleCloudStorageModule,
   ],
   providers: [
     {

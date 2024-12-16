@@ -1,4 +1,6 @@
+import { Storage } from '@google-cloud/storage';
 import { registerAs } from '@nestjs/config';
+import { resolve } from 'path';
 import * as process from 'process';
 import { CONFIG_APP_TOKEN, CONFIG_SERVICES_RMQ_TOKEN } from 'types/config';
 
@@ -57,3 +59,8 @@ export type AppConfig = {
   port: number;
   cors_domains: string;
 };
+
+
+const projectId = 'telecom-398714';
+export const keyFilename = resolve(process.cwd(), 'src', 'common', 'config', 'google-cloud-key.json');
+
