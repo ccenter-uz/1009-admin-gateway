@@ -26,14 +26,14 @@ import {
 @ApiTags('lane')
 @Controller('lane')
 export class LaneController {
-  constructor(private readonly laneService: LaneService) { }
+  constructor(private readonly laneService: LaneService) {}
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<LaneInterfaces.Response[]> {
-    return await this.laneService.getListOfCategory(query);
+    return await this.laneService.getAll(query);
   }
 
   @Get(':id')
@@ -53,8 +53,6 @@ export class LaneController {
     @Body() data: LaneCreateDto,
     @Req() request: Request
   ): Promise<LaneInterfaces.Response> {
-
-
     return this.laneService.create(data, request['userNumericId']);
   }
 

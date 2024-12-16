@@ -30,10 +30,10 @@ export class AreaController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<AreaInterfaces.Response[]> {
-    return await this.areaService.getListOfCategory(query);
+    return await this.areaService.getAll(query);
   }
 
   @Get(':id')

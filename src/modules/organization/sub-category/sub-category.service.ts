@@ -15,21 +15,12 @@ import { SubCategoryInterfaces } from 'types/organization/sub-category';
 export class SubCategoryService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
+  async getAll(
     query: SubCategoryFilterDto
   ): Promise<SubCategoryInterfaces.Response[]> {
-    if (query.all) {
-      return lastValueFrom(
-        this.adminClient.send<SubCategoryInterfaces.Response[], ListQueryDto>(
-          { cmd: Commands.GET_ALL_LIST },
-          query
-        )
-      );
-    }
-
     return lastValueFrom(
       this.adminClient.send<SubCategoryInterfaces.Response[], ListQueryDto>(
-        { cmd: Commands.GET_LIST_BY_PAGINATION },
+        { cmd: Commands.GET_ALL_LIST },
         query
       )
     );

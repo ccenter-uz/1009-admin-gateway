@@ -21,6 +21,7 @@ import {
   ProductServiceSubCategoryInterfaces,
   ProductServiceSubCategoryUpdateDto,
 } from 'types/organization/product-service-sub-category';
+import { ProductServiceSubCategoryFilterDto } from 'types/organization/product-service-sub-category/dto/filter-product-service-sub-category.dto';
 
 @ApiBearerAuth()
 @ApiTags('product-servise-sub-category')
@@ -32,10 +33,10 @@ export class ProductServiseSubCategoryController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
-    @Query() query: ListQueryDto
+  async getAll(
+    @Query() query: ProductServiceSubCategoryFilterDto
   ): Promise<ProductServiceSubCategoryInterfaces.Response[]> {
-    return await this.productServiseSubCategoryService.getListOfCategory(query);
+    return await this.productServiseSubCategoryService.getAll(query);
   }
 
   @Get(':id')
@@ -55,7 +56,10 @@ export class ProductServiseSubCategoryController {
     @Body() data: ProductServiceSubCategoryCreateDto,
     @Req() request: Request
   ): Promise<ProductServiceSubCategoryInterfaces.Response> {
-    return this.productServiseSubCategoryService.create(data, request['userNumericId']);
+    return this.productServiseSubCategoryService.create(
+      data,
+      request['userNumericId']
+    );
   }
 
   @Put(':id')

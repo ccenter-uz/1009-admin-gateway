@@ -38,10 +38,10 @@ export class MainOrganizationController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<MainOrganizationInterfaces.Response[]> {
-    return await this.mainOrganizationService.getListOfCategory(query);
+    return await this.mainOrganizationService.getAll(query);
   }
 
   @Get(':id')

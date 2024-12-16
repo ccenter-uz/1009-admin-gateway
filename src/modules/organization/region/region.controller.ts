@@ -29,10 +29,10 @@ export class RegionController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<RegionInterfaces.Response[]> {
-    return await this.regionService.getListOfCategory(query);
+    return await this.regionService.getAll(query);
   }
 
   // @Get(':id')

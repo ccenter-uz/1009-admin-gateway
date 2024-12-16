@@ -15,23 +15,14 @@ import {
 export class MainOrganizationService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
+  async getAll(
     query: ListQueryDto
   ): Promise<MainOrganizationInterfaces.Response[]> {
-    if (query.all) {
-      return lastValueFrom(
-        this.adminClient.send<
-          MainOrganizationInterfaces.Response[],
-          ListQueryDto
-        >({ cmd: Commands.GET_ALL_LIST }, query)
-      );
-    }
-
     return lastValueFrom(
       this.adminClient.send<
         MainOrganizationInterfaces.Response[],
         ListQueryDto
-      >({ cmd: Commands.GET_LIST_BY_PAGINATION }, query)
+      >({ cmd: Commands.GET_ALL_LIST }, query)
     );
   }
 

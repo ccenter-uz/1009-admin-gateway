@@ -64,3 +64,7 @@ export type AppConfig = {
 const projectId = 'telecom-398714';
 export const keyFilename = resolve(process.cwd(), 'src', 'common', 'config', 'google-cloud-key.json');
 
+export const JwtConfig = {
+  secretKey: process.env.SECRET_KEY || 'secret-key',
+  expiresIn: process.env.EXPIRES_IN || '1d',
+};

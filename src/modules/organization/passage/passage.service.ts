@@ -12,23 +12,12 @@ import {
 
 @Injectable()
 export class PassageService {
-  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
-    query: ListQueryDto
-  ): Promise<PassageInterfaces.Response[]> {
-    if (query.all) {
-      return lastValueFrom(
-        this.adminClient.send<PassageInterfaces.Response[], ListQueryDto>(
-          { cmd: Commands.GET_ALL_LIST },
-          query
-        )
-      );
-    }
-
+  async getAll(query: ListQueryDto): Promise<PassageInterfaces.Response[]> {
     return lastValueFrom(
       this.adminClient.send<PassageInterfaces.Response[], ListQueryDto>(
-        { cmd: Commands.GET_LIST_BY_PAGINATION },
+        { cmd: Commands.GET_ALL_LIST },
         query
       )
     );
@@ -44,7 +33,8 @@ export class PassageService {
   }
 
   async create(
-    data: PassageCreateDto, userNumericId: string
+    data: PassageCreateDto,
+    userNumericId: string
   ): Promise<PassageInterfaces.Response> {
     data = { staffNumber: userNumericId, ...data };
     return await lastValueFrom(
@@ -55,9 +45,7 @@ export class PassageService {
     );
   }
 
-  async update(
-    data: PassageUpdateDto
-  ): Promise<PassageInterfaces.Response> {
+  async update(data: PassageUpdateDto): Promise<PassageInterfaces.Response> {
     return lastValueFrom(
       this.adminClient.send<
         PassageInterfaces.Response,

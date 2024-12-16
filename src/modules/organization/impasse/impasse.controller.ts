@@ -25,14 +25,14 @@ import {
 @ApiTags('impasse')
 @Controller('impasse')
 export class ImpasseController {
-  constructor(private readonly impasseService: ImpasseService) { }
+  constructor(private readonly impasseService: ImpasseService) {}
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<ImpasseInterfaces.Response[]> {
-    return await this.impasseService.getListOfCategory(query);
+    return await this.impasseService.getAll(query);
   }
 
   @Get(':id')
@@ -52,8 +52,6 @@ export class ImpasseController {
     @Body() data: ImpasseCreateDto,
     @Req() request: Request
   ): Promise<ImpasseInterfaces.Response> {
-
-
     return this.impasseService.create(data, request['userNumericId']);
   }
 
@@ -71,7 +69,7 @@ export class ImpasseController {
   @HttpCode(HttpStatus.OK)
   async delete(
     @Param('id', ParseIntPipe) id: number,
-    @Query('delete', ) deleteQuery?: boolean
+    @Query('delete') deleteQuery?: boolean
   ): Promise<ImpasseInterfaces.Response> {
     return this.impasseService.delete({ id, delete: deleteQuery });
   }

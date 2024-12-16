@@ -26,7 +26,11 @@ import {
   CategoryCreateDto,
   CategoryUpdateDto,
 } from 'types/organization/category';
-import { SegmentCreateDto, SegmentInterfaces, SegmentUpdateDto } from 'types/organization/segment';
+import {
+  SegmentCreateDto,
+  SegmentInterfaces,
+  SegmentUpdateDto,
+} from 'types/organization/segment';
 
 @ApiBearerAuth()
 @ApiTags('segment')
@@ -36,10 +40,10 @@ export class SegmentController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getAll(
     @Query() query: ListQueryDto
   ): Promise<SegmentInterfaces.Response[]> {
-    return await this.segmentService.getListOfCategory(query);
+    return await this.segmentService.getAll(query);
   }
 
   @Get(':id')

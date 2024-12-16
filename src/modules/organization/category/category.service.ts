@@ -9,26 +9,18 @@ import {
   CategoryUpdateDto,
   CategoryServiceCommands as Commands,
 } from 'types/organization/category';
+import { CategoryFilterDto } from 'types/organization/category/dto/filter-category.dto';
 
 @Injectable()
 export class CategoryService {
-  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
-    query: ListQueryDto
+  async getAll(
+    query: CategoryFilterDto
   ): Promise<CategoryInterfaces.Response[]> {
-    if (query.all) {
-      return lastValueFrom(
-        this.adminClient.send<CategoryInterfaces.Response[], ListQueryDto>(
-          { cmd: Commands.GET_ALL_LIST },
-          query
-        )
-      );
-    }
-
     return lastValueFrom(
-      this.adminClient.send<CategoryInterfaces.Response[], ListQueryDto>(
-        { cmd: Commands.GET_LIST_BY_PAGINATION },
+      this.adminClient.send<CategoryInterfaces.Response[], CategoryFilterDto>(
+        { cmd: Commands.GET_ALL_LIST },
         query
       )
     );
@@ -43,7 +35,10 @@ export class CategoryService {
     );
   }
 
-  async create(data: CategoryCreateDto, userNumericId: string): Promise<CategoryInterfaces.Response> {
+  async create(
+    data: CategoryCreateDto,
+    userNumericId: string
+  ): Promise<CategoryInterfaces.Response> {
     data = { staffNumber: userNumericId, ...data };
     return await lastValueFrom(
       this.adminClient.send<

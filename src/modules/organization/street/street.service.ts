@@ -13,29 +13,16 @@ import {
 @Injectable()
 export class StreetService {
   private logger = new Logger(StreetService.name);
-  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
-    query: ListQueryDto
-  ): Promise<StreetInterfaces.Response[]> {
-
-    const methodName: string = this.getListOfCategory.name;
+  async getAll(query: ListQueryDto): Promise<StreetInterfaces.Response[]> {
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
-    if (query.all) {
-      const response = lastValueFrom(
-        this.adminClient.send<StreetInterfaces.Response[], ListQueryDto>(
-          { cmd: Commands.GET_ALL_LIST },
-          query
-        )
-      );
-      this.logger.debug(`Method: ${methodName} - Response: `, response);
-      return response;
-    }
 
     const response = lastValueFrom(
       this.adminClient.send<StreetInterfaces.Response[], ListQueryDto>(
-        { cmd: Commands.GET_LIST_BY_PAGINATION },
+        { cmd: Commands.GET_ALL_LIST },
         query
       )
     );
@@ -44,7 +31,7 @@ export class StreetService {
   }
 
   async getById(data: GetOneDto): Promise<StreetInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -59,9 +46,10 @@ export class StreetService {
   }
 
   async create(
-    data: StreetCreateDto, userNumericId: string
+    data: StreetCreateDto,
+    userNumericId: string
   ): Promise<StreetInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
     data = { staffNumber: userNumericId, ...data };
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -75,25 +63,23 @@ export class StreetService {
     return response;
   }
 
-  async update(
-    data: StreetUpdateDto
-  ): Promise<StreetInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+  async update(data: StreetUpdateDto): Promise<StreetInterfaces.Response> {
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = lastValueFrom(
-      this.adminClient.send<
-        StreetInterfaces.Response,
-        StreetInterfaces.Update
-      >({ cmd: Commands.UPDATE }, data)
+      this.adminClient.send<StreetInterfaces.Response, StreetInterfaces.Update>(
+        { cmd: Commands.UPDATE },
+        data
+      )
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
     return response;
   }
 
   async delete(data: DeleteDto): Promise<StreetInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -108,7 +94,7 @@ export class StreetService {
   }
 
   async restore(data: GetOneDto): Promise<StreetInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 

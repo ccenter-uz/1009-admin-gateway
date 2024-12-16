@@ -13,29 +13,16 @@ import {
 @Injectable()
 export class LaneService {
   private logger = new Logger(LaneService.name);
-  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
-    query: ListQueryDto
-  ): Promise<LaneInterfaces.Response[]> {
-
-    const methodName: string = this.getListOfCategory.name;
+  async getAll(query: ListQueryDto): Promise<LaneInterfaces.Response[]> {
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
-    if (query.all) {
-      const response = lastValueFrom(
-        this.adminClient.send<LaneInterfaces.Response[], ListQueryDto>(
-          { cmd: Commands.GET_ALL_LIST },
-          query
-        )
-      );
-      this.logger.debug(`Method: ${methodName} - Response: `, response);
-      return response;
-    }
 
     const response = lastValueFrom(
       this.adminClient.send<LaneInterfaces.Response[], ListQueryDto>(
-        { cmd: Commands.GET_LIST_BY_PAGINATION },
+        { cmd: Commands.GET_ALL_LIST },
         query
       )
     );
@@ -44,7 +31,7 @@ export class LaneService {
   }
 
   async getById(data: GetOneDto): Promise<LaneInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -59,41 +46,40 @@ export class LaneService {
   }
 
   async create(
-    data: LaneCreateDto, userNumericId: string
+    data: LaneCreateDto,
+    userNumericId: string
   ): Promise<LaneInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
     data = { staffNumber: userNumericId, ...data };
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(
-      this.adminClient.send<
-        LaneInterfaces.Response,
-        LaneInterfaces.Request
-      >({ cmd: Commands.CREATE }, data)
+      this.adminClient.send<LaneInterfaces.Response, LaneInterfaces.Request>(
+        { cmd: Commands.CREATE },
+        data
+      )
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
     return response;
   }
 
-  async update(
-    data: LaneUpdateDto
-  ): Promise<LaneInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+  async update(data: LaneUpdateDto): Promise<LaneInterfaces.Response> {
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = lastValueFrom(
-      this.adminClient.send<
-        LaneInterfaces.Response,
-        LaneInterfaces.Update
-      >({ cmd: Commands.UPDATE }, data)
+      this.adminClient.send<LaneInterfaces.Response, LaneInterfaces.Update>(
+        { cmd: Commands.UPDATE },
+        data
+      )
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
     return response;
   }
 
   async delete(data: DeleteDto): Promise<LaneInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -108,7 +94,7 @@ export class LaneService {
   }
 
   async restore(data: GetOneDto): Promise<LaneInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 

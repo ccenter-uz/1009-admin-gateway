@@ -7,44 +7,39 @@ import {
   ProductServiceSubCategoryCreateDto,
   ProductServiceSubCategoryUpdateDto,
   ProductServiceSubCategoryServiceCommands as Commands,
-  ProductServiceSubCategoryInterfaces
+  ProductServiceSubCategoryInterfaces,
 } from 'types/organization/product-service-sub-category';
+import { ProductServiceSubCategoryFilterDto } from 'types/organization/product-service-sub-category/dto/filter-product-service-sub-category.dto';
 
 @Injectable()
 export class ProductServiseSubCategoryService {
-  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) { }
+  constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getListOfCategory(
-    query: ListQueryDto
+  async getAll(
+    query: ProductServiceSubCategoryFilterDto
   ): Promise<ProductServiceSubCategoryInterfaces.Response[]> {
-    if (query.all) {
-      return lastValueFrom(
-        this.adminClient.send<ProductServiceSubCategoryInterfaces.Response[], ListQueryDto>(
-          { cmd: Commands.GET_ALL_LIST },
-          query
-        )
-      );
-    }
-
     return lastValueFrom(
-      this.adminClient.send<ProductServiceSubCategoryInterfaces.Response[], ListQueryDto>(
-        { cmd: Commands.GET_LIST_BY_PAGINATION },
-        query
-      )
+      this.adminClient.send<
+        ProductServiceSubCategoryInterfaces.Response[],
+        ListQueryDto
+      >({ cmd: Commands.GET_ALL_LIST }, query)
     );
   }
 
-  async getById(data: GetOneDto): Promise<ProductServiceSubCategoryInterfaces.Response> {
+  async getById(
+    data: GetOneDto
+  ): Promise<ProductServiceSubCategoryInterfaces.Response> {
     return lastValueFrom(
-      this.adminClient.send<ProductServiceSubCategoryInterfaces.Response, GetOneDto>(
-        { cmd: Commands.GET_BY_ID },
-        data
-      )
+      this.adminClient.send<
+        ProductServiceSubCategoryInterfaces.Response,
+        GetOneDto
+      >({ cmd: Commands.GET_BY_ID }, data)
     );
   }
 
   async create(
-    data: ProductServiceSubCategoryCreateDto, userNumericId: string
+    data: ProductServiceSubCategoryCreateDto,
+    userNumericId: string
   ): Promise<ProductServiceSubCategoryInterfaces.Response> {
     data = { staffNumber: userNumericId, ...data };
     return await lastValueFrom(
@@ -66,21 +61,25 @@ export class ProductServiseSubCategoryService {
     );
   }
 
-  async delete(data: DeleteDto): Promise<ProductServiceSubCategoryInterfaces.Response> {
+  async delete(
+    data: DeleteDto
+  ): Promise<ProductServiceSubCategoryInterfaces.Response> {
     return lastValueFrom(
-      this.adminClient.send<ProductServiceSubCategoryInterfaces.Response, DeleteDto>(
-        { cmd: Commands.DELETE },
-        data
-      )
+      this.adminClient.send<
+        ProductServiceSubCategoryInterfaces.Response,
+        DeleteDto
+      >({ cmd: Commands.DELETE }, data)
     );
   }
 
-  async restore(data: GetOneDto): Promise<ProductServiceSubCategoryInterfaces.Response> {
+  async restore(
+    data: GetOneDto
+  ): Promise<ProductServiceSubCategoryInterfaces.Response> {
     return lastValueFrom(
-      this.adminClient.send<ProductServiceSubCategoryInterfaces.Response, GetOneDto>(
-        { cmd: Commands.RESTORE },
-        data
-      )
+      this.adminClient.send<
+        ProductServiceSubCategoryInterfaces.Response,
+        GetOneDto
+      >({ cmd: Commands.RESTORE }, data)
     );
   }
 }
