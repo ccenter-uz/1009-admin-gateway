@@ -44,16 +44,15 @@ export class GoogleCloudStorageService {
 
   async uploadFiles(files: Array<Multer.File>): Promise<{ link: string }[]> {
     const uploadedLinks: { link: string }[] = [];
-    console.log(files, 'files');
+
 
     for (const file of files) {
-      console.log(file, 'file');
+
 
       const imageLink = join(v4() + extname(file.originalname));
       const blob = this.bucket.file(imageLink);
       const blobStream = blob.createWriteStream();
-      console.log('Uploading file:', file.originalname);
-      console.log('Generated link:', imageLink);
+
       await new Promise((resolve, reject) => {
         blobStream.on('error', (err) => {
           console.error('Blob stream error:', err);
@@ -85,27 +84,25 @@ export class GoogleCloudStorageService {
   
 //   async uploadFile(file: Multer.File): Promise<string> {
 //     try {
-//   console.log(keyFilename, 'keyFilename');
-//       console.log(file, 'file');
+//   
+//    
 
 //       const bucket = this.storage.bucket(this.bucketName);
 //       const fileName = `${this.bucketName}/${Date.now()}_${file.originalname}`;
 //       const blob = bucket.file(fileName);
-//       console.log(blob, 'blob');
-//       console.log(fileName, 'fileName');
-//       console.log(bucket, 'bucket');
+//   
 
 //       const a = await blob.save(file.buffer, {
 //         metadata: { contentType: file.mimetype },
 //       });
-//       console.log(a, 'blobSave');
+//   
 
 //       // Make the file public (optional)
 //       await blob.makePublic();
 
 //       return `https://storage.googleapis.com/${this.bucketName}/${fileName}`;
 // } catch (error) {
-//   console.log(error, 'error');
+// 
 //   throw error
   
 // }
@@ -114,7 +111,7 @@ export class GoogleCloudStorageService {
 //   async uploadMultipleFiles(
 //     files: Multer.File[],
 //   ): Promise<string[]> {
-//     console.log(files, 'files');
+// 
     
 //     const uploadPromises = files.map((file) => this.uploadFile(file));
 //     return Promise.all(uploadPromises);
@@ -139,16 +136,16 @@ export class GoogleCloudStorageService {
 
 //   async uploadFiles(files: Array<Multer.File>): Promise<{ link: string }[]> {
 //     const uploadedLinks: { link: string }[] = [];
-//     console.log(files, 'files');
+
 
 //     for (const file of files) {
-//       console.log(file, 'file');
+
 
 //       const imageLink = join(v4() + extname(file.originalname));
 //       const blob = bucket.file(imageLink);
 //       const blobStream = blob.createWriteStream();
-// console.log('Uploading file:', file.originalname);
-// console.log('Generated link:', imageLink);
+
+
 //       await new Promise((resolve, reject) => {
 //         blobStream.on('error', (err) => {
 //           console.error('Blob stream error:', err);

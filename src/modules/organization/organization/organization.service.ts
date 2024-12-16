@@ -71,9 +71,15 @@ export class OrganizationService {
     const methodName: string = this.getListOfCategory.name;
 
     const fileLinks = await this.googleCloudStorageService.uploadFiles(files);
-    data = { ...data, role, staffNumber: userNumericId, PhotoLink: fileLinks  ,phone : typeof data.phone == 'string' ?  JSON.parse(data.phone)  :data.phone};
-    
-    console.log(data, 'data');
+    data = {
+      ...data,
+      role,
+      staffNumber: userNumericId,
+      PhotoLink: fileLinks,
+      phone:
+        typeof data.phone == 'string' ? JSON.parse(data.phone) : data.phone,
+    };
+
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(
