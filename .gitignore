@@ -2,7 +2,7 @@
 /dist
 /node_modules
 /build
-
+/src/common/config/google-cloud-key.json
 # Logs
 logs
 *.log
