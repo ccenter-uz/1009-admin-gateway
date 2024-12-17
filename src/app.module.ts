@@ -36,6 +36,7 @@ import { LaneModule } from './modules/organization/lane/lane.module';
 import { StreetModule } from './modules/organization/street/street.module';
 import { OrganizationModule } from './modules/organization/organization/organization.module';
 import { GoogleCloudStorageModule } from './modules/file-upload/google-cloud-storage.module';
+import { PhoneTypeModule } from './modules/organization/phone-type/phone-type.module';
 
 @Module({
   imports: [
@@ -73,6 +74,7 @@ import { GoogleCloudStorageModule } from './modules/file-upload/google-cloud-sto
     StreetModule,
     OrganizationModule,
     GoogleCloudStorageModule,
+    PhoneTypeModule,
   ],
   providers: [
     {

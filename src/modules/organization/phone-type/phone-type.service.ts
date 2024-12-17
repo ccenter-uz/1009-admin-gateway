@@ -5,26 +5,26 @@ import { ORGANIZATION } from 'types/config';
 import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
 
 import {
-  NearbyCategoryCreateDto,
-  NearbyCategoryUpdateDto,
-  NearbyCategoryInterfaces,
-  NearbyCategoryServiceCommands as Commands,
-} from 'types/organization/nearby-category';
+  PhoneTypeCreateDto,
+  PhoneTypeUpdateDto,
+  PhoneTypeInterfaces,
+  PhoneTypeServiceCommands as Commands,
+} from 'types/organization/phone-type';
 
 @Injectable()
-export class NearbyCategoryService {
-  private logger = new Logger(NearbyCategoryService.name);
+export class PhoneTypeService {
+  private logger = new Logger(PhoneTypeService.name);
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
   async getAll(
     query: ListQueryDto
-  ): Promise<NearbyCategoryInterfaces.Response[]> {
+  ): Promise<PhoneTypeInterfaces.Response[]> {
     const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
 
     const response = await lastValueFrom(
-      this.adminClient.send<NearbyCategoryInterfaces.Response[], ListQueryDto>(
+      this.adminClient.send<PhoneTypeInterfaces.Response[], ListQueryDto>(
         { cmd: Commands.GET_ALL_LIST },
         query
       )
@@ -33,12 +33,12 @@ export class NearbyCategoryService {
     return response;
   }
 
-  async getById(data: GetOneDto): Promise<NearbyCategoryInterfaces.Response> {
+  async getById(data: GetOneDto): Promise<PhoneTypeInterfaces.Response> {
     const methodName: string = this.getById.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
     const response = await lastValueFrom(
-      this.adminClient.send<NearbyCategoryInterfaces.Response, GetOneDto>(
+      this.adminClient.send<PhoneTypeInterfaces.Response, GetOneDto>(
         { cmd: Commands.GET_BY_ID },
         data
       )
@@ -49,17 +49,17 @@ export class NearbyCategoryService {
   }
 
   async create(
-    data: NearbyCategoryCreateDto,
+    data: PhoneTypeCreateDto,
     userNumericId: string
-  ): Promise<NearbyCategoryInterfaces.Response> {
+  ): Promise<PhoneTypeInterfaces.Response> {
     const methodName: string = this.create.name;
     data = { staffNumber: userNumericId, ...data };
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(
       this.adminClient.send<
-        NearbyCategoryInterfaces.Response,
-        NearbyCategoryInterfaces.Request
+        PhoneTypeInterfaces.Response,
+        PhoneTypeInterfaces.Request
       >({ cmd: Commands.CREATE }, data)
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
@@ -68,16 +68,16 @@ export class NearbyCategoryService {
   }
 
   async update(
-    data: NearbyCategoryUpdateDto
-  ): Promise<NearbyCategoryInterfaces.Response> {
+    data: PhoneTypeUpdateDto
+  ): Promise<PhoneTypeInterfaces.Response> {
     const methodName: string = this.update.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(
       this.adminClient.send<
-        NearbyCategoryInterfaces.Response,
-        NearbyCategoryInterfaces.Update
+        PhoneTypeInterfaces.Response,
+        PhoneTypeInterfaces.Update
       >({ cmd: Commands.UPDATE }, data)
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
@@ -85,12 +85,12 @@ export class NearbyCategoryService {
     return response;
   }
 
-  async delete(data: DeleteDto): Promise<NearbyCategoryInterfaces.Response> {
+  async delete(data: DeleteDto): Promise<PhoneTypeInterfaces.Response> {
     const methodName: string = this.delete.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
     const response = await lastValueFrom(
-      this.adminClient.send<NearbyCategoryInterfaces.Response, DeleteDto>(
+      this.adminClient.send<PhoneTypeInterfaces.Response, DeleteDto>(
         { cmd: Commands.DELETE },
         data
       )
@@ -101,12 +101,12 @@ export class NearbyCategoryService {
     return response;
   }
 
-  async restore(data: GetOneDto): Promise<NearbyCategoryInterfaces.Response> {
+  async restore(data: GetOneDto): Promise<PhoneTypeInterfaces.Response> {
     const methodName: string = this.restore.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
     const response = await lastValueFrom(
-      this.adminClient.send<NearbyCategoryInterfaces.Response, GetOneDto>(
+      this.adminClient.send<PhoneTypeInterfaces.Response, GetOneDto>(
         { cmd: Commands.RESTORE },
         data
       )
