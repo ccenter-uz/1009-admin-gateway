@@ -20,13 +20,15 @@ export class OrganizationService {
     private readonly googleCloudStorageService: GoogleCloudStorageService
   ) {}
 
-  async getListOfCategory(
+  async getListOfOrganization(
     query: ListQueryDto
   ): Promise<OrganizationInterfaces.Response[]> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getListOfOrganization.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
+
     if (query.all) {
+      
       const response = lastValueFrom(
         this.adminClient.send<OrganizationInterfaces.Response[], ListQueryDto>(
           { cmd: Commands.GET_ALL_LIST },
@@ -48,7 +50,7 @@ export class OrganizationService {
   }
 
   async getById(data: GetOneDto): Promise<OrganizationInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getListOfOrganization.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -68,7 +70,7 @@ export class OrganizationService {
     userNumericId: string,
     files: Array<Multer.File>
   ): Promise<OrganizationInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getListOfOrganization.name;
 
     const fileLinks = await this.googleCloudStorageService.uploadFiles(files);
     data = {
@@ -95,7 +97,7 @@ export class OrganizationService {
   async update(
     data: OrganizationUpdateDto
   ): Promise<OrganizationInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getListOfOrganization.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -110,7 +112,7 @@ export class OrganizationService {
   }
 
   async delete(data: DeleteDto): Promise<OrganizationInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getListOfOrganization.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -125,7 +127,7 @@ export class OrganizationService {
   }
 
   async restore(data: GetOneDto): Promise<OrganizationInterfaces.Response> {
-    const methodName: string = this.getListOfCategory.name;
+    const methodName: string = this.getListOfOrganization.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 

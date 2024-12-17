@@ -42,7 +42,7 @@ export class OrganizationController {
   async getListOfCategory(
     @Query() query: ListQueryDto
   ): Promise<OrganizationInterfaces.Response[]> {
-    return await this.organizationService.getListOfCategory(query);
+    return await this.organizationService.getListOfOrganization(query);
   }
 
   @Get(':id')
