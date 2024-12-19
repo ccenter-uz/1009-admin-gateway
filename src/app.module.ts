@@ -23,7 +23,6 @@ import { RoleModule } from './modules/user/role/role.module';
 import { NearbyCategoryModule } from './modules/organization/nearby-categoty/nearby-category.module';
 import { NearbyModule } from './modules/organization/nearby/nearby.module';
 import { DistrictModule } from './modules/organization/district/district.module';
-// import { DistrictModule } from './modules/organization/district/district.module';
 import { PassageModule } from './modules/organization/passage/passage.module';
 import { RegionModule } from './modules/organization/region/region.module';
 import { CityModule } from './modules/organization/city/city.module';
