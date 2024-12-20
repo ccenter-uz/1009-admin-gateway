@@ -16,9 +16,7 @@ import { ProductServiceCategoryService } from './product-servise-category.servic
 import {
   ApiBearerAuth,
   ApiBody,
-  ApiOperation,
   ApiParam,
-  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { LanguageRequestDto, ListQueryDto } from 'types/global';

@@ -1,17 +1,7 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { lastValueFrom } from 'rxjs';
-import { ORGANIZATION } from 'types/config';
-import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
-import {
-  OrganizationCreateDto,
-  OrganizationInterfaces,
-  OrganizationUpdateDto,
-  OrganizationServiceCommands as Commands,
-} from 'types/organization/organization';
+import { Injectable } from '@nestjs/common';
 import * as Multer from 'multer';
 import { keyFilename } from 'src/common/config/app.config';
-import { extname, join, resolve } from 'path';
+import { extname, join } from 'path';
 import { v4 } from 'uuid';
 import { Storage, Bucket } from '@google-cloud/storage';
 

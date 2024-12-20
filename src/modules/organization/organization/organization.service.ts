@@ -27,21 +27,9 @@ export class OrganizationService {
 
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
 
-    if (query.all) {
-      
       const response = lastValueFrom(
         this.adminClient.send<OrganizationInterfaces.Response[], ListQueryDto>(
           { cmd: Commands.GET_ALL_LIST },
-          query
-        )
-      );
-      this.logger.debug(`Method: ${methodName} - Response: `, response);
-      return response;
-    }
-
-    const response = lastValueFrom(
-      this.adminClient.send<OrganizationInterfaces.Response[], ListQueryDto>(
-        { cmd: Commands.GET_LIST_BY_PAGINATION },
         query
       )
     );
