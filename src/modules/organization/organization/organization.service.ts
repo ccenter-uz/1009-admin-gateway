@@ -11,6 +11,7 @@ import {
 } from 'types/organization/organization';
 import * as Multer from 'multer';
 import { GoogleCloudStorageService } from 'src/modules/file-upload/google-cloud-storage.service';
+import { OrganizationFilterDto } from 'types/organization/organization/dto/filter-organization.dto';
 
 @Injectable()
 export class OrganizationService {
@@ -21,10 +22,11 @@ export class OrganizationService {
   ) {}
 
   async getListOfOrganization(
-    query: ListQueryDto
+    query: OrganizationFilterDto,
+    userNumericId: string,
   ): Promise<OrganizationInterfaces.Response[]> {
     const methodName: string = this.getListOfOrganization.name;
-
+    query.staffNumber = userNumericId
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
 
       const response = lastValueFrom(
