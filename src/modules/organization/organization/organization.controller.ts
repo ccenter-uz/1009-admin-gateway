@@ -40,11 +40,20 @@ export class OrganizationController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfCategory(
+  async getListOfOrganization(
     @Query() query: OrganizationFilterDto,
     @Req() request: Request,
   ): Promise<OrganizationInterfaces.Response[]> {
     return await this.organizationService.getListOfOrganization(query, request['userNumericId'],);
+  }
+
+  @Get('my-org')
+  @HttpCode(HttpStatus.OK)
+  async getMyOfOrganization(
+    @Query() query: ListQueryDto,
+    @Req() request: Request,
+  ): Promise<OrganizationInterfaces.Response[]> {
+    return await this.organizationService.getMyOfOrganization(query, request['userNumericId'],);
   }
 
   @Get(':id')
