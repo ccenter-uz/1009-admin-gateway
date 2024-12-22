@@ -30,6 +30,7 @@ import {
 } from 'types/organization/organization';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import * as Multer from 'multer';
+import { OrganizationVersionInterfaces, OrganizationVersionUpdateDto } from 'types/organization/organization-version';
 
 @ApiBearerAuth()
 @ApiTags('Organization')
@@ -65,7 +66,8 @@ export class OrganizationController {
     @Req() request: Request,
     @UploadedFiles() files: Multer.File[]
   ): Promise<OrganizationInterfaces.Response> {
-
+    // console.log(data);
+    
     return this.organizationService.create(
       data,
       request['userRole'],
@@ -75,13 +77,22 @@ export class OrganizationController {
   }
 
   @Put(':id')
-  @ApiBody({ type: OrganizationUpdateDto })
+  @ApiBody({ type: OrganizationVersionUpdateDto })
+  @UseInterceptors(FilesInterceptor('photos'))
+  @ApiConsumes('multipart/form-data')
   @HttpCode(HttpStatus.OK)
   async update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() data: Omit<OrganizationUpdateDto, 'id'>
-  ): Promise<OrganizationInterfaces.Response> {
-    return this.organizationService.update({ ...data, id });
+    @Body() data: Omit<OrganizationVersionUpdateDto, 'id'>,
+    @Req() request: Request,
+    @UploadedFiles() files: Multer.File[]
+  ): Promise<OrganizationVersionInterfaces.Response> {
+    return this.organizationService.update(
+      { ...data, id },
+      request['userRole'],
+      request['userNumericId'],
+      files
+    );
   }
 
   @Delete(':id')

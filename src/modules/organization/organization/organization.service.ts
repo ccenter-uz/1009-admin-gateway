@@ -11,6 +11,10 @@ import {
 } from 'types/organization/organization';
 import * as Multer from 'multer';
 import { GoogleCloudStorageService } from 'src/modules/file-upload/google-cloud-storage.service';
+import {
+  OrganizationVersionInterfaces,
+  OrganizationVersionUpdateDto,
+} from 'types/organization/organization-version';
 
 @Injectable()
 export class OrganizationService {
@@ -27,9 +31,9 @@ export class OrganizationService {
 
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
 
-      const response = lastValueFrom(
-        this.adminClient.send<OrganizationInterfaces.Response[], ListQueryDto>(
-          { cmd: Commands.GET_ALL_LIST },
+    const response = lastValueFrom(
+      this.adminClient.send<OrganizationInterfaces.Response[], ListQueryDto>(
+        { cmd: Commands.GET_ALL_LIST },
         query
       )
     );
@@ -68,6 +72,12 @@ export class OrganizationService {
       PhotoLink: fileLinks,
       phone:
         typeof data.phone == 'string' ? JSON.parse(data.phone) : data.phone,
+      productService:
+        typeof data.productService == 'string'
+          ? JSON.parse(data.productService)
+          : data.productService,
+      nearby:
+        typeof data.nearby == 'string' ? JSON.parse(data.nearby) : data.nearby,
     };
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
@@ -83,16 +93,29 @@ export class OrganizationService {
   }
 
   async update(
-    data: OrganizationUpdateDto
-  ): Promise<OrganizationInterfaces.Response> {
+    data: OrganizationVersionUpdateDto,
+    role: string,
+    userNumericId: string,
+    files: Array<Multer.File>
+  ): Promise<OrganizationVersionInterfaces.Response> {
     const methodName: string = this.getListOfOrganization.name;
+
+    const fileLinks = await this.googleCloudStorageService.uploadFiles(files);
+    data = {
+      ...data,
+      role,
+      staffNumber: userNumericId,
+      PhotoLink: fileLinks,
+      phone:
+        typeof data.phone == 'string' ? JSON.parse(data.phone) : data.phone,
+    };
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = lastValueFrom(
       this.adminClient.send<
-        OrganizationInterfaces.Response,
-        OrganizationInterfaces.Update
+        OrganizationVersionInterfaces.Response,
+        OrganizationVersionInterfaces.Update
       >({ cmd: Commands.UPDATE }, data)
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
