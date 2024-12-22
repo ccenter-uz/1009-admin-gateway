@@ -20,7 +20,7 @@ export class OrganizationService {
     @Inject(ORGANIZATION) private adminClient: ClientProxy,
     private readonly googleCloudStorageService: GoogleCloudStorageService
   ) {}
-
+  
   async getListOfOrganization(
     query: OrganizationFilterDto,
     userNumericId: string,
@@ -32,6 +32,24 @@ export class OrganizationService {
       const response = lastValueFrom(
         this.adminClient.send<OrganizationInterfaces.Response[], ListQueryDto>(
           { cmd: Commands.GET_ALL_LIST },
+        query
+      )
+    );
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+    return response;
+  }
+
+  async getMyOfOrganization(
+    query: ListQueryDto,
+    userNumericId: string,
+  ): Promise<OrganizationInterfaces.Response[]> {
+    const methodName: string = this.getListOfOrganization.name;
+    query.staffNumber = userNumericId
+    this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
+
+      const response = lastValueFrom(
+        this.adminClient.send<OrganizationInterfaces.Response[], ListQueryDto>(
+          { cmd: Commands.GET_MY_LIST },
         query
       )
     );
