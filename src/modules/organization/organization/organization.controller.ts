@@ -30,7 +30,13 @@ import {
 } from 'types/organization/organization';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import * as Multer from 'multer';
-import { OrganizationVersionInterfaces, OrganizationVersionUpdateDto } from 'types/organization/organization-version';
+
+import {
+  OrganizationVersionInterfaces,
+  OrganizationVersionUpdateDto,
+} from 'types/organization/organization-version';
+
+import { OrganizationFilterDto } from 'types/organization/organization/dto/filter-organization.dto';
 
 @ApiBearerAuth()
 @ApiTags('Organization')
@@ -41,9 +47,13 @@ export class OrganizationController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getListOfCategory(
-    @Query() query: ListQueryDto
+    @Query() query: OrganizationFilterDto,
+    @Req() request: Request
   ): Promise<OrganizationInterfaces.Response[]> {
-    return await this.organizationService.getListOfOrganization(query);
+    return await this.organizationService.getListOfOrganization(
+      query,
+      request['userNumericId']
+    );
   }
 
   @Get(':id')
@@ -67,7 +77,7 @@ export class OrganizationController {
     @UploadedFiles() files: Multer.File[]
   ): Promise<OrganizationInterfaces.Response> {
     // console.log(data);
-    
+
     return this.organizationService.create(
       data,
       request['userRole'],
