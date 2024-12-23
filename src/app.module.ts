@@ -47,7 +47,6 @@ import { PhoneTypeModule } from './modules/organization/phone-type/phone-type.mo
     }),
     JwtModule.register({
       secret: JwtConfig.secretKey,
-      /* signOptions: { expiresIn: JwtConfig.expiresIn },*/
     }),
     CategoryModule,
     SubCategoryModule,

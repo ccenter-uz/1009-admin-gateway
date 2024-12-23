@@ -17,6 +17,7 @@ import {
 import { UserInterfaces } from 'types/user/user';
 import { CheckUserPermissionDto } from 'types/user/user/dto/check-permission.dto';
 import { UserLogInDto } from 'types/user/user/dto/log-in-user.dto';
+import { JwtConfig } from 'src/common/config/app.config';
 
 @Injectable()
 export class UserService {
@@ -41,10 +42,13 @@ export class UserService {
 
     this.logger.debug(`Method: ${methodName} - Role: `, user['role']['name']);
 
-    const accessToken = this.jwtService.sign({
-      userId: user.id,
-      roleId: user.roleId,
-    });
+    const accessToken = this.jwtService.sign(
+      {
+        userId: user.id,
+        roleId: user.roleId,
+      },
+      { expiresIn: JwtConfig.expiresIn }
+    );
 
     const response: UserInterfaces.LogInResponse = {
       accessToken,
