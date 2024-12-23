@@ -88,8 +88,6 @@ export class OrganizationController {
     @Req() request: Request,
     @UploadedFiles() files: Multer.File[]
   ): Promise<OrganizationInterfaces.Response> {
-    // console.log(data);
-
     return this.organizationService.create(
       data,
       request['userRole'],
@@ -109,8 +107,6 @@ export class OrganizationController {
     @Req() request: Request,
     @UploadedFiles() files: Multer.File[]
   ): Promise<OrganizationVersionInterfaces.Response> {
-    // console.log(data, files);
-
     return this.organizationService.update(
       { ...data, id },
       request['userRole'],
@@ -126,8 +122,6 @@ export class OrganizationController {
     // @Body() data: Omit<OrganizationVersionUpdateDto, 'id'>,
     @Req() request: Request
   ): Promise<OrganizationVersionInterfaces.Response> {
-    // console.log(data, files);
-
     return this.organizationService.updateConfirm(
       id,
       request['userRole'],
