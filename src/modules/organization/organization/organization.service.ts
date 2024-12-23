@@ -32,10 +32,10 @@ export class OrganizationService {
   ): Promise<OrganizationInterfaces.Response[]> {
     const methodName: string = this.getListOfOrganization.name;
     query.staffNumber = userNumericId;
-    this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
+    this.logger.debug(`Method: ${methodName} - Request: `, OrganizationFilterDto);
 
     const response = lastValueFrom(
-      this.adminClient.send<OrganizationInterfaces.Response[], ListQueryDto>(
+      this.adminClient.send<OrganizationInterfaces.Response[], OrganizationFilterDto>(
         { cmd: Commands.GET_ALL_LIST },
         query
       )
