@@ -17,6 +17,7 @@ import {
   OrganizationVersionServiceCommands as CommmandsVersion,
 } from 'types/organization/organization-version';
 import { OrganizationFilterDto } from 'types/organization/organization/dto/filter-organization.dto';
+import { ConfirmDto } from 'types/organization/organization/dto/confirm-organization.dto';
 
 @Injectable()
 export class OrganizationService {
@@ -169,15 +170,15 @@ export class OrganizationService {
   }
 
   async updateConfirm(
-    id: number,
+    data: ConfirmDto,
     role: string,
     userNumericId: string
   ): Promise<OrganizationVersionInterfaces.Response> {
     const methodName: string = this.getListOfOrganization.name;
 
-    let data = {
-      id,
-      role,
+  data = {
+    ...data,
+    role,
       staffNumber: userNumericId,
     };
 
