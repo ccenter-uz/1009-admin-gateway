@@ -45,14 +45,14 @@ export class RegionController {
   //   return this.regionService.getById({ id, ...query });
   // }
 
-  // @Post()
-  // @ApiBody({ type: RegionCreateDto })
-  // @HttpCode(HttpStatus.CREATED)
-  // async create(
-  //   @Body() data: RegionCreateDto
-  // ): Promise<RegionInterfaces.Response> {
-  //   return this.regionService.create(data);
-  // }
+  @Post()
+  @ApiBody({ type: RegionCreateDto })
+  @HttpCode(HttpStatus.CREATED)
+  async create(
+    @Body() data: RegionCreateDto
+  ): Promise<RegionInterfaces.Response> {
+    return this.regionService.create(data);
+  }
 
   // @Put(':id')
   // @ApiBody({ type: RegionUpdateDto })

@@ -46,12 +46,12 @@ export class CityController {
   //   return this.subCategoryService.getById({ id, ...query });
   // }
 
-  // @Post()
-  // @ApiBody({ type: CityCreateDto })
-  // @HttpCode(HttpStatus.CREATED)
-  // async create(@Body() data: CityCreateDto): Promise<CityInterfaces.Response> {
-  //   return this.subCategoryService.create(data);
-  // }
+  @Post()
+  @ApiBody({ type: CityCreateDto })
+  @HttpCode(HttpStatus.CREATED)
+  async create(@Body() data: CityCreateDto): Promise<CityInterfaces.Response> {
+    return this.subCategoryService.create(data);
+  }
 
   // @Put(':id')
   // @ApiBody({ type: CityUpdateDto })
