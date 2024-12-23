@@ -37,6 +37,7 @@ import {
 } from 'types/organization/organization-version';
 
 import { OrganizationFilterDto } from 'types/organization/organization/dto/filter-organization.dto';
+import { ConfirmDto } from 'types/organization/organization/dto/confirm-organization.dto';
 
 @ApiBearerAuth()
 @ApiTags('Organization')
@@ -115,15 +116,15 @@ export class OrganizationController {
     );
   }
   @Put('confirm/:id')
-  // @ApiBody({ type: OrganizationVersionUpdateDto })
+  @ApiBody({ type: ConfirmDto })
   @HttpCode(HttpStatus.OK)
   async updateConfirm(
     @Param('id', ParseIntPipe) id: number,
-    // @Body() data: Omit<OrganizationVersionUpdateDto, 'id'>,
+    @Body() data: Omit<ConfirmDto, 'id'>,
     @Req() request: Request
   ): Promise<OrganizationVersionInterfaces.Response> {
     return this.organizationService.updateConfirm(
-      id,
+      { ...data, id},
       request['userRole'],
       request['userNumericId']
     );
