@@ -14,6 +14,7 @@ import { GoogleCloudStorageService } from 'src/modules/file-upload/google-cloud-
 import {
   OrganizationVersionInterfaces,
   OrganizationVersionUpdateDto,
+  OrganizationVersionServiceCommands as CommmandsVersion,
 } from 'types/organization/organization-version';
 import { OrganizationFilterDto } from 'types/organization/organization/dto/filter-organization.dto';
 
@@ -24,13 +25,13 @@ export class OrganizationService {
     @Inject(ORGANIZATION) private adminClient: ClientProxy,
     private readonly googleCloudStorageService: GoogleCloudStorageService
   ) {}
-  
+
   async getListOfOrganization(
     query: OrganizationFilterDto,
-    userNumericId: string,
+    userNumericId: string
   ): Promise<OrganizationInterfaces.Response[]> {
     const methodName: string = this.getListOfOrganization.name;
-    query.staffNumber = userNumericId
+    query.staffNumber = userNumericId;
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
 
     const response = lastValueFrom(
@@ -45,15 +46,15 @@ export class OrganizationService {
 
   async getMyOfOrganization(
     query: ListQueryDto,
-    userNumericId: string,
+    userNumericId: string
   ): Promise<OrganizationInterfaces.Response[]> {
     const methodName: string = this.getListOfOrganization.name;
-    query.staffNumber = userNumericId
+    query.staffNumber = userNumericId;
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
 
-      const response = lastValueFrom(
-        this.adminClient.send<OrganizationInterfaces.Response[], ListQueryDto>(
-          { cmd: Commands.GET_MY_LIST },
+    const response = lastValueFrom(
+      this.adminClient.send<OrganizationInterfaces.Response[], ListQueryDto>(
+        { cmd: Commands.GET_MY_LIST },
         query
       )
     );
@@ -128,7 +129,19 @@ export class OrganizationService {
       PhotoLink: fileLinks,
       phone:
         typeof data.phone == 'string' ? JSON.parse(data.phone) : data.phone,
+      productService:
+        typeof data.productService == 'string'
+          ? JSON.parse(data.productService)
+          : data.productService,
+      nearby:
+        typeof data.nearby == 'string' ? JSON.parse(data.nearby) : data.nearby,
+      picture:
+        typeof data.picture == 'string'
+          ? JSON.parse(data.picture)
+          : data.picture,
     };
+
+    console.log(data, 'data');
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -136,7 +149,7 @@ export class OrganizationService {
       this.adminClient.send<
         OrganizationVersionInterfaces.Response,
         OrganizationVersionInterfaces.Update
-      >({ cmd: Commands.UPDATE }, data)
+      >({ cmd: CommmandsVersion.UPDATE }, data)
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
     return response;
@@ -152,6 +165,33 @@ export class OrganizationService {
         { cmd: Commands.DELETE },
         data
       )
+    );
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+    return response;
+  }
+
+  async updateConfirm(
+    id: number,
+    role: string,
+    userNumericId: string,
+  ): Promise<OrganizationVersionInterfaces.Response> {
+    const methodName: string = this.getListOfOrganization.name;
+
+    let data = {
+      id,
+      role ,
+      staffNumber: userNumericId,
+
+    };
+
+
+    this.logger.debug(`Method: ${methodName} - Request: `, data);
+
+    const response = lastValueFrom(
+      this.adminClient.send<
+        OrganizationInterfaces.Response,
+        OrganizationInterfaces.Update
+      >({ cmd: Commands.CONFIRM }, data)
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
     return response;

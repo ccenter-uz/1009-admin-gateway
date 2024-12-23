@@ -60,9 +60,12 @@ export class OrganizationController {
   @HttpCode(HttpStatus.OK)
   async getMyOfOrganization(
     @Query() query: ListQueryDto,
-    @Req() request: Request,
+    @Req() request: Request
   ): Promise<OrganizationInterfaces.Response[]> {
-    return await this.organizationService.getMyOfOrganization(query, request['userNumericId'],);
+    return await this.organizationService.getMyOfOrganization(
+      query,
+      request['userNumericId']
+    );
   }
 
   @Get(':id')
@@ -106,11 +109,29 @@ export class OrganizationController {
     @Req() request: Request,
     @UploadedFiles() files: Multer.File[]
   ): Promise<OrganizationVersionInterfaces.Response> {
+    // console.log(data, files);
+
     return this.organizationService.update(
       { ...data, id },
       request['userRole'],
       request['userNumericId'],
       files
+    );
+  }
+  @Put('confirm/:id')
+  // @ApiBody({ type: OrganizationVersionUpdateDto })
+  @HttpCode(HttpStatus.OK)
+  async updateConfirm(
+    @Param('id', ParseIntPipe) id: number,
+    // @Body() data: Omit<OrganizationVersionUpdateDto, 'id'>,
+    @Req() request: Request
+  ): Promise<OrganizationVersionInterfaces.Response> {
+    // console.log(data, files);
+
+    return this.organizationService.updateConfirm(
+      id,
+      request['userRole'],
+      request['userNumericId']
     );
   }
 

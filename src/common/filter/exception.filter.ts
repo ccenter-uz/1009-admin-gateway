@@ -15,13 +15,15 @@ export class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
+
+    
     let status =
-      exception.response.statusCode || HttpStatus.INTERNAL_SERVER_ERROR;
+      exception?.response?.statusCode || HttpStatus.INTERNAL_SERVER_ERROR;
 
     const message =
-      (typeof exception.response.message === 'string'
-        ? exception.response.message
-        : exception.response.message[0]) || 'Internal server error';
+      (typeof exception?.response?.message === 'string'
+        ? exception?.response?.message
+        : exception?.response?.message[0]) || 'Internal server error';
 
     if (exception instanceof TokenExpiredError)
       status = HttpStatus.UNAUTHORIZED;
