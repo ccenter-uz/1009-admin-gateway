@@ -57,7 +57,6 @@ export class GoogleCloudStorageService {
       });
     }
 
-    console.log(uploadedLinks, 'LINKS');
 
     return uploadedLinks;
   }
