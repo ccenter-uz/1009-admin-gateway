@@ -141,8 +141,6 @@ export class OrganizationService {
           : data.picture,
     };
 
-    console.log(data, 'data');
-
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = lastValueFrom(
@@ -173,17 +171,15 @@ export class OrganizationService {
   async updateConfirm(
     id: number,
     role: string,
-    userNumericId: string,
+    userNumericId: string
   ): Promise<OrganizationVersionInterfaces.Response> {
     const methodName: string = this.getListOfOrganization.name;
 
     let data = {
       id,
-      role ,
+      role,
       staffNumber: userNumericId,
-
     };
-
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
