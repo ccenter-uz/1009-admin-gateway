@@ -38,6 +38,7 @@ import {
 
 import { OrganizationFilterDto } from 'types/organization/organization/dto/filter-organization.dto';
 import { ConfirmDto } from 'types/organization/organization/dto/confirm-organization.dto';
+import { MyOrganizationFilterDto } from 'types/organization/organization/dto/filter-my-organization.dto';
 
 @ApiBearerAuth()
 @ApiTags('Organization')
@@ -60,7 +61,7 @@ export class OrganizationController {
   @Get('my-org')
   @HttpCode(HttpStatus.OK)
   async getMyOrganization(
-    @Query() query: OrganizationFilterDto,
+    @Query() query: MyOrganizationFilterDto,
     @Req() request: Request
   ): Promise<OrganizationInterfaces.Response[]> {
     return await this.organizationService.getMyOrganization(

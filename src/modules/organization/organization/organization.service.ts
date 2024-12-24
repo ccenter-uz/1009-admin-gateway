@@ -17,6 +17,7 @@ import {
 } from 'types/organization/organization-version';
 import { OrganizationFilterDto } from 'types/organization/organization/dto/filter-organization.dto';
 import { ConfirmDto } from 'types/organization/organization/dto/confirm-organization.dto';
+import { MyOrganizationFilterDto } from 'types/organization/organization/dto/filter-my-organization.dto';
 
 @Injectable()
 export class OrganizationService {
@@ -48,20 +49,20 @@ export class OrganizationService {
   }
 
   async getMyOrganization(
-    query: OrganizationFilterDto,
+    query: MyOrganizationFilterDto,
     userNumericId: string
   ): Promise<OrganizationInterfaces.Response[]> {
     const methodName: string = this.getMyOrganization.name;
     query.staffNumber = userNumericId;
     this.logger.debug(
       `Method: ${methodName} - Request: `,
-      OrganizationFilterDto
+      MyOrganizationFilterDto
     );
 
     const response = lastValueFrom(
       this.adminClient.send<
         OrganizationInterfaces.Response[],
-        OrganizationFilterDto
+        MyOrganizationFilterDto
       >({ cmd: Commands.GET_MY_LIST }, query)
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
