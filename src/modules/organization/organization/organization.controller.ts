@@ -59,11 +59,11 @@ export class OrganizationController {
 
   @Get('my-org')
   @HttpCode(HttpStatus.OK)
-  async getMyOfOrganization(
-    @Query() query: ListQueryDto,
+  async getMyOrganization(
+    @Query() query: OrganizationFilterDto,
     @Req() request: Request
   ): Promise<OrganizationInterfaces.Response[]> {
-    return await this.organizationService.getMyOfOrganization(
+    return await this.organizationService.getMyOrganization(
       query,
       request['userNumericId']
     );
