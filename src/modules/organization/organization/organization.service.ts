@@ -95,6 +95,9 @@ export class OrganizationService {
     const methodName: string = this.getListOfOrganization.name;
 
     const fileLinks = await this.googleCloudStorageService.uploadFiles(files);
+
+    this.logger.debug(`Method: ${methodName} - Upload File: `, fileLinks);
+
     data = {
       ...data,
       role,
