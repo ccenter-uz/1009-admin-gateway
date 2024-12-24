@@ -2,11 +2,10 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
-import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
+import { DeleteDto, GetOneDto } from 'types/global';
 import {
   OrganizationCreateDto,
   OrganizationInterfaces,
-  OrganizationUpdateDto,
   OrganizationServiceCommands as Commands,
 } from 'types/organization/organization';
 import * as Multer from 'multer';
@@ -18,6 +17,7 @@ import {
 } from 'types/organization/organization-version';
 import { OrganizationFilterDto } from 'types/organization/organization/dto/filter-organization.dto';
 import { ConfirmDto } from 'types/organization/organization/dto/confirm-organization.dto';
+import { MyOrganizationFilterDto } from 'types/organization/organization/dto/filter-my-organization.dto';
 import { OrganizationDeleteDto } from 'types/organization/organization/dto/delete-organization.dto';
 import { OrganizationRestoreDto } from 'types/organization/organization/dto/get-restore-organization.dto';
 
@@ -35,31 +35,37 @@ export class OrganizationService {
   ): Promise<OrganizationInterfaces.Response[]> {
     const methodName: string = this.getListOfOrganization.name;
     query.staffNumber = userNumericId;
-    this.logger.debug(`Method: ${methodName} - Request: `, OrganizationFilterDto);
+    this.logger.debug(
+      `Method: ${methodName} - Request: `,
+      OrganizationFilterDto
+    );
 
     const response = lastValueFrom(
-      this.adminClient.send<OrganizationInterfaces.Response[], OrganizationFilterDto>(
-        { cmd: Commands.GET_ALL_LIST },
-        query
-      )
+      this.adminClient.send<
+        OrganizationInterfaces.Response[],
+        OrganizationFilterDto
+      >({ cmd: Commands.GET_ALL_LIST }, query)
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
     return response;
   }
 
   async getMyOrganization(
-    query: OrganizationFilterDto,
+    query: MyOrganizationFilterDto,
     userNumericId: string
   ): Promise<OrganizationInterfaces.Response[]> {
     const methodName: string = this.getMyOrganization.name;
     query.staffNumber = userNumericId;
-    this.logger.debug(`Method: ${methodName} - Request: `, OrganizationFilterDto);
+    this.logger.debug(
+      `Method: ${methodName} - Request: `,
+      MyOrganizationFilterDto
+    );
 
     const response = lastValueFrom(
-      this.adminClient.send<OrganizationInterfaces.Response[], OrganizationFilterDto>(
-        { cmd: Commands.GET_MY_LIST },
-        query
-      )
+      this.adminClient.send<
+        OrganizationInterfaces.Response[],
+        MyOrganizationFilterDto
+      >({ cmd: Commands.GET_MY_LIST }, query)
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
     return response;
