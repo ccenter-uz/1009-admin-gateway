@@ -19,6 +19,7 @@ import {
   NearbyCreateDto,
   NearbyUpdateDto,
   NearbyInterfaces,
+  NearbyFilterDto,
 } from 'types/organization/nearby';
 
 @ApiBearerAuth()
@@ -30,7 +31,7 @@ export class NearbyController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Query() query: NearbyFilterDto
   ): Promise<NearbyInterfaces.Response[]> {
     return await this.nearbyService.getAll(query);
   }

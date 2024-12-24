@@ -35,10 +35,10 @@ export class OrganizationService {
   ): Promise<OrganizationInterfaces.Response[]> {
     const methodName: string = this.getListOfOrganization.name;
     query.staffNumber = userNumericId;
-    this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
+    this.logger.debug(`Method: ${methodName} - Request: `, OrganizationFilterDto);
 
     const response = lastValueFrom(
-      this.adminClient.send<OrganizationInterfaces.Response[], ListQueryDto>(
+      this.adminClient.send<OrganizationInterfaces.Response[], OrganizationFilterDto>(
         { cmd: Commands.GET_ALL_LIST },
         query
       )
@@ -47,16 +47,16 @@ export class OrganizationService {
     return response;
   }
 
-  async getMyOfOrganization(
-    query: ListQueryDto,
+  async getMyOrganization(
+    query: OrganizationFilterDto,
     userNumericId: string
   ): Promise<OrganizationInterfaces.Response[]> {
-    const methodName: string = this.getListOfOrganization.name;
+    const methodName: string = this.getMyOrganization.name;
     query.staffNumber = userNumericId;
-    this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
+    this.logger.debug(`Method: ${methodName} - Request: `, OrganizationFilterDto);
 
     const response = lastValueFrom(
-      this.adminClient.send<OrganizationInterfaces.Response[], ListQueryDto>(
+      this.adminClient.send<OrganizationInterfaces.Response[], OrganizationFilterDto>(
         { cmd: Commands.GET_MY_LIST },
         query
       )
