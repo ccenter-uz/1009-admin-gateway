@@ -116,7 +116,7 @@ export class OrganizationController {
       files
     );
   }
-  @Put('confirm/:id')
+  @Put('check/:id')
   @ApiBody({ type: ConfirmDto })
   @HttpCode(HttpStatus.OK)
   async updateConfirm(
@@ -125,7 +125,7 @@ export class OrganizationController {
     @Req() request: Request
   ): Promise<OrganizationVersionInterfaces.Response> {
     return this.organizationService.updateConfirm(
-      { ...data, id},
+      { ...data, id },
       request['userRole'],
       request['userNumericId']
     );
@@ -135,16 +135,22 @@ export class OrganizationController {
   @HttpCode(HttpStatus.OK)
   async delete(
     @Param('id', ParseIntPipe) id: number,
+    @Req() request: Request,
     @Query('delete') deleteQuery?: boolean
   ): Promise<OrganizationInterfaces.Response> {
-    return this.organizationService.delete({ id, delete: deleteQuery });
+    return this.organizationService.delete({
+      id,
+      delete: deleteQuery,
+      role: request['userRole'],
+    });
   }
 
   @Put(':id/restore')
   @HttpCode(HttpStatus.OK)
   async restore(
-    @Param('id', ParseIntPipe) id: number
+    @Param('id', ParseIntPipe) id: number,
+    @Req() request: Request
   ): Promise<OrganizationInterfaces.Response> {
-    return this.organizationService.restore({ id });
+    return this.organizationService.restore({ id, role: request['userRole'] });
   }
 }

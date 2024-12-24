@@ -10,7 +10,6 @@ import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { RpcExceptionInterceptor } from './common/interceptors/rpc.exception.interceptor';
 import { CategoryModule } from './modules/organization/category/category.module';
 import { SubCategoryModule } from './modules/organization/sub-category/sub-category.module';
-import { SectionModule } from './modules/organization/section/section.module';
 import { SegmentModule } from './modules/organization/segment/segment.module';
 import { MainOrganizationModule } from './modules/organization/main-organization/main-organization.module';
 import { ProductServiceCategoryModule } from './modules/organization/product-servise-category/product-servise-category.module';
@@ -50,7 +49,6 @@ import { PhoneTypeModule } from './modules/organization/phone-type/phone-type.mo
     }),
     CategoryModule,
     SubCategoryModule,
-    SectionModule,
     SegmentModule,
     MainOrganizationModule,
     ProductServiceCategoryModule,

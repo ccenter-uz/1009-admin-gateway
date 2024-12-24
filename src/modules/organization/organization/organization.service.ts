@@ -18,6 +18,8 @@ import {
 import { OrganizationFilterDto } from 'types/organization/organization/dto/filter-organization.dto';
 import { ConfirmDto } from 'types/organization/organization/dto/confirm-organization.dto';
 import { MyOrganizationFilterDto } from 'types/organization/organization/dto/filter-my-organization.dto';
+import { OrganizationDeleteDto } from 'types/organization/organization/dto/delete-organization.dto';
+import { OrganizationRestoreDto } from 'types/organization/organization/dto/get-restore-organization.dto';
 
 @Injectable()
 export class OrganizationService {
@@ -159,22 +161,6 @@ export class OrganizationService {
     this.logger.debug(`Method: ${methodName} - Response: `, response);
     return response;
   }
-
-  async delete(data: DeleteDto): Promise<OrganizationInterfaces.Response> {
-    const methodName: string = this.getListOfOrganization.name;
-
-    this.logger.debug(`Method: ${methodName} - Request: `, data);
-
-    const response = lastValueFrom(
-      this.adminClient.send<OrganizationInterfaces.Response, DeleteDto>(
-        { cmd: Commands.DELETE },
-        data
-      )
-    );
-    this.logger.debug(`Method: ${methodName} - Response: `, response);
-    return response;
-  }
-
   async updateConfirm(
     data: ConfirmDto,
     role: string,
@@ -200,16 +186,35 @@ export class OrganizationService {
     return response;
   }
 
-  async restore(data: GetOneDto): Promise<OrganizationInterfaces.Response> {
+  async delete(
+    data: OrganizationDeleteDto
+  ): Promise<OrganizationInterfaces.Response> {
     const methodName: string = this.getListOfOrganization.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = lastValueFrom(
-      this.adminClient.send<OrganizationInterfaces.Response, GetOneDto>(
-        { cmd: Commands.RESTORE },
-        data
-      )
+      this.adminClient.send<
+        OrganizationInterfaces.Response,
+        OrganizationDeleteDto
+      >({ cmd: Commands.DELETE }, data)
+    );
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+    return response;
+  }
+
+  async restore(
+    data: OrganizationRestoreDto
+  ): Promise<OrganizationInterfaces.Response> {
+    const methodName: string = this.getListOfOrganization.name;
+
+    this.logger.debug(`Method: ${methodName} - Request: `, data);
+
+    const response = lastValueFrom(
+      this.adminClient.send<
+        OrganizationInterfaces.Response,
+        OrganizationRestoreDto
+      >({ cmd: Commands.RESTORE }, data)
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
     return response;
