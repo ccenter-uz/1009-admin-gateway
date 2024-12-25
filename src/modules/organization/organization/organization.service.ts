@@ -92,9 +92,12 @@ export class OrganizationService {
     userNumericId: string,
     files: Array<Multer.File>
   ): Promise<OrganizationInterfaces.Response> {
-    const methodName: string = this.getListOrganization.name;
+    const methodName: string = this.create.name;
 
     const fileLinks = await this.googleCloudStorageService.uploadFiles(files);
+
+    this.logger.debug(`Method: ${methodName} - Upload File: `, fileLinks);
+
     data = {
       ...data,
       role,
@@ -128,7 +131,7 @@ export class OrganizationService {
     userNumericId: string,
     files: Array<Multer.File>
   ): Promise<OrganizationVersionInterfaces.Response> {
-    const methodName: string = this.getListOrganization.name;
+    const methodName: string = this.update.name;
 
     const fileLinks = await this.googleCloudStorageService.uploadFiles(files);
     data = {
@@ -166,7 +169,7 @@ export class OrganizationService {
     role: string,
     userNumericId: string
   ): Promise<OrganizationVersionInterfaces.Response> {
-    const methodName: string = this.getListOrganization.name;
+    const methodName: string = this.updateConfirm.name;
 
     data = {
       ...data,
@@ -189,7 +192,7 @@ export class OrganizationService {
   async delete(
     data: OrganizationDeleteDto
   ): Promise<OrganizationInterfaces.Response> {
-    const methodName: string = this.getListOrganization.name;
+    const methodName: string = this.delete.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -206,7 +209,7 @@ export class OrganizationService {
   async restore(
     data: OrganizationRestoreDto
   ): Promise<OrganizationInterfaces.Response> {
-    const methodName: string = this.getListOrganization.name;
+    const methodName: string = this.restore.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
