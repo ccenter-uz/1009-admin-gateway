@@ -20,6 +20,7 @@ import { ConfirmDto } from 'types/organization/organization/dto/confirm-organiza
 import { MyOrganizationFilterDto } from 'types/organization/organization/dto/filter-my-organization.dto';
 import { OrganizationDeleteDto } from 'types/organization/organization/dto/delete-organization.dto';
 import { OrganizationRestoreDto } from 'types/organization/organization/dto/get-restore-organization.dto';
+import { UnconfirmOrganizationFilterDto } from 'types/organization/organization/dto/filter-unconfirm-organization.dto';
 
 @Injectable()
 export class OrganizationService {
@@ -66,6 +67,27 @@ export class OrganizationService {
         OrganizationInterfaces.Response[],
         MyOrganizationFilterDto
       >({ cmd: Commands.GET_MY_LIST }, query)
+    );
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+    return response;
+  }
+
+  async getUnconfirm(
+    query: UnconfirmOrganizationFilterDto,
+    userNumericId: string
+  ): Promise<OrganizationInterfaces.Response[]> {
+    const methodName: string = this.getUnconfirm.name;
+    query.staffNumber = userNumericId;
+    this.logger.debug(
+      `Method: ${methodName} - Request: `,
+      UnconfirmOrganizationFilterDto
+    );
+
+    const response = lastValueFrom(
+      this.adminClient.send<
+        OrganizationInterfaces.Response[],
+        UnconfirmOrganizationFilterDto
+      >({ cmd: Commands.GET_UNCONFIRM_LIST }, query)
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
     return response;
