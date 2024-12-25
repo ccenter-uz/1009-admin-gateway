@@ -48,11 +48,11 @@ export class OrganizationController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfOrganization(
+  async getListOrganization(
     @Query() query: OrganizationFilterDto,
     @Req() request: Request
   ): Promise<OrganizationInterfaces.Response[]> {
-    return await this.organizationService.getListOfOrganization(
+    return await this.organizationService.getListOrganization(
       query,
       request['userNumericId']
     );

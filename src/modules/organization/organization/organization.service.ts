@@ -29,11 +29,11 @@ export class OrganizationService {
     private readonly googleCloudStorageService: GoogleCloudStorageService
   ) {}
 
-  async getListOfOrganization(
+  async getListOrganization(
     query: OrganizationFilterDto,
     userNumericId: string
   ): Promise<OrganizationInterfaces.Response[]> {
-    const methodName: string = this.getListOfOrganization.name;
+    const methodName: string = this.getListOrganization.name;
     query.staffNumber = userNumericId;
     this.logger.debug(
       `Method: ${methodName} - Request: `,
@@ -72,7 +72,7 @@ export class OrganizationService {
   }
 
   async getById(data: GetOneDto): Promise<OrganizationInterfaces.Response> {
-    const methodName: string = this.getListOfOrganization.name;
+    const methodName: string = this.getListOrganization.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -92,7 +92,7 @@ export class OrganizationService {
     userNumericId: string,
     files: Array<Multer.File>
   ): Promise<OrganizationInterfaces.Response> {
-    const methodName: string = this.getListOfOrganization.name;
+    const methodName: string = this.getListOrganization.name;
 
     const fileLinks = await this.googleCloudStorageService.uploadFiles(files);
     data = {
@@ -128,7 +128,7 @@ export class OrganizationService {
     userNumericId: string,
     files: Array<Multer.File>
   ): Promise<OrganizationVersionInterfaces.Response> {
-    const methodName: string = this.getListOfOrganization.name;
+    const methodName: string = this.getListOrganization.name;
 
     const fileLinks = await this.googleCloudStorageService.uploadFiles(files);
     data = {
@@ -166,7 +166,7 @@ export class OrganizationService {
     role: string,
     userNumericId: string
   ): Promise<OrganizationVersionInterfaces.Response> {
-    const methodName: string = this.getListOfOrganization.name;
+    const methodName: string = this.getListOrganization.name;
 
     data = {
       ...data,
@@ -189,7 +189,7 @@ export class OrganizationService {
   async delete(
     data: OrganizationDeleteDto
   ): Promise<OrganizationInterfaces.Response> {
-    const methodName: string = this.getListOfOrganization.name;
+    const methodName: string = this.getListOrganization.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -206,7 +206,7 @@ export class OrganizationService {
   async restore(
     data: OrganizationRestoreDto
   ): Promise<OrganizationInterfaces.Response> {
-    const methodName: string = this.getListOfOrganization.name;
+    const methodName: string = this.getListOrganization.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
