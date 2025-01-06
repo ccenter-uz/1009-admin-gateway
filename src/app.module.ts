@@ -35,6 +35,7 @@ import { StreetModule } from './modules/organization/street/street.module';
 import { OrganizationModule } from './modules/organization/organization/organization.module';
 import { GoogleCloudStorageModule } from './modules/file-upload/google-cloud-storage.module';
 import { PhoneTypeModule } from './modules/organization/phone-type/phone-type.module';
+import { FtpModule } from './modules/organization/ftp/ftp.module';
 
 @Module({
   imports: [
@@ -71,6 +72,7 @@ import { PhoneTypeModule } from './modules/organization/phone-type/phone-type.mo
     OrganizationModule,
     GoogleCloudStorageModule,
     PhoneTypeModule,
+    FtpModule
   ],
   providers: [
     {
