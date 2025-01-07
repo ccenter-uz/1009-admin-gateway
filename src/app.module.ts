@@ -81,10 +81,10 @@ import { PhoneTypeModule } from './modules/organization/phone-type/phone-type.mo
       provide: APP_INTERCEPTOR,
       useClass: RpcExceptionInterceptor,
     },
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: AuthGuard,
-    // },
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
   ],
 })
 export class AppModule {}
