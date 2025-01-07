@@ -39,6 +39,7 @@ import {
 import { OrganizationFilterDto } from 'types/organization/organization/dto/filter-organization.dto';
 import { ConfirmDto } from 'types/organization/organization/dto/confirm-organization.dto';
 import { MyOrganizationFilterDto } from 'types/organization/organization/dto/filter-my-organization.dto';
+import { UnconfirmOrganizationFilterDto } from 'types/organization/organization/dto/filter-unconfirm-organization.dto';
 
 @ApiBearerAuth()
 @ApiTags('Organization')
@@ -48,11 +49,11 @@ export class OrganizationController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getListOfOrganization(
+  async getListOrganization(
     @Query() query: OrganizationFilterDto,
     @Req() request: Request
   ): Promise<OrganizationInterfaces.Response[]> {
-    return await this.organizationService.getListOfOrganization(
+    return await this.organizationService.getListOrganization(
       query,
       request['userNumericId']
     );
@@ -65,6 +66,18 @@ export class OrganizationController {
     @Req() request: Request
   ): Promise<OrganizationInterfaces.Response[]> {
     return await this.organizationService.getMyOrganization(
+      query,
+      request['userNumericId']
+    );
+  }
+
+  @Get('unconfirm')
+  @HttpCode(HttpStatus.OK)
+  async getUnconfirm(
+    @Query() query: UnconfirmOrganizationFilterDto,
+    @Req() request: Request
+  ): Promise<OrganizationInterfaces.Response[]> {
+    return await this.organizationService.getUnconfirm(
       query,
       request['userNumericId']
     );
