@@ -186,12 +186,12 @@ export class OrganizationService {
     this.logger.debug(`Method: ${methodName} - Response: `, response);
     return response;
   }
-  async updateConfirm(
+  async updateCheck(
     data: ConfirmDto,
     role: string,
     userNumericId: string
   ): Promise<OrganizationVersionInterfaces.Response> {
-    const methodName: string = this.updateConfirm.name;
+    const methodName: string = this.updateCheck.name;
 
     data = {
       ...data,
@@ -205,7 +205,7 @@ export class OrganizationService {
       this.adminClient.send<
         OrganizationInterfaces.Response,
         OrganizationInterfaces.Update
-      >({ cmd: Commands.CONFIRM }, data)
+      >({ cmd: Commands.CHECK }, data)
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
     return response;

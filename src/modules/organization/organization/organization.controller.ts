@@ -132,12 +132,12 @@ export class OrganizationController {
   @Put('check/:id')
   @ApiBody({ type: ConfirmDto })
   @HttpCode(HttpStatus.OK)
-  async updateConfirm(
+  async updateCheck(
     @Param('id', ParseIntPipe) id: number,
     @Body() data: Omit<ConfirmDto, 'id'>,
     @Req() request: Request
   ): Promise<OrganizationVersionInterfaces.Response> {
-    return this.organizationService.updateConfirm(
+    return this.organizationService.updateCheck(
       { ...data, id },
       request['userRole'],
       request['userNumericId']
