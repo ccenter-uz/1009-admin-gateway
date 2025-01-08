@@ -11,9 +11,9 @@ export class FtpService {
   constructor(@Inject(ORGANIZATION) private readonly adminClient: ClientProxy) {}
 
   async readExcel(remoteFilePath: string, localFilePath: string): Promise<any> {
-    this.logger.debug(`Sending READ_FILES command with paths:
-      remoteFilePath: ${remoteFilePath},
-      localFilePath: ${localFilePath}`);
+    // this.logger.debug(`Sending READ_FILES command with paths:
+    //   remoteFilePath: ${remoteFilePath},
+    //   localFilePath: ${localFilePath}`);
 
     const response = await lastValueFrom(
       this.adminClient.send(
@@ -22,7 +22,7 @@ export class FtpService {
       )
     );
 
-    this.logger.debug(`Received response: `, response);
+    // this.logger.debug(`Received response: `, response);
     return response;
   }
 }
