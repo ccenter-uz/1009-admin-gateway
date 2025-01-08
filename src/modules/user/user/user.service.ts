@@ -1,4 +1,10 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import {
+  HttpException,
+  Inject,
+  Injectable,
+  Logger,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
@@ -40,7 +46,11 @@ export class UserService {
       >({ cmd: Commands.LOG_IN }, data)
     );
 
-    this.logger.debug(`Method: ${methodName} - Role: `, user['role']['name']);
+    if (user?.error) {
+      throw new UnauthorizedException(user?.error?.error);
+    }
+
+    this.logger.debug(`Method: ${methodName} - Role: `, user?.role?.name);
 
     const accessToken = this.jwtService.sign(
       {
@@ -52,7 +62,7 @@ export class UserService {
 
     const response: UserInterfaces.LogInResponse = {
       accessToken,
-      permissions: UserPermissions[user['role']['name']],
+      permissions: UserPermissions[user?.role?.name],
     };
 
     this.logger.debug(`Method: ${methodName} - Response: `, response);
