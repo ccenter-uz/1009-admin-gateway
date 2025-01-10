@@ -12,6 +12,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { UserCreateDto, UserInterfaces, UserUpdateDto } from 'types/user/user';
@@ -50,6 +51,15 @@ export class UserController {
     @Query() query: LanguageRequestDto
   ): Promise<UserInterfaces.Response> {
     return this.userService.getById({ id, ...query });
+  }
+
+  @Get('get-me-by-id')
+  @HttpCode(HttpStatus.OK)
+  async getMeById(
+    @Req() request: Request
+  ): Promise<UserInterfaces.Response> {
+    
+    return this.userService.getMeById({ id: +request['userNumericId'] });
   }
 
   @Post()

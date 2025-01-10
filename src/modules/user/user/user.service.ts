@@ -17,6 +17,7 @@ import {
 } from 'types/global';
 import {
   UserServiceCommands as Commands,
+  GetMeDto,
   UserCreateDto,
   UserUpdateDto,
 } from 'types/user/user';
@@ -63,6 +64,7 @@ export class UserService {
     const response: UserInterfaces.LogInResponse = {
       accessToken,
       permissions: UserPermissions[user?.role?.name],
+      role: user?.role?.name,
     };
 
     this.logger.debug(`Method: ${methodName} - Response: `, response);
@@ -116,6 +118,23 @@ export class UserService {
     const response: UserInterfaces.Response = await lastValueFrom(
       this.adminClient.send<UserInterfaces.Response, GetOneDto>(
         { cmd: Commands.GET_BY_ID },
+        data
+      )
+    );
+
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+
+    return response;
+  }
+
+  async getMeById(data: GetMeDto): Promise<UserInterfaces.Response> {
+    const methodName: string = this.getMeById.name;
+
+    this.logger.debug(`Method: ${methodName} - Request: `, data);
+
+    const response: UserInterfaces.Response = await lastValueFrom(
+      this.adminClient.send<UserInterfaces.Response, GetMeDto>(
+        { cmd: Commands.GET_ME_BY_ID },
         data
       )
     );
