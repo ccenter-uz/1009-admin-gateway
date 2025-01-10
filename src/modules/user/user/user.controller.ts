@@ -59,7 +59,7 @@ export class UserController {
     @Req() request: Request
   ): Promise<UserInterfaces.Response> {
     
-    return this.userService.getMeById({ id: +request['id'] });
+    return this.userService.getMeById({ id: +request['userId'] });
   }
 
   @Post()
