@@ -1,4 +1,10 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import {
+  HttpException,
+  Inject,
+  Injectable,
+  Logger,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
@@ -11,6 +17,7 @@ import {
 } from 'types/global';
 import {
   UserServiceCommands as Commands,
+  GetMeDto,
   UserCreateDto,
   UserUpdateDto,
 } from 'types/user/user';
@@ -40,7 +47,11 @@ export class UserService {
       >({ cmd: Commands.LOG_IN }, data)
     );
 
-    this.logger.debug(`Method: ${methodName} - Role: `, user['role']['name']);
+    if (user?.error) {
+      throw new UnauthorizedException(user?.error?.error);
+    }
+
+    this.logger.debug(`Method: ${methodName} - Role: `, user?.role?.name);
 
     const accessToken = this.jwtService.sign(
       {
@@ -52,7 +63,8 @@ export class UserService {
 
     const response: UserInterfaces.LogInResponse = {
       accessToken,
-      permissions: UserPermissions[user['role']['name']],
+      permissions: UserPermissions[user?.role?.name],
+      role: user?.role?.name,
     };
 
     this.logger.debug(`Method: ${methodName} - Response: `, response);
@@ -106,6 +118,23 @@ export class UserService {
     const response: UserInterfaces.Response = await lastValueFrom(
       this.adminClient.send<UserInterfaces.Response, GetOneDto>(
         { cmd: Commands.GET_BY_ID },
+        data
+      )
+    );
+
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+
+    return response;
+  }
+
+  async getMeById(data: GetMeDto): Promise<UserInterfaces.Response> {
+    const methodName: string = this.getMeById.name;
+
+    this.logger.debug(`Method: ${methodName} - Request: `, data);
+
+    const response: UserInterfaces.Response = await lastValueFrom(
+      this.adminClient.send<UserInterfaces.Response, GetMeDto>(
+        { cmd: Commands.GET_ME_BY_ID },
         data
       )
     );

@@ -44,9 +44,11 @@ export class AuthGuard implements CanActivate {
     }
 
     const user = await this.userService.getById({ id: decoded.userId });
-    request.userNumericId = user.numericId;
+    request.userNumericId = user?.numericId;
+    request.userId= user?.id;
     request.userRole = user['role'].name;
 
+    
     return true;
   }
 }
