@@ -13,12 +13,7 @@ export class FtpService {
     @Inject(ORGANIZATION) private readonly adminClient: ClientProxy
   ) {}
   async readExcel(rows: scriptResponse): Promise<any> {
-    // console.log(1212);
-    // // this.logger.debug(`Sending READ_FILES command with paths:
-    // console.log(rows);
-    // console.log('serviceRows:', rows);
-
-// console.log(rows);
+    
 
     const response = await lastValueFrom(
       this.adminClient.send({ cmd: Commands.POST_ORGANIZATIONS }, { rows })
