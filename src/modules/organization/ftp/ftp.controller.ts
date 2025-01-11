@@ -1,12 +1,7 @@
-import {
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { FtpService } from './ftp.service';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { scriptResponse } from 'types/organization/organization/dto/create-exel.dto';
 
 @ApiBearerAuth()
 @ApiTags('ftp')
@@ -14,12 +9,10 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class FtpController {
   constructor(private readonly ftpService: FtpService) {}
 
-  @Get('read-excel')
-  @HttpCode(HttpStatus.OK)
-  async readExcel(
-    @Query('remoteFilePath') remoteFilePath: string,
-    @Query('localFilePath') localFilePath: string
-  ): Promise<any> {
-    return await this.ftpService.readExcel(remoteFilePath, localFilePath);
+  @Post('create-organizations')
+  @ApiBody({ type: scriptResponse })
+  @HttpCode(HttpStatus.CREATED)
+  async readExcel(@Body() rows: any): Promise<any> {
+    return this.ftpService.readExcel(rows);
   }
 }

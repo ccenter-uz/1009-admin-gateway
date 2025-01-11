@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { AppConfig } from './common/config/app.config';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,7 +12,8 @@ async function bootstrap() {
   const appConfig = configService.get<AppConfig>('app');
   const corsOrigin: string = appConfig.cors_domains;
   app.setGlobalPrefix('v1');
-
+  app.use(bodyParser.json({ limit: '10mb' }));
+  app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
   /* CORS */
   app.enableCors({
     origin: corsOrigin,
@@ -28,7 +30,6 @@ async function bootstrap() {
       transform: true,
     })
   );
-
   /* SWAGGER */
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Admin Api Docs')
