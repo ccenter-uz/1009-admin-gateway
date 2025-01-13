@@ -40,6 +40,7 @@ import { OrganizationFilterDto } from 'types/organization/organization/dto/filte
 import { ConfirmDto } from 'types/organization/organization/dto/confirm-organization.dto';
 import { MyOrganizationFilterDto } from 'types/organization/organization/dto/filter-my-organization.dto';
 import { UnconfirmOrganizationFilterDto } from 'types/organization/organization/dto/filter-unconfirm-organization.dto';
+import { OrganizationDeleteDto } from 'types/organization/organization/dto/delete-organization.dto';
 
 @ApiBearerAuth()
 @ApiTags('Organization')
@@ -150,12 +151,14 @@ export class OrganizationController {
   async delete(
     @Param('id', ParseIntPipe) id: number,
     @Req() request: Request,
-    @Query('delete') deleteQuery?: boolean
+    @Query('delete') deleteQuery?: boolean,
+    @Query('deleteReason') deleteReason?: string
   ): Promise<OrganizationInterfaces.Response> {
     return this.organizationService.delete({
       id,
       delete: deleteQuery,
       role: request['userRole'],
+      deleteReason: deleteReason,
     });
   }
 
