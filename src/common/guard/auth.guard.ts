@@ -22,6 +22,8 @@ export class AuthGuard implements CanActivate {
 
     if (path === '/user/log-in') return true;
 
+    console.log(request.route.path, 'PATH');
+
     if (!token) {
       throw new ForbiddenException('No token provided');
     }
@@ -45,10 +47,9 @@ export class AuthGuard implements CanActivate {
 
     const user = await this.userService.getById({ id: decoded.userId });
     request.userNumericId = user?.numericId;
-    request.userId= user?.id;
+    request.userId = user?.id;
     request.userRole = user['role'].name;
 
-    
     return true;
   }
 }

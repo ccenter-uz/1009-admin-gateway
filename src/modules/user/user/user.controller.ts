@@ -43,6 +43,12 @@ export class UserController {
     return await this.userService.getListOfUsers(query);
   }
 
+  @Get('get-me') // /user/get-me
+  @HttpCode(HttpStatus.OK)
+  async getMeById(@Req() request: Request): Promise<UserInterfaces.Response> {
+    return this.userService.getMeById({ id: +request['userId'] });
+  }
+
   @Get(':id')
   @ApiParam({ name: 'id' })
   @HttpCode(HttpStatus.OK)
@@ -51,12 +57,6 @@ export class UserController {
     @Query() query: LanguageRequestDto
   ): Promise<UserInterfaces.Response> {
     return this.userService.getById({ id, ...query });
-  }
-
-  @Get('get-me')
-  @HttpCode(HttpStatus.OK)
-  async getMeById(@Req() request: Request): Promise<UserInterfaces.Response> {
-    return this.userService.getMeById({ id: +request['userId'] });
   }
 
   @Post()
