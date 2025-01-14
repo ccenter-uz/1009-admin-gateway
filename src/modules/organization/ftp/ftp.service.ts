@@ -19,7 +19,7 @@ export class FtpService {
       this.adminClient.send({ cmd: Commands.POST_ORGANIZATIONS }, { rows })
     );
 
-    // this.logger.debug(`Received response: `, response);
+    this.logger.debug(`Received response: `, response);
     return response;
   }
 }
