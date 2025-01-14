@@ -53,12 +53,9 @@ export class UserController {
     return this.userService.getById({ id, ...query });
   }
 
-  @Get('get-me-by-id')
+  @Get('get-me')
   @HttpCode(HttpStatus.OK)
-  async getMeById(
-    @Req() request: Request
-  ): Promise<UserInterfaces.Response> {
-    
+  async getMeById(@Req() request: Request): Promise<UserInterfaces.Response> {
     return this.userService.getMeById({ id: +request['userId'] });
   }
 
