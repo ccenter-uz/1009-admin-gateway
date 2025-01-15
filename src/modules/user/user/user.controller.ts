@@ -15,7 +15,12 @@ import {
   Req,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
-import { UserCreateDto, UserInterfaces, UserUpdateDto } from 'types/user/user';
+import {
+  UserCreateDto,
+  UserInterfaces,
+  UserUpdateDto,
+  UserUpdateMeDto,
+} from 'types/user/user';
 import { UserLogInDto } from 'types/user/user/dto/log-in-user.dto';
 import { UserService } from './user.service';
 import { LanguageRequestDto, ListQueryDto } from 'types/global';
@@ -43,10 +48,20 @@ export class UserController {
     return await this.userService.getListOfUsers(query);
   }
 
-  @Get('get-me') // /user/get-me
+  @Get('get-me')
   @HttpCode(HttpStatus.OK)
   async getMeById(@Req() request: Request): Promise<UserInterfaces.Response> {
     return this.userService.getMeById({ id: +request['userId'] });
+  }
+
+  @Put('update-me')
+  @ApiBody({ type: UserUpdateMeDto })
+  @HttpCode(HttpStatus.OK)
+  async updateMe(
+    @Req() request: Request,
+    @Body() data: Omit<UserUpdateMeDto, 'id'>
+  ): Promise<UserInterfaces.Response> {
+    return this.userService.updateMe({ ...data, id: +request['userId'] });
   }
 
   @Get(':id')

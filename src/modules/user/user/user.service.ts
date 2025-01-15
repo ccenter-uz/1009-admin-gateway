@@ -17,9 +17,9 @@ import {
 } from 'types/global';
 import {
   UserServiceCommands as Commands,
-  GetMeDto,
   UserCreateDto,
   UserUpdateDto,
+  UserUpdateMeDto,
 } from 'types/user/user';
 import { UserInterfaces } from 'types/user/user';
 import { CheckUserPermissionDto } from 'types/user/user/dto/check-permission.dto';
@@ -127,13 +127,13 @@ export class UserService {
     return response;
   }
 
-  async getMeById(data: GetMeDto): Promise<UserInterfaces.Response> {
+  async getMeById(data: GetOneDto): Promise<UserInterfaces.Response> {
     const methodName: string = this.getMeById.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response: UserInterfaces.Response = await lastValueFrom(
-      this.adminClient.send<UserInterfaces.Response, GetMeDto>(
+      this.adminClient.send<UserInterfaces.Response, GetOneDto>(
         { cmd: Commands.GET_ME_BY_ID },
         data
       )
@@ -170,6 +170,27 @@ export class UserService {
       const response: UserInterfaces.Response = await lastValueFrom(
         this.adminClient.send<UserInterfaces.Response, UserInterfaces.Update>(
           { cmd: Commands.UPDATE },
+          data
+        )
+      );
+
+      this.logger.debug(`Method: ${methodName} - Response: `, response);
+
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async updateMe(data: UserUpdateMeDto): Promise<UserInterfaces.Response> {
+    try {
+      const methodName: string = this.updateMe.name;
+
+      this.logger.debug(`Method: ${methodName} - Request: `, data);
+
+      const response: UserInterfaces.Response = await lastValueFrom(
+        this.adminClient.send<UserInterfaces.Response, UserInterfaces.UpdateMe>(
+          { cmd: Commands.UPDATE_ME_BY_ID },
           data
         )
       );
