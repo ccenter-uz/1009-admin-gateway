@@ -69,7 +69,8 @@ export class OrganizationController {
   ): Promise<OrganizationInterfaces.Response[]> {
     return await this.organizationService.getMyOrganization(
       query,
-      request['userNumericId']
+      request['userNumericId'],
+      request['userRole']
     );
   }
 
@@ -90,9 +91,13 @@ export class OrganizationController {
   @HttpCode(HttpStatus.OK)
   async getById(
     @Param('id', ParseIntPipe) id: number,
-    @Query() query: LanguageRequestDto
+    @Query() query: LanguageRequestDto,
+    @Req() request: Request
   ): Promise<OrganizationInterfaces.Response> {
-    return this.organizationService.getById({ id, ...query });
+    return this.organizationService.getById(
+      { id, ...query },
+      request['userRole']
+    );
   }
 
   @Post()

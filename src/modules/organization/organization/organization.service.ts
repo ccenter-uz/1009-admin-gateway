@@ -55,11 +55,12 @@ export class OrganizationService {
 
   async getMyOrganization(
     query: MyOrganizationFilterDto,
-    userNumericId: string
+    userNumericId: string,
+    role: string
   ): Promise<OrganizationInterfaces.Response[]> {
     const methodName: string = this.getMyOrganization.name;
     query.staffNumber = userNumericId;
-
+    query.role = role;
     this.logger.debug(
       `Method: ${methodName} - Request: `,
       MyOrganizationFilterDto
@@ -96,11 +97,14 @@ export class OrganizationService {
     return response;
   }
 
-  async getById(data: GetOneDto): Promise<OrganizationInterfaces.Response> {
+  async getById(
+    data: GetOneDto,
+    role: string
+  ): Promise<OrganizationInterfaces.Response> {
     const methodName: string = this.getListOrganization.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
-
+    data.role = role;
     const response = lastValueFrom(
       this.adminClient.send<OrganizationInterfaces.Response, GetOneDto>(
         { cmd: Commands.GET_BY_ID },
