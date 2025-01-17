@@ -43,8 +43,10 @@ export class UserController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getListOfUsers(
+    @Req() request: Request,
     @Query() query: ListQueryDto
   ): Promise<UserInterfaces.Response[]> {
+    console.log(request.body, 'REQ');
     return await this.userService.getListOfUsers(query);
   }
 
