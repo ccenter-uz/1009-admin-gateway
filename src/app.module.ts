@@ -36,6 +36,10 @@ import { OrganizationModule } from './modules/organization/organization/organiza
 import { GoogleCloudStorageModule } from './modules/file-upload/google-cloud-storage.module';
 import { PhoneTypeModule } from './modules/organization/phone-type/phone-type.module';
 import { FtpModule } from './modules/organization/ftp/ftp.module';
+import { AdditionalCategoryModule } from './modules/organization/additional-category/additional-category.module';
+import { AdditionalModule } from './modules/organization/additional/additional.module';
+import { AdditionalContentModule } from './modules/organization/additional-content/additional-content.module';
+import { AdditionalTableModule } from './modules/organization/additional-table/additional-table.module';
 
 @Module({
   imports: [
@@ -72,7 +76,11 @@ import { FtpModule } from './modules/organization/ftp/ftp.module';
     OrganizationModule,
     GoogleCloudStorageModule,
     PhoneTypeModule,
-    FtpModule
+    FtpModule,
+    AdditionalCategoryModule,
+    AdditionalModule,
+    AdditionalContentModule,
+    AdditionalTableModule,
   ],
   providers: [
     {
