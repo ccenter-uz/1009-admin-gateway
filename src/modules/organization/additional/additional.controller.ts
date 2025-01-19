@@ -26,9 +26,7 @@ import { AdditionalFilterDto } from 'types/organization/additional/dto/filter-ad
 @ApiTags('additional')
 @Controller('additional')
 export class AdditionalController {
-  constructor(
-    private readonly additionalService: AdditionalService
-  ) {}
+  constructor(private readonly additionalService: AdditionalService) {}
 
   @Get()
   @HttpCode(HttpStatus.OK)
@@ -57,7 +55,7 @@ export class AdditionalController {
   ): Promise<AdditionalInterfaces.Response> {
     return this.additionalService.create(
       data,
-      request['userNumericId']
+      request.body['userData'].user.numericId
     );
   }
 

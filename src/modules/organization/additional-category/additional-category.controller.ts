@@ -57,7 +57,7 @@ export class AdditionalCategoryController {
   ): Promise<AdditionalCategoryInterfaces.Response> {
     return this.additionalCategoryService.create(
       data,
-      request['userNumericId']
+      request.body['userData'].user.numericId
     );
   }
 

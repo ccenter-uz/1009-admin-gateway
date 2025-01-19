@@ -53,7 +53,10 @@ export class NearbyController {
     @Body() data: NearbyCreateDto,
     @Req() request: Request
   ): Promise<NearbyInterfaces.Response> {
-    return this.nearbyService.create(data, request['userNumericId']);
+    return this.nearbyService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

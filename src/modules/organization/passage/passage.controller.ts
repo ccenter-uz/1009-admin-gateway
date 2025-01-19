@@ -53,7 +53,10 @@ export class PassageController {
     @Body() data: PassageCreateDto,
     @Req() request: Request
   ): Promise<PassageInterfaces.Response> {
-    return this.passageService.create(data, request['userNumericId']);
+    return this.passageService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from 'src/modules/user/user/user.service';
 import { JwtService } from '@nestjs/jwt';
-import { Roles, UserType } from 'types/global';
+import { LogDataType } from 'types/global';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -48,20 +48,18 @@ export class AuthGuard implements CanActivate {
 
     const user = await this.userService.getById({ id: decoded.userId });
 
-    console.log(user.role.name, 'ROLE');
-    const userData: UserType = {
-      id: user?.id,
-      numericId: user?.numericId,
-      fullName: user?.fullName,
-      role: user.role.name,
+    const userData: LogDataType = {
+      user: {
+        id: user?.id,
+        numericId: user?.numericId,
+        fullName: user?.fullName,
+        role: user.role.name,
+      },
+      path,
+      method,
     };
 
     request.body.userData = userData;
-
-    request.userNumericId = user?.numericId;
-    request.userId = user?.id;
-    request.userFullName = user?.fullName;
-    request.userRole = user.role.name;
 
     return true;
   }

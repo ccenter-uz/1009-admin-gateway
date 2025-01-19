@@ -13,12 +13,7 @@ import {
   Req,
 } from '@nestjs/common';
 import { ProductServiceCategoryService } from './product-servise-category.service';
-import {
-  ApiBearerAuth,
-  ApiBody,
-  ApiParam,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { LanguageRequestDto, ListQueryDto } from 'types/global';
 import {
   ProductServiseCategoryCreateDto,
@@ -61,7 +56,7 @@ export class ProductServiceCategoryController {
   ): Promise<ProductServiseCategoryInterfaces.Response> {
     return this.productServiceCategoryService.create(
       data,
-      request['userNumericId']
+      request.body['userData'].user.numericId
     );
   }
 

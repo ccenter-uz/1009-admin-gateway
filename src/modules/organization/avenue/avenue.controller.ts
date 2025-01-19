@@ -53,7 +53,10 @@ export class AvenueController {
     @Body() data: AvenueCreateDto,
     @Req() request: Request
   ): Promise<AvenueInterfaces.Response> {
-    return this.avenueService.create(data, request['userNumericId']);
+    return this.avenueService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

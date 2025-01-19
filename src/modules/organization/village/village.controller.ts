@@ -53,7 +53,10 @@ export class VillageController {
     @Body() data: VillageCreateDto,
     @Req() request: Request
   ): Promise<VillageInterfaces.Response> {
-    return this.villageService.create(data, request['userNumericId']);
+    return this.villageService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

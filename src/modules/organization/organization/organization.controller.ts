@@ -56,8 +56,8 @@ export class OrganizationController {
   ): Promise<OrganizationInterfaces.Response[]> {
     return await this.organizationService.getListOrganization(
       query,
-      request['userNumericId'],
-      request['userRole']
+      request.body['userData'].user.numericId,
+      request.body['userData'].user.role
     );
   }
 
@@ -69,8 +69,8 @@ export class OrganizationController {
   ): Promise<OrganizationInterfaces.Response[]> {
     return await this.organizationService.getMyOrganization(
       query,
-      request['userNumericId'],
-      request['userRole']
+      request.body['userData'].user.numericId,
+      request.body['userData'].user.role
     );
   }
 
@@ -82,7 +82,7 @@ export class OrganizationController {
   ): Promise<OrganizationInterfaces.Response[]> {
     return await this.organizationService.getUnconfirm(
       query,
-      request['userNumericId']
+      request.body['userData'].user.numericId
     );
   }
 
@@ -96,7 +96,7 @@ export class OrganizationController {
   ): Promise<OrganizationInterfaces.Response> {
     return this.organizationService.getById(
       { id, ...query },
-      request['userRole']
+      request.body['userData'].user.role
     );
   }
 
@@ -112,8 +112,8 @@ export class OrganizationController {
   ): Promise<OrganizationInterfaces.Response> {
     return this.organizationService.create(
       data,
-      request['userRole'],
-      request['userNumericId'],
+      request.body['userData'].user.role,
+      request.body['userData'].user.numericId,
       files
     );
   }
@@ -131,8 +131,8 @@ export class OrganizationController {
   ): Promise<OrganizationVersionInterfaces.Response> {
     return this.organizationService.update(
       { ...data, id },
-      request['userRole'],
-      request['userNumericId'],
+      request.body['userData'].user.role,
+      request.body['userData'].user.numericId,
       files
     );
   }
@@ -146,8 +146,8 @@ export class OrganizationController {
   ): Promise<OrganizationVersionInterfaces.Response> {
     return this.organizationService.updateCheck(
       { ...data, id },
-      request['userRole'],
-      request['userNumericId']
+      request.body['userData'].user.role,
+      request.body['userData'].user.numericId
     );
   }
 
@@ -162,7 +162,7 @@ export class OrganizationController {
     return this.organizationService.delete({
       id,
       delete: deleteQuery,
-      role: request['userRole'],
+      role: request.body['userData'].user.role,
       deleteReason: deleteReason,
     });
   }
@@ -173,6 +173,9 @@ export class OrganizationController {
     @Param('id', ParseIntPipe) id: number,
     @Req() request: Request
   ): Promise<OrganizationInterfaces.Response> {
-    return this.organizationService.restore({ id, role: request['userRole'] });
+    return this.organizationService.restore({
+      id,
+      role: request.body['userData'].user.role,
+    });
   }
 }
