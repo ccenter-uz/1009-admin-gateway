@@ -52,7 +52,10 @@ export class ImpasseController {
     @Body() data: ImpasseCreateDto,
     @Req() request: Request
   ): Promise<ImpasseInterfaces.Response> {
-    return this.impasseService.create(data, request['userNumericId']);
+    return this.impasseService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

@@ -55,7 +55,10 @@ export class AdditionalTableController {
     @Body() data: AdditionalTableCreateDto,
     @Req() request: Request
   ): Promise<AdditionalTableInterfaces.Response> {
-    return this.additionalTableService.create(data, request['userNumericId']);
+    return this.additionalTableService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

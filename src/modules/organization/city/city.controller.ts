@@ -33,6 +33,7 @@ export class CityController {
   async getAll(
     @Query() query: CityFilterDto
   ): Promise<CityInterfaces.Response[]> {
+    console.log('START');
     return await this.subCategoryService.getAll(query);
   }
 

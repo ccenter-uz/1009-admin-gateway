@@ -53,7 +53,10 @@ export class LaneController {
     @Body() data: LaneCreateDto,
     @Req() request: Request
   ): Promise<LaneInterfaces.Response> {
-    return this.laneService.create(data, request['userNumericId']);
+    return this.laneService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

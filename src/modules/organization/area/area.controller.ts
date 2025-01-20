@@ -53,7 +53,10 @@ export class AreaController {
     @Body() data: AreaCreateDto,
     @Req() request: Request
   ): Promise<AreaInterfaces.Response> {
-    return this.areaService.create(data, request['userNumericId']);
+    return this.areaService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

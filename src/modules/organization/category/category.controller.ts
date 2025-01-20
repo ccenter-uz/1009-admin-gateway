@@ -53,7 +53,10 @@ export class CategoryController {
     @Body() data: CategoryCreateDto,
     @Req() request: Request
   ): Promise<CategoryInterfaces.Response> {
-    return this.categoryService.create(data, request['userNumericId']);
+    return this.categoryService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

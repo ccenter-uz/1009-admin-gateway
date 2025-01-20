@@ -57,7 +57,7 @@ export class AdditionalContentController {
   ): Promise<AdditionalContentInterfaces.Response> {
     return this.additionalContentService.create(
       data,
-      request['userNumericId']
+      request.body['userData'].user.numericId
     );
   }
 

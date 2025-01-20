@@ -53,7 +53,10 @@ export class StreetController {
     @Body() data: StreetCreateDto,
     @Req() request: Request
   ): Promise<StreetInterfaces.Response> {
-    return this.streetService.create(data, request['userNumericId']);
+    return this.streetService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

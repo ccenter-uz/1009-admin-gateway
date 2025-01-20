@@ -52,7 +52,10 @@ export class NearbyCategoryController {
     @Body() data: NearbyCategoryCreateDto,
     @Req() request: Request
   ): Promise<NearbyCategoryInterfaces.Response> {
-    return this.categoryService.create(data, request['userNumericId']);
+    return this.categoryService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')
