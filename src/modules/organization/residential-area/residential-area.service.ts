@@ -3,6 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
 import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
+import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
 import {
   ResidentialAreaCreateDto,
   ResidentialAreaUpdateDto,
@@ -16,14 +17,14 @@ export class ResidentialAreaService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
   async getAll(
-    query: ListQueryDto
+    query: CityRegionFilterDto
   ): Promise<ResidentialAreaInterfaces.Response[]> {
     const methodName: string = this.getAll.name;
 
-    this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
+    this.logger.debug(`Method: ${methodName} - Request: `, CityRegionFilterDto);
 
     const response = lastValueFrom(
-      this.adminClient.send<ResidentialAreaInterfaces.Response[], ListQueryDto>(
+      this.adminClient.send<ResidentialAreaInterfaces.Response[], CityRegionFilterDto>(
         { cmd: Commands.GET_ALL_LIST },
         query
       )
