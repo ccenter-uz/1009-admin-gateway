@@ -54,7 +54,10 @@ export class ResidentialAreaController {
     @Body() data: ResidentialAreaCreateDto,
     @Req() request: Request
   ): Promise<ResidentialAreaInterfaces.Response> {
-    return this.residentialAreaService.create(data, request['userNumericId']);
+    return this.residentialAreaService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

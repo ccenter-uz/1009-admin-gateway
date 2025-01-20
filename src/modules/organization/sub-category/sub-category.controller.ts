@@ -54,7 +54,10 @@ export class SubCategoryController {
     @Body() data: SubCategoryCreateDto,
     @Req() request: Request
   ): Promise<SubCategoryInterfaces.Response> {
-    return this.subCategoryService.create(data, request['userNumericId']);
+    return this.subCategoryService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

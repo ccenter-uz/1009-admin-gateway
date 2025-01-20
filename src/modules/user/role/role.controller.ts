@@ -1,4 +1,11 @@
-import { Controller, Get, HttpCode, HttpStatus, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Query,
+  Req,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ListQueryDto } from 'types/global';
 import { RoleInterfaces } from 'types/user/role';
@@ -13,9 +20,13 @@ export class RoleController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getListOfRoles(
+    @Req() request: Request,
     @Query() query: ListQueryDto
   ): Promise<RoleInterfaces.Response[]> {
-    return await this.roleService.getListOfRoles(query);
+    return await this.roleService.getListOfRoles({
+      ...query,
+      logData: request.body['userData'],
+    });
   }
 
   // @Get(':id')
