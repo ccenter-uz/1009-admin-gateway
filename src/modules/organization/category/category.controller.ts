@@ -20,7 +20,7 @@ import {
   CategoryInterfaces,
   CategoryUpdateDto,
 } from 'types/organization/category';
-import { CategoryFilterDto } from 'types/organization/category/dto/filter-category.dto';
+import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
 
 @ApiBearerAuth()
 @ApiTags('category')
@@ -31,7 +31,7 @@ export class CategoryController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: CategoryFilterDto
+    @Query() query: CityRegionFilterDto
   ): Promise<CategoryInterfaces.Response[]> {
     return await this.categoryService.getAll(query);
   }

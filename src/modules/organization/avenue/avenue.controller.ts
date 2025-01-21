@@ -21,6 +21,7 @@ import {
   AvenueUpdateDto,
   AvenueInterfaces,
 } from 'types/organization/avenue';
+import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
 
 @ApiBearerAuth()
 @ApiTags('avenue')
@@ -31,7 +32,7 @@ export class AvenueController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Query() query: CityRegionFilterDto
   ): Promise<AvenueInterfaces.Response[]> {
     return await this.avenueService.getAll(query);
   }

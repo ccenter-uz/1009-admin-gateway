@@ -20,6 +20,7 @@ import {
   ResidentialAreaUpdateDto,
   ResidentialAreaInterfaces,
 } from 'types/organization/residential-area';
+import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
 
 @ApiBearerAuth()
 @ApiTags('residential-area')
@@ -32,7 +33,7 @@ export class ResidentialAreaController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Query() query: CityRegionFilterDto
   ): Promise<ResidentialAreaInterfaces.Response[]> {
     return await this.residentialAreaService.getAll(query);
   }

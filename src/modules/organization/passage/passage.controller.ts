@@ -21,6 +21,7 @@ import {
   PassageUpdateDto,
   PassageInterfaces,
 } from 'types/organization/passage';
+import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
 
 @ApiBearerAuth()
 @ApiTags('passage')
@@ -31,7 +32,7 @@ export class PassageController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Query() query: CityRegionFilterDto
   ): Promise<PassageInterfaces.Response[]> {
     return await this.passageService.getAll(query);
   }

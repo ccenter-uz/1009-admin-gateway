@@ -20,6 +20,7 @@ import {
   ImpasseUpdateDto,
   ImpasseInterfaces,
 } from 'types/organization/impasse';
+import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
 
 @ApiBearerAuth()
 @ApiTags('impasse')
@@ -30,7 +31,7 @@ export class ImpasseController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Query() query: CityRegionFilterDto
   ): Promise<ImpasseInterfaces.Response[]> {
     return await this.impasseService.getAll(query);
   }

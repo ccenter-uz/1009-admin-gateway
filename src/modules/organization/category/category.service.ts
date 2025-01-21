@@ -3,23 +3,23 @@ import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
 import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
+import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
 import {
   CategoryCreateDto,
   CategoryInterfaces,
   CategoryUpdateDto,
   CategoryServiceCommands as Commands,
 } from 'types/organization/category';
-import { CategoryFilterDto } from 'types/organization/category/dto/filter-category.dto';
 
 @Injectable()
 export class CategoryService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
   async getAll(
-    query: CategoryFilterDto
+    query: CityRegionFilterDto
   ): Promise<CategoryInterfaces.Response[]> {
     return lastValueFrom(
-      this.adminClient.send<CategoryInterfaces.Response[], CategoryFilterDto>(
+      this.adminClient.send<CategoryInterfaces.Response[], CityRegionFilterDto>(
         { cmd: Commands.GET_ALL_LIST },
         query
       )
