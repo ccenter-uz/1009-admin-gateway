@@ -58,7 +58,7 @@ export class ProductServiseSubCategoryController {
   ): Promise<ProductServiceSubCategoryInterfaces.Response> {
     return this.productServiseSubCategoryService.create(
       data,
-      request['userNumericId']
+      request.body['userData'].user.numericId
     );
   }
 

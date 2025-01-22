@@ -52,7 +52,10 @@ export class PhoneTypeController {
     @Body() data: PhoneTypeCreateDto,
     @Req() request: Request
   ): Promise<PhoneTypeInterfaces.Response> {
-    return this.categoryService.create(data, request['userNumericId']);
+    return this.categoryService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

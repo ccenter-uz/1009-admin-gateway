@@ -54,7 +54,10 @@ export class DistrictController {
     @Body() data: DistrictCreateDto,
     @Req() request: Request
   ): Promise<DistrictInterfaces.Response> {
-    return this.districtService.create(data, request['userNumericId']);
+    return this.districtService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

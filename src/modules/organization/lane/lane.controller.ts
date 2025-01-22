@@ -21,6 +21,7 @@ import {
   LaneUpdateDto,
   LaneInterfaces,
 } from 'types/organization/lane';
+import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
 
 @ApiBearerAuth()
 @ApiTags('lane')
@@ -31,7 +32,7 @@ export class LaneController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Query() query: CityRegionFilterDto
   ): Promise<LaneInterfaces.Response[]> {
     return await this.laneService.getAll(query);
   }
@@ -53,7 +54,10 @@ export class LaneController {
     @Body() data: LaneCreateDto,
     @Req() request: Request
   ): Promise<LaneInterfaces.Response> {
-    return this.laneService.create(data, request['userNumericId']);
+    return this.laneService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

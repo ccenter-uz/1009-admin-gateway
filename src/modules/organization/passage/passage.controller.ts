@@ -21,6 +21,7 @@ import {
   PassageUpdateDto,
   PassageInterfaces,
 } from 'types/organization/passage';
+import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
 
 @ApiBearerAuth()
 @ApiTags('passage')
@@ -31,7 +32,7 @@ export class PassageController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Query() query: CityRegionFilterDto
   ): Promise<PassageInterfaces.Response[]> {
     return await this.passageService.getAll(query);
   }
@@ -53,7 +54,10 @@ export class PassageController {
     @Body() data: PassageCreateDto,
     @Req() request: Request
   ): Promise<PassageInterfaces.Response> {
-    return this.passageService.create(data, request['userNumericId']);
+    return this.passageService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

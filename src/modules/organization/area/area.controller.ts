@@ -21,6 +21,7 @@ import {
   AreaUpdateDto,
   AreaInterfaces,
 } from 'types/organization/area';
+import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
 
 @ApiBearerAuth()
 @ApiTags('area')
@@ -31,7 +32,7 @@ export class AreaController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Query() query: CityRegionFilterDto
   ): Promise<AreaInterfaces.Response[]> {
     return await this.areaService.getAll(query);
   }
@@ -53,7 +54,10 @@ export class AreaController {
     @Body() data: AreaCreateDto,
     @Req() request: Request
   ): Promise<AreaInterfaces.Response> {
-    return this.areaService.create(data, request['userNumericId']);
+    return this.areaService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

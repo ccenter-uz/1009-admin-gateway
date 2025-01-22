@@ -21,6 +21,7 @@ import {
   VillageUpdateDto,
   VillageInterfaces,
 } from 'types/organization/village';
+import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
 
 @ApiBearerAuth()
 @ApiTags('village')
@@ -31,7 +32,7 @@ export class VillageController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Query() query: CityRegionFilterDto
   ): Promise<VillageInterfaces.Response[]> {
     return await this.villageService.getAll(query);
   }
@@ -53,7 +54,10 @@ export class VillageController {
     @Body() data: VillageCreateDto,
     @Req() request: Request
   ): Promise<VillageInterfaces.Response> {
-    return this.villageService.create(data, request['userNumericId']);
+    return this.villageService.create(
+      data,
+      request.body['userData'].user.numericId
+    );
   }
 
   @Put(':id')

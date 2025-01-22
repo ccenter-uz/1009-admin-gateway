@@ -3,6 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
 import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
+import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
 import {
   ImpasseCreateDto,
   ImpasseUpdateDto,
@@ -15,13 +16,13 @@ export class ImpasseService {
   private logger = new Logger(ImpasseService.name);
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getAll(query: ListQueryDto): Promise<ImpasseInterfaces.Response[]> {
+  async getAll(query: CityRegionFilterDto): Promise<ImpasseInterfaces.Response[]> {
     const methodName: string = this.getAll.name;
 
-    this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
+    this.logger.debug(`Method: ${methodName} - Request: `, CityRegionFilterDto);
 
     const response = lastValueFrom(
-      this.adminClient.send<ImpasseInterfaces.Response[], ListQueryDto>(
+      this.adminClient.send<ImpasseInterfaces.Response[], CityRegionFilterDto>(
         { cmd: Commands.GET_ALL_LIST },
         query
       )
