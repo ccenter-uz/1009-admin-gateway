@@ -131,8 +131,8 @@ export class OrganizationController {
   ): Promise<OrganizationVersionInterfaces.Response> {
     return this.organizationService.update(
       { ...data, id },
-      request.body['userData'].user.role,
-      request.body['userData'].user.numericId,
+      request['userData'].user.role,
+      request['userData'].user.numericId,
       files
     );
   }
