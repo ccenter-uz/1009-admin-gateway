@@ -106,14 +106,14 @@ export class OrganizationController {
   @ApiConsumes('multipart/form-data')
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() data: OrganizationCreateDto,
     @Req() request: Request,
+    @Body() data: OrganizationCreateDto,
     @UploadedFiles() files: Multer.File[]
   ): Promise<OrganizationInterfaces.Response> {
     return this.organizationService.create(
       data,
-      request.body['userData'].user.role,
-      request.body['userData'].user.numericId,
+      request['userData'].user.role,
+      request['userData'].user.numericId,
       files
     );
   }
@@ -131,8 +131,8 @@ export class OrganizationController {
   ): Promise<OrganizationVersionInterfaces.Response> {
     return this.organizationService.update(
       { ...data, id },
-      request.body['userData'].user.role,
-      request.body['userData'].user.numericId,
+      request['userData'].user.role,
+      request['userData'].user.numericId,
       files
     );
   }
