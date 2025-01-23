@@ -36,10 +36,8 @@ export class SubCategoryService {
   }
 
   async create(
-    data: SubCategoryCreateDto,
-    userNumericId: string
+    data: SubCategoryCreateDto
   ): Promise<SubCategoryInterfaces.Response> {
-    data = { staffNumber: userNumericId, ...data };
     return await lastValueFrom(
       this.adminClient.send<
         SubCategoryInterfaces.Response,

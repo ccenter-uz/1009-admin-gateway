@@ -32,19 +32,28 @@ export class SubCategoryController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
+    @Req() request: Request,
     @Query() query: SubCategoryFilterDto
   ): Promise<SubCategoryInterfaces.Response[]> {
-    return await this.subCategoryService.getAll(query);
+    return await this.subCategoryService.getAll({
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Get(':id')
   @ApiParam({ name: 'id' })
   @HttpCode(HttpStatus.OK)
   async getById(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query() query: LanguageRequestDto
   ): Promise<SubCategoryInterfaces.Response> {
-    return this.subCategoryService.getById({ id, ...query });
+    return this.subCategoryService.getById({
+      id,
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Post()
@@ -54,36 +63,51 @@ export class SubCategoryController {
     @Body() data: SubCategoryCreateDto,
     @Req() request: Request
   ): Promise<SubCategoryInterfaces.Response> {
-    return this.subCategoryService.create(
-      data,
-      request.body['userData'].user.numericId
-    );
+    return this.subCategoryService.create({
+      ...data,
+      staffNumber: request['userData'].user.numericId,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id')
   @ApiBody({ type: SubCategoryUpdateDto })
   @HttpCode(HttpStatus.OK)
   async update(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Body() data: Omit<SubCategoryUpdateDto, 'id'>
   ): Promise<SubCategoryInterfaces.Response> {
-    return this.subCategoryService.update({ ...data, id });
+    return this.subCategoryService.update({
+      ...data,
+      id,
+      logData: request['userData'],
+    });
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query('delete') deleteQuery?: boolean
   ): Promise<SubCategoryInterfaces.Response> {
-    return this.subCategoryService.delete({ id, delete: deleteQuery });
+    return this.subCategoryService.delete({
+      id,
+      delete: deleteQuery,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id/restore')
   @HttpCode(HttpStatus.OK)
   async restore(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number
   ): Promise<SubCategoryInterfaces.Response> {
-    return this.subCategoryService.restore({ id });
+    return this.subCategoryService.restore({
+      id,
+      logData: request['userData'],
+    });
   }
 }
