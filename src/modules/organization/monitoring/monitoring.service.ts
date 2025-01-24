@@ -3,23 +3,34 @@ import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
 import {
-  MainOrganizationInterfaces,
-  MainOrganizationServiceCommands as Commands,
-} from 'types/organization/main-organization';
+  MonitoringServiceCommands as Commands,
+  MonitoringInterfaces,
+} from 'types/organization/monitoring';
 import { MonitoringFilterDto } from 'types/organization/monitoring';
 
 @Injectable()
 export class MonitoringService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getAll(
+  async getAllOrganizations(
     query: MonitoringFilterDto
-  ): Promise<MainOrganizationInterfaces.Response[]> {
+  ): Promise<MonitoringInterfaces.Response[]> {
     return lastValueFrom(
       this.adminClient.send<
-        MainOrganizationInterfaces.Response[],
+        MonitoringInterfaces.Response[],
         MonitoringFilterDto
       >({ cmd: Commands.GET_ALL_LIST }, query)
     );
   }
+
+  // async getAllUsers(
+  //   query: MonitoringFilterDto
+  // ): Promise<MonitoringInterfaces.Response[]> {
+  //   return lastValueFrom(
+  //     this.adminClient.send<
+  //       MonitoringInterfaces.Response[],
+  //       MonitoringFilterDto
+  //     >({ cmd: Commands.GET_ALL_LIST }, query)
+  //   );
+  // }
 }

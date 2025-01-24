@@ -1,8 +1,17 @@
-import { Controller, Get, HttpCode, HttpStatus, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Query,
+  Req,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { MainOrganizationInterfaces } from 'types/organization/main-organization';
 import { MonitoringService } from './monitoring.service';
-import { MonitoringFilterDto } from 'types/organization/monitoring';
+import {
+  MonitoringFilterDto,
+  MonitoringInterfaces,
+} from 'types/organization/monitoring';
 
 @ApiBearerAuth()
 @ApiTags('monitoring')
@@ -10,11 +19,24 @@ import { MonitoringFilterDto } from 'types/organization/monitoring';
 export class MonitoringController {
   constructor(private readonly monitoringService: MonitoringService) {}
 
-  @Get()
+  @Get('organization')
   @HttpCode(HttpStatus.OK)
-  async getAll(
+  async getAllOrganizations(
+    @Req() request: Request,
     @Query() query: MonitoringFilterDto
-  ): Promise<MainOrganizationInterfaces.Response[]> {
-    return await this.monitoringService.getAll(query);
+  ): Promise<MonitoringInterfaces.Response[]> {
+    return await this.monitoringService.getAllOrganizations({
+      ...query,
+      staffNumber: request['userData'].user.numericId,
+      role: request['userData'].user.role,
+    });
   }
+
+  // @Get('user')
+  // @HttpCode(HttpStatus.OK)
+  // async getAllUsers(
+  //   @Query() query: MonitoringFilterDto
+  // ): Promise<MonitoringInterfaces.Response[]> {
+  //   return await this.monitoringService.getAllUsers(query);
+  // }
 }
