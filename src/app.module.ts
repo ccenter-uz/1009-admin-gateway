@@ -40,7 +40,8 @@ import { AdditionalCategoryModule } from './modules/organization/additional-cate
 import { AdditionalModule } from './modules/organization/additional/additional.module';
 import { AdditionalContentModule } from './modules/organization/additional-content/additional-content.module';
 import { AdditionalTableModule } from './modules/organization/additional-table/additional-table.module';
-import { MonitoringModule } from './modules/organization/monitoring/monitoring.module';
+import { OrganizationMonitoringModule } from './modules/organization/monitoring/monitoring.module';
+import { UserMonitoringModule } from './modules/user/monitoring/monitoring.module';
 
 @Module({
   imports: [
@@ -82,7 +83,8 @@ import { MonitoringModule } from './modules/organization/monitoring/monitoring.m
     AdditionalModule,
     AdditionalContentModule,
     AdditionalTableModule,
-    MonitoringModule,
+    OrganizationMonitoringModule,
+    UserMonitoringModule,
   ],
   providers: [
     {

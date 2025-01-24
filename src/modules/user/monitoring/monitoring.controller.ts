@@ -19,12 +19,12 @@ import {
 export class MonitoringController {
   constructor(private readonly monitoringService: MonitoringService) {}
 
-  @Get('organization')
+  @Get('user')
   @HttpCode(HttpStatus.OK)
   async getAll(
     @Req() request: Request,
     @Query() query: MonitoringFilterDto
-  ): Promise<MonitoringInterfaces.OrganizationResponse[]> {
+  ): Promise<MonitoringInterfaces.UserResponse[]> {
     return await this.monitoringService.getAll({
       ...query,
       staffNumber: request['userData'].user.numericId,
