@@ -24,10 +24,10 @@ export class ResidentialAreaService {
     this.logger.debug(`Method: ${methodName} - Request: `, CityRegionFilterDto);
 
     const response = lastValueFrom(
-      this.adminClient.send<ResidentialAreaInterfaces.Response[], CityRegionFilterDto>(
-        { cmd: Commands.GET_ALL_LIST },
-        query
-      )
+      this.adminClient.send<
+        ResidentialAreaInterfaces.Response[],
+        CityRegionFilterDto
+      >({ cmd: Commands.GET_ALL_LIST }, query)
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
     return response;
@@ -49,11 +49,10 @@ export class ResidentialAreaService {
   }
 
   async create(
-    data: ResidentialAreaCreateDto,
-    userNumericId: string
+    data: ResidentialAreaCreateDto
   ): Promise<ResidentialAreaInterfaces.Response> {
     const methodName: string = this.getAll.name;
-    data = { staffNumber: userNumericId, ...data };
+
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(

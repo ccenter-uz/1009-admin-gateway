@@ -49,11 +49,10 @@ export class NearbyCategoryService {
   }
 
   async create(
-    data: NearbyCategoryCreateDto,
-    userNumericId: string
+    data: NearbyCategoryCreateDto
   ): Promise<NearbyCategoryInterfaces.Response> {
     const methodName: string = this.create.name;
-    data = { staffNumber: userNumericId, ...data };
+
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(
