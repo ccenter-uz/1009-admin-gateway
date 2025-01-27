@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
-import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
+import { DeleteDto, GetOneDto } from 'types/global';
 import {
   CityCreateDto,
   CityUpdateDto,
