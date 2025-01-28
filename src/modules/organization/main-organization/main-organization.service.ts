@@ -4,6 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { UserService } from 'src/modules/user/user/user.service';
 import { ORGANIZATION } from 'types/config';
 import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
+import { ListQueryWithOrderDto } from 'types/global/dto/list-query-with-order.dto';
 import {
   MainOrganizationInterfaces,
   MainOrganizationServiceCommands as Commands,
@@ -16,12 +17,12 @@ export class MainOrganizationService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
   async getAll(
-    query: ListQueryDto
+    query: ListQueryWithOrderDto
   ): Promise<MainOrganizationInterfaces.Response[]> {
     return lastValueFrom(
       this.adminClient.send<
         MainOrganizationInterfaces.Response[],
-        ListQueryDto
+        ListQueryWithOrderDto
       >({ cmd: Commands.GET_ALL_LIST }, query)
     );
   }

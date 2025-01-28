@@ -19,7 +19,7 @@ export class SubCategoryService {
     query: SubCategoryFilterDto
   ): Promise<SubCategoryInterfaces.Response[]> {
     return lastValueFrom(
-      this.adminClient.send<SubCategoryInterfaces.Response[], ListQueryDto>(
+      this.adminClient.send<SubCategoryInterfaces.Response[], SubCategoryFilterDto>(
         { cmd: Commands.GET_ALL_LIST },
         query
       )

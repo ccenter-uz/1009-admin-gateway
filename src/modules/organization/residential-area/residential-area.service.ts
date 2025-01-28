@@ -3,7 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
 import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
-import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
+import { CityRegionFilterDto } from 'types/global/dto/city-region-filter.dto';
 import {
   ResidentialAreaCreateDto,
   ResidentialAreaUpdateDto,
@@ -24,10 +24,10 @@ export class ResidentialAreaService {
     this.logger.debug(`Method: ${methodName} - Request: `, CityRegionFilterDto);
 
     const response = lastValueFrom(
-      this.adminClient.send<ResidentialAreaInterfaces.Response[], CityRegionFilterDto>(
-        { cmd: Commands.GET_ALL_LIST },
-        query
-      )
+      this.adminClient.send<
+        ResidentialAreaInterfaces.Response[],
+        CityRegionFilterDto
+      >({ cmd: Commands.GET_ALL_LIST }, query)
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
     return response;

@@ -21,7 +21,7 @@ import {
   LaneUpdateDto,
   LaneInterfaces,
 } from 'types/organization/lane';
-import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
+import { CityRegionFilterDto } from 'types/global/dto/city-region-filter.dto';
 
 @ApiBearerAuth()
 @ApiTags('lane')

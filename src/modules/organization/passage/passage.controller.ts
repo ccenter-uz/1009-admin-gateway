@@ -21,7 +21,7 @@ import {
   PassageUpdateDto,
   PassageInterfaces,
 } from 'types/organization/passage';
-import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
+import { CityRegionFilterDto } from 'types/global/dto/city-region-filter.dto';
 
 @ApiBearerAuth()
 @ApiTags('passage')

@@ -31,6 +31,7 @@ import {
   SegmentInterfaces,
   SegmentUpdateDto,
 } from 'types/organization/segment';
+import { ListQueryWithOrderDto } from 'types/global/dto/list-query-with-order.dto';
 
 @ApiBearerAuth()
 @ApiTags('segment')
@@ -41,7 +42,7 @@ export class SegmentController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Query() query: ListQueryWithOrderDto
   ): Promise<SegmentInterfaces.Response[]> {
     return await this.segmentService.getAll(query);
   }

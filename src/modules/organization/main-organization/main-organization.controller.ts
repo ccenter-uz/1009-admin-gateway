@@ -27,6 +27,7 @@ import {
   MainOrganizationInterfaces,
   MainOrganizationUpdateDto,
 } from 'types/organization/main-organization';
+import { ListQueryWithOrderDto } from 'types/global/dto/list-query-with-order.dto';
 
 @ApiBearerAuth()
 @ApiTags('main-organization')
@@ -39,7 +40,7 @@ export class MainOrganizationController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Query() query: ListQueryWithOrderDto
   ): Promise<MainOrganizationInterfaces.Response[]> {
     return await this.mainOrganizationService.getAll(query);
   }

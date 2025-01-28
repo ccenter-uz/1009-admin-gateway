@@ -3,6 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
 import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
+import { ListQueryWithOrderDto } from 'types/global/dto/list-query-with-order.dto';
 
 import {
   NearbyCategoryCreateDto,
@@ -17,14 +18,14 @@ export class NearbyCategoryService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
   async getAll(
-    query: ListQueryDto
+    query: ListQueryWithOrderDto
   ): Promise<NearbyCategoryInterfaces.Response[]> {
     const methodName: string = this.getAll.name;
 
-    this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
+    this.logger.debug(`Method: ${methodName} - Request: `, ListQueryWithOrderDto);
 
     const response = await lastValueFrom(
-      this.adminClient.send<NearbyCategoryInterfaces.Response[], ListQueryDto>(
+      this.adminClient.send<NearbyCategoryInterfaces.Response[], ListQueryWithOrderDto>(
         { cmd: Commands.GET_ALL_LIST },
         query
       )

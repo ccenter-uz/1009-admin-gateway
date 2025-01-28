@@ -20,7 +20,7 @@ import {
   ResidentialAreaUpdateDto,
   ResidentialAreaInterfaces,
 } from 'types/organization/residential-area';
-import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
+import { CityRegionFilterDto } from 'types/global/dto/city-region-filter.dto';
 
 @ApiBearerAuth()
 @ApiTags('residential-area')
