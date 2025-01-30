@@ -42,6 +42,7 @@ import { AdditionalContentModule } from './modules/organization/additional-conte
 import { AdditionalTableModule } from './modules/organization/additional-table/additional-table.module';
 import { OrganizationMonitoringModule } from './modules/organization/monitoring/monitoring.module';
 import { UserMonitoringModule } from './modules/user/monitoring/monitoring.module';
+import { MinioModule } from './modules/minio/minio.module';
 
 @Module({
   imports: [
@@ -85,6 +86,8 @@ import { UserMonitoringModule } from './modules/user/monitoring/monitoring.modul
     AdditionalTableModule,
     OrganizationMonitoringModule,
     UserMonitoringModule,
+
+    MinioModule,
   ],
   providers: [
     {
