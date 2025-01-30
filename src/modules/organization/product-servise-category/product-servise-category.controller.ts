@@ -20,6 +20,7 @@ import {
   ProductServiseCategoryInterfaces,
   ProductServiseCategoryUpdateDto,
 } from 'types/organization/product-service-category';
+import { ListQueryWithOrderDto } from 'types/global/dto/list-query-with-order.dto';
 
 @ApiBearerAuth()
 @ApiTags('product-servise-category')
@@ -32,7 +33,7 @@ export class ProductServiceCategoryController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Query() query: ListQueryWithOrderDto
   ): Promise<ProductServiseCategoryInterfaces.Response[]> {
     return await this.productServiceCategoryService.getAll(query);
   }

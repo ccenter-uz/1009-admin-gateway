@@ -20,6 +20,7 @@ import {
   PhoneTypeUpdateDto,
   PhoneTypeInterfaces,
 } from 'types/organization/phone-type';
+import { ListQueryWithOrderDto } from 'types/global/dto/list-query-with-order.dto';
 
 @ApiBearerAuth()
 @ApiTags('phone-type')
@@ -30,7 +31,7 @@ export class PhoneTypeController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Query() query: ListQueryWithOrderDto
   ): Promise<PhoneTypeInterfaces.Response[]> {
     return await this.categoryService.getAll(query);
   }
