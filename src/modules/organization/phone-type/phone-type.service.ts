@@ -16,9 +16,7 @@ export class PhoneTypeService {
   private logger = new Logger(PhoneTypeService.name);
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getAll(
-    query: ListQueryDto
-  ): Promise<PhoneTypeInterfaces.Response[]> {
+  async getAll(query: ListQueryDto): Promise<PhoneTypeInterfaces.Response[]> {
     const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
@@ -49,11 +47,10 @@ export class PhoneTypeService {
   }
 
   async create(
-    data: PhoneTypeCreateDto,
-    userNumericId: string
+    data: PhoneTypeCreateDto
   ): Promise<PhoneTypeInterfaces.Response> {
     const methodName: string = this.create.name;
-    data = { staffNumber: userNumericId, ...data };
+
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(

@@ -16,7 +16,9 @@ export class ImpasseService {
   private logger = new Logger(ImpasseService.name);
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getAll(query: CityRegionFilterDto): Promise<ImpasseInterfaces.Response[]> {
+  async getAll(
+    query: CityRegionFilterDto
+  ): Promise<ImpasseInterfaces.Response[]> {
     const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, CityRegionFilterDto);
@@ -46,12 +48,9 @@ export class ImpasseService {
     return response;
   }
 
-  async create(
-    data: ImpasseCreateDto,
-    userNumericId: string
-  ): Promise<ImpasseInterfaces.Response> {
+  async create(data: ImpasseCreateDto): Promise<ImpasseInterfaces.Response> {
     const methodName: string = this.getAll.name;
-    data = { staffNumber: userNumericId, ...data };
+
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(

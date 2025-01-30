@@ -19,14 +19,16 @@ export class AdditionalCategoryService {
     query: AdditionalCategoryFilterDto
   ): Promise<AdditionalCategoryInterfaces.Response[]> {
     return lastValueFrom(
-      this.adminClient.send<AdditionalCategoryInterfaces.Response[], AdditionalCategoryFilterDto>(
-        { cmd: Commands.GET_ALL_LIST },
-        query
-      )
+      this.adminClient.send<
+        AdditionalCategoryInterfaces.Response[],
+        AdditionalCategoryFilterDto
+      >({ cmd: Commands.GET_ALL_LIST }, query)
     );
   }
 
-  async getById(data: GetOneDto): Promise<AdditionalCategoryInterfaces.Response> {
+  async getById(
+    data: GetOneDto
+  ): Promise<AdditionalCategoryInterfaces.Response> {
     return lastValueFrom(
       this.adminClient.send<AdditionalCategoryInterfaces.Response, GetOneDto>(
         { cmd: Commands.GET_BY_ID },
@@ -36,10 +38,8 @@ export class AdditionalCategoryService {
   }
 
   async create(
-    data: AdditionalCategoryCreateDto,
-    userNumericId: string
+    data: AdditionalCategoryCreateDto
   ): Promise<AdditionalCategoryInterfaces.Response> {
-    data = { staffNumber: userNumericId, ...data };
     return await lastValueFrom(
       this.adminClient.send<
         AdditionalCategoryInterfaces.Response,
@@ -48,7 +48,9 @@ export class AdditionalCategoryService {
     );
   }
 
-  async update(data: AdditionalCategoryUpdateDto): Promise<AdditionalCategoryInterfaces.Response> {
+  async update(
+    data: AdditionalCategoryUpdateDto
+  ): Promise<AdditionalCategoryInterfaces.Response> {
     return lastValueFrom(
       this.adminClient.send<
         AdditionalCategoryInterfaces.Response,
@@ -57,7 +59,9 @@ export class AdditionalCategoryService {
     );
   }
 
-  async delete(data: DeleteDto): Promise<AdditionalCategoryInterfaces.Response> {
+  async delete(
+    data: DeleteDto
+  ): Promise<AdditionalCategoryInterfaces.Response> {
     return lastValueFrom(
       this.adminClient.send<AdditionalCategoryInterfaces.Response, DeleteDto>(
         { cmd: Commands.DELETE },
@@ -66,7 +70,9 @@ export class AdditionalCategoryService {
     );
   }
 
-  async restore(data: GetOneDto): Promise<AdditionalCategoryInterfaces.Response> {
+  async restore(
+    data: GetOneDto
+  ): Promise<AdditionalCategoryInterfaces.Response> {
     return lastValueFrom(
       this.adminClient.send<AdditionalCategoryInterfaces.Response, GetOneDto>(
         { cmd: Commands.RESTORE },

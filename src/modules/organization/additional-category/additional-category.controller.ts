@@ -33,19 +33,28 @@ export class AdditionalCategoryController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
+    @Req() request: Request,
     @Query() query: AdditionalCategoryFilterDto
   ): Promise<AdditionalCategoryInterfaces.Response[]> {
-    return await this.additionalCategoryService.getAll(query);
+    return await this.additionalCategoryService.getAll({
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Get(':id')
   @ApiParam({ name: 'id' })
   @HttpCode(HttpStatus.OK)
   async getById(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query() query: LanguageRequestDto
   ): Promise<AdditionalCategoryInterfaces.Response> {
-    return this.additionalCategoryService.getById({ id, ...query });
+    return this.additionalCategoryService.getById({
+      id,
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Post()
@@ -55,36 +64,51 @@ export class AdditionalCategoryController {
     @Body() data: AdditionalCategoryCreateDto,
     @Req() request: Request
   ): Promise<AdditionalCategoryInterfaces.Response> {
-    return this.additionalCategoryService.create(
-      data,
-      request.body['userData'].user.numericId
-    );
+    return this.additionalCategoryService.create({
+      ...data,
+      staffNumber: request['userData'].user.numericId,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id')
   @ApiBody({ type: AdditionalCategoryUpdateDto })
   @HttpCode(HttpStatus.OK)
   async update(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Body() data: Omit<AdditionalCategoryUpdateDto, 'id'>
   ): Promise<AdditionalCategoryInterfaces.Response> {
-    return this.additionalCategoryService.update({ ...data, id });
+    return this.additionalCategoryService.update({
+      ...data,
+      id,
+      logData: request['userData'],
+    });
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query('delete') deleteQuery?: boolean
   ): Promise<AdditionalCategoryInterfaces.Response> {
-    return this.additionalCategoryService.delete({ id, delete: deleteQuery });
+    return this.additionalCategoryService.delete({
+      id,
+      delete: deleteQuery,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id/restore')
   @HttpCode(HttpStatus.OK)
   async restore(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number
   ): Promise<AdditionalCategoryInterfaces.Response> {
-    return this.additionalCategoryService.restore({ id });
+    return this.additionalCategoryService.restore({
+      id,
+      logData: request['userData'],
+    });
   }
 }

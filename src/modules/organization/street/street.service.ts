@@ -16,7 +16,9 @@ export class StreetService {
   private logger = new Logger(StreetService.name);
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getAll(query: CityRegionFilterDto): Promise<StreetInterfaces.Response[]> {
+  async getAll(
+    query: CityRegionFilterDto
+  ): Promise<StreetInterfaces.Response[]> {
     const methodName: string = this.getAll.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, CityRegionFilterDto);
@@ -46,12 +48,9 @@ export class StreetService {
     return response;
   }
 
-  async create(
-    data: StreetCreateDto,
-    userNumericId: string
-  ): Promise<StreetInterfaces.Response> {
+  async create(data: StreetCreateDto): Promise<StreetInterfaces.Response> {
     const methodName: string = this.getAll.name;
-    data = { staffNumber: userNumericId, ...data };
+
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(

@@ -32,19 +32,28 @@ export class StreetController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
+    @Req() request: Request,
     @Query() query: CityRegionFilterDto
   ): Promise<StreetInterfaces.Response[]> {
-    return await this.streetService.getAll(query);
+    return await this.streetService.getAll({
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Get(':id')
   @ApiParam({ name: 'id' })
   @HttpCode(HttpStatus.OK)
   async getById(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query() query: LanguageRequestDto
   ): Promise<StreetInterfaces.Response> {
-    return this.streetService.getById({ id, ...query });
+    return this.streetService.getById({
+      id,
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Post()
@@ -54,36 +63,48 @@ export class StreetController {
     @Body() data: StreetCreateDto,
     @Req() request: Request
   ): Promise<StreetInterfaces.Response> {
-    return this.streetService.create(
-      data,
-      request.body['userData'].user.numericId
-    );
+    return this.streetService.create({
+      ...data,
+      staffNumber: request['userData'].user.numericId,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id')
   @ApiBody({ type: StreetUpdateDto })
   @HttpCode(HttpStatus.OK)
   async update(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Body() data: Omit<StreetUpdateDto, 'id'>
   ): Promise<StreetInterfaces.Response> {
-    return this.streetService.update({ ...data, id });
+    return this.streetService.update({
+      ...data,
+      id,
+      logData: request['userData'],
+    });
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query('delete') deleteQuery?: boolean
   ): Promise<StreetInterfaces.Response> {
-    return this.streetService.delete({ id, delete: deleteQuery });
+    return this.streetService.delete({
+      id,
+      delete: deleteQuery,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id/restore')
   @HttpCode(HttpStatus.OK)
   async restore(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number
   ): Promise<StreetInterfaces.Response> {
-    return this.streetService.restore({ id });
+    return this.streetService.restore({ id, logData: request['userData'] });
   }
 }
