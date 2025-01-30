@@ -1,6 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Client } from 'minio';
 import * as Multer from 'multer';
+import * as mime from 'mime-types';
 
 @Injectable()
 export class MinioService implements OnModuleInit {
@@ -20,12 +21,15 @@ export class MinioService implements OnModuleInit {
 
   async upload(bucketName: string, file: Multer.File) {
     const fileName = `${Date.now()}-${file.originalname}`;
+    const contentType =
+      mime.lookup(file.originalname) || 'application/octet-stream'; // Get correct MIME type
 
     await this.minioClient.putObject(
       bucketName,
       fileName,
       file.buffer,
-      file.size
+      file.size,
+      { 'Content-Type': contentType }
     );
 
     // return `http://${process.env.MINIO_ENDPOINT}:${process.env.MINIO_PORT}/${bucketName}/${fileName}`;
