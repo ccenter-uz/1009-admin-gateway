@@ -38,10 +38,8 @@ export class ProductServiseSubCategoryService {
   }
 
   async create(
-    data: ProductServiceSubCategoryCreateDto,
-    userNumericId: string
+    data: ProductServiceSubCategoryCreateDto
   ): Promise<ProductServiceSubCategoryInterfaces.Response> {
-    data = { staffNumber: userNumericId, ...data };
     return await lastValueFrom(
       this.adminClient.send<
         ProductServiceSubCategoryInterfaces.Response,

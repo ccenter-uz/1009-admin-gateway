@@ -54,11 +54,12 @@ export class OrganizationController {
     @Query() query: OrganizationFilterDto,
     @Req() request: Request
   ): Promise<OrganizationInterfaces.Response[]> {
-    return await this.organizationService.getListOrganization(
-      query,
-      request.body['userData'].user.numericId,
-      request.body['userData'].user.role
-    );
+    return await this.organizationService.getListOrganization({
+      ...query,
+      staffNumber: request['userData'].user.numericId,
+      role: request['userData'].user.role,
+      logData: request['userData'],
+    });
   }
 
   @Get('my-org')
@@ -67,11 +68,12 @@ export class OrganizationController {
     @Query() query: MyOrganizationFilterDto,
     @Req() request: Request
   ): Promise<OrganizationInterfaces.Response[]> {
-    return await this.organizationService.getMyOrganization(
-      query,
-      request.body['userData'].user.numericId,
-      request.body['userData'].user.role
-    );
+    return await this.organizationService.getMyOrganization({
+      ...query,
+      staffNumber: request['userData'].user.numericId,
+      role: request['userData'].user.role,
+      logData: request['userData'],
+    });
   }
 
   @Get('unconfirm')
@@ -80,10 +82,11 @@ export class OrganizationController {
     @Query() query: UnconfirmOrganizationFilterDto,
     @Req() request: Request
   ): Promise<OrganizationInterfaces.Response[]> {
-    return await this.organizationService.getUnconfirm(
-      query,
-      request.body['userData'].user.numericId
-    );
+    return await this.organizationService.getUnconfirm({
+      ...query,
+      staffNumber: request['userData'].user.numericId,
+      logData: request['userData'],
+    });
   }
 
   @Get(':id')
@@ -94,10 +97,12 @@ export class OrganizationController {
     @Query() query: LanguageRequestDto,
     @Req() request: Request
   ): Promise<OrganizationInterfaces.Response> {
-    return this.organizationService.getById(
-      { id, ...query },
-      request.body['userData'].user.role
-    );
+    return this.organizationService.getById({
+      id,
+      ...query,
+      role: request['userData'].user.role,
+      logData: request['userData'],
+    });
   }
 
   @Post()
@@ -106,14 +111,17 @@ export class OrganizationController {
   @ApiConsumes('multipart/form-data')
   @HttpCode(HttpStatus.CREATED)
   async create(
-    @Body() data: OrganizationCreateDto,
     @Req() request: Request,
+    @Body() data: OrganizationCreateDto,
     @UploadedFiles() files: Multer.File[]
   ): Promise<OrganizationInterfaces.Response> {
     return this.organizationService.create(
-      data,
-      request.body['userData'].user.role,
-      request.body['userData'].user.numericId,
+      {
+        ...data,
+        staffNumber: request['userData'].user.numericI,
+        role: request['userData'].user.role,
+        logData: request['userData'],
+      },
       files
     );
   }
@@ -130,9 +138,13 @@ export class OrganizationController {
     @UploadedFiles() files: Multer.File[]
   ): Promise<OrganizationVersionInterfaces.Response> {
     return this.organizationService.update(
-      { ...data, id },
-      request.body['userData'].user.role,
-      request.body['userData'].user.numericId,
+      {
+        ...data,
+        id,
+        staffNumber: request['userData'].user.numericId,
+        role: request['userData'].user.role,
+        logData: request['userData'],
+      },
       files
     );
   }
@@ -144,11 +156,13 @@ export class OrganizationController {
     @Body() data: Omit<ConfirmDto, 'id'>,
     @Req() request: Request
   ): Promise<OrganizationVersionInterfaces.Response> {
-    return this.organizationService.updateCheck(
-      { ...data, id },
-      request.body['userData'].user.role,
-      request.body['userData'].user.numericId
-    );
+    return this.organizationService.updateCheck({
+      ...data,
+      id,
+      staffNumber: request['userData'].user.numericId,
+      role: request['userData'].user.role,
+      logData: request['userData'],
+    });
   }
 
   @Delete(':id')
@@ -164,6 +178,7 @@ export class OrganizationController {
       delete: deleteQuery,
       role: request.body['userData'].user.role,
       deleteReason: deleteReason,
+      logData: request['userData'],
     });
   }
 
@@ -176,6 +191,7 @@ export class OrganizationController {
     return this.organizationService.restore({
       id,
       role: request.body['userData'].user.role,
+      logData: request['userData'],
     });
   }
 }

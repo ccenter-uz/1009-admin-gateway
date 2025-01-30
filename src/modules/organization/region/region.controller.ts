@@ -30,9 +30,13 @@ export class RegionController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
+    @Req() request: Request,
     @Query() query: ListQueryDto
   ): Promise<RegionInterfaces.Response[]> {
-    return await this.regionService.getAll(query);
+    return await this.regionService.getAll({
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   // @Get(':id')

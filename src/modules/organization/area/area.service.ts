@@ -45,12 +45,9 @@ export class AreaService {
     return response;
   }
 
-  async create(
-    data: AreaCreateDto,
-    userNumericId: string
-  ): Promise<AreaInterfaces.Response> {
+  async create(data: AreaCreateDto): Promise<AreaInterfaces.Response> {
     const methodName: string = this.getAll.name;
-    data = { staffNumber: userNumericId, ...data };
+
     this.logger.debug(`Method: ${methodName} - Request: `, data);
     const response = await lastValueFrom(
       this.adminClient.send<AreaInterfaces.Response, AreaInterfaces.Request>(
