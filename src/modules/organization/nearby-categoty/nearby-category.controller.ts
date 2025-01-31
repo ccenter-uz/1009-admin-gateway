@@ -20,6 +20,7 @@ import {
   NearbyCategoryUpdateDto,
   NearbyCategoryInterfaces,
 } from 'types/organization/nearby-category';
+import { ListQueryWithOrderDto } from 'types/global/dto/list-query-with-order.dto';
 
 @ApiBearerAuth()
 @ApiTags('nearby-category')
@@ -31,7 +32,7 @@ export class NearbyCategoryController {
   @HttpCode(HttpStatus.OK)
   async getAll(
     @Req() request: Request,
-    @Query() query: ListQueryDto
+    @Query() query: ListQueryWithOrderDto
   ): Promise<NearbyCategoryInterfaces.Response[]> {
     return await this.categoryService.getAll({
       ...query,
