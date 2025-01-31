@@ -37,11 +37,8 @@ export class MainOrganizationService {
   }
 
   async create(
-    data: MainOrganizationCreateDto,
-    userNumericId: string
+    data: MainOrganizationCreateDto
   ): Promise<MainOrganizationInterfaces.Response> {
-    data = { staffNumber: userNumericId, ...data };
-
     const response = await lastValueFrom(
       this.adminClient.send<
         MainOrganizationInterfaces.Response,

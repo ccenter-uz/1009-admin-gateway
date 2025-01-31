@@ -47,12 +47,9 @@ export class NearbyService {
     return response;
   }
 
-  async create(
-    data: NearbyCreateDto,
-    userNumericId: string
-  ): Promise<NearbyInterfaces.Response> {
+  async create(data: NearbyCreateDto): Promise<NearbyInterfaces.Response> {
     const methodName: string = this.create.name;
-    data = { staffNumber: userNumericId, ...data };
+
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(

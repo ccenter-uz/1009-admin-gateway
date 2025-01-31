@@ -51,11 +51,10 @@ export class PhoneTypeService {
   }
 
   async create(
-    data: PhoneTypeCreateDto,
-    userNumericId: string
+    data: PhoneTypeCreateDto
   ): Promise<PhoneTypeInterfaces.Response> {
     const methodName: string = this.create.name;
-    data = { staffNumber: userNumericId, ...data };
+
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(

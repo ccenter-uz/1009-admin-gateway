@@ -31,19 +31,28 @@ export class NearbyCategoryController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
+    @Req() request: Request,
     @Query() query: ListQueryWithOrderDto
   ): Promise<NearbyCategoryInterfaces.Response[]> {
-    return await this.categoryService.getAll(query);
+    return await this.categoryService.getAll({
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Get(':id')
   @ApiParam({ name: 'id' })
   @HttpCode(HttpStatus.OK)
   async getById(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query() query: LanguageRequestDto
   ): Promise<NearbyCategoryInterfaces.Response> {
-    return this.categoryService.getById({ id, ...query });
+    return this.categoryService.getById({
+      id,
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Post()
@@ -53,36 +62,48 @@ export class NearbyCategoryController {
     @Body() data: NearbyCategoryCreateDto,
     @Req() request: Request
   ): Promise<NearbyCategoryInterfaces.Response> {
-    return this.categoryService.create(
-      data,
-      request.body['userData'].user.numericId
-    );
+    return this.categoryService.create({
+      ...data,
+      staffNumber: request['userData'].user.numericId,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id')
   @ApiBody({ type: NearbyCategoryUpdateDto })
   @HttpCode(HttpStatus.OK)
   async update(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Body() data: Omit<NearbyCategoryUpdateDto, 'id'>
   ): Promise<NearbyCategoryInterfaces.Response> {
-    return this.categoryService.update({ ...data, id });
+    return this.categoryService.update({
+      ...data,
+      id,
+      logData: request['userData'],
+    });
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query('delete') deleteQuery?: boolean
   ): Promise<NearbyCategoryInterfaces.Response> {
-    return this.categoryService.delete({ id, delete: deleteQuery });
+    return this.categoryService.delete({
+      id,
+      delete: deleteQuery,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id/restore')
   @HttpCode(HttpStatus.OK)
   async restore(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number
   ): Promise<NearbyCategoryInterfaces.Response> {
-    return this.categoryService.restore({ id });
+    return this.categoryService.restore({ id, logData: request['userData'] });
   }
 }

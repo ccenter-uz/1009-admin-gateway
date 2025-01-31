@@ -33,19 +33,28 @@ export class AdditionalContentController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
+    @Req() request: Request,
     @Query() query: AdditionalContentFilterDto
   ): Promise<AdditionalContentInterfaces.Response[]> {
-    return await this.additionalContentService.getAll(query);
+    return await this.additionalContentService.getAll({
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Get(':id')
   @ApiParam({ name: 'id' })
   @HttpCode(HttpStatus.OK)
   async getById(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query() query: LanguageRequestDto
   ): Promise<AdditionalContentInterfaces.Response> {
-    return this.additionalContentService.getById({ id, ...query });
+    return this.additionalContentService.getById({
+      id,
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Post()
@@ -55,36 +64,51 @@ export class AdditionalContentController {
     @Body() data: AdditionalContentCreateDto,
     @Req() request: Request
   ): Promise<AdditionalContentInterfaces.Response> {
-    return this.additionalContentService.create(
-      data,
-      request.body['userData'].user.numericId
-    );
+    return this.additionalContentService.create({
+      ...data,
+      staffNumber: request['userData'].user.numericId,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id')
   @ApiBody({ type: AdditionalContentUpdateDto })
   @HttpCode(HttpStatus.OK)
   async update(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Body() data: Omit<AdditionalContentUpdateDto, 'id'>
   ): Promise<AdditionalContentInterfaces.Response> {
-    return this.additionalContentService.update({ ...data, id });
+    return this.additionalContentService.update({
+      ...data,
+      id,
+      logData: request['userData'],
+    });
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query('delete') deleteQuery?: boolean
   ): Promise<AdditionalContentInterfaces.Response> {
-    return this.additionalContentService.delete({ id, delete: deleteQuery });
+    return this.additionalContentService.delete({
+      id,
+      delete: deleteQuery,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id/restore')
   @HttpCode(HttpStatus.OK)
   async restore(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number
   ): Promise<AdditionalContentInterfaces.Response> {
-    return this.additionalContentService.restore({ id });
+    return this.additionalContentService.restore({
+      id,
+      logData: request['userData'],
+    });
   }
 }

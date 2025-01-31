@@ -48,13 +48,10 @@ export class AvenueService {
     return response;
   }
 
-  async create(
-    data: AvenueCreateDto,
-    userNumericId: string
-  ): Promise<AvenueInterfaces.Response> {
+  async create(data: AvenueCreateDto): Promise<AvenueInterfaces.Response> {
     const methodName: string = this.getAll.name;
     this.logger.debug(`Method: ${methodName} - Request: `, data);
-    data = { staffNumber: userNumericId, ...data };
+
     const response = await lastValueFrom(
       this.adminClient.send<
         AvenueInterfaces.Response,

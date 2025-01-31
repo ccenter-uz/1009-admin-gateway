@@ -48,12 +48,9 @@ export class ImpasseService {
     return response;
   }
 
-  async create(
-    data: ImpasseCreateDto,
-    userNumericId: string
-  ): Promise<ImpasseInterfaces.Response> {
+  async create(data: ImpasseCreateDto): Promise<ImpasseInterfaces.Response> {
     const methodName: string = this.getAll.name;
-    data = { staffNumber: userNumericId, ...data };
+
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(

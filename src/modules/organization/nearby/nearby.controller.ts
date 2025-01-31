@@ -31,19 +31,28 @@ export class NearbyController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
+    @Req() request: Request,
     @Query() query: NearbyFilterDto
   ): Promise<NearbyInterfaces.Response[]> {
-    return await this.nearbyService.getAll(query);
+    return await this.nearbyService.getAll({
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Get(':id')
   @ApiParam({ name: 'id' })
   @HttpCode(HttpStatus.OK)
   async getById(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query() query: LanguageRequestDto
   ): Promise<NearbyInterfaces.Response> {
-    return this.nearbyService.getById({ id, ...query });
+    return this.nearbyService.getById({
+      id,
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Post()
@@ -53,36 +62,48 @@ export class NearbyController {
     @Body() data: NearbyCreateDto,
     @Req() request: Request
   ): Promise<NearbyInterfaces.Response> {
-    return this.nearbyService.create(
-      data,
-      request.body['userData'].user.numericId
-    );
+    return this.nearbyService.create({
+      ...data,
+      staffNumber: request['userData'].user.numericId,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id')
   @ApiBody({ type: NearbyUpdateDto })
   @HttpCode(HttpStatus.OK)
   async update(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Body() data: Omit<NearbyUpdateDto, 'id'>
   ): Promise<NearbyInterfaces.Response> {
-    return this.nearbyService.update({ ...data, id });
+    return this.nearbyService.update({
+      ...data,
+      id,
+      logData: request['userData'],
+    });
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query('delete') deleteQuery?: boolean
   ): Promise<NearbyInterfaces.Response> {
-    return this.nearbyService.delete({ id, delete: deleteQuery });
+    return this.nearbyService.delete({
+      id,
+      delete: deleteQuery,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id/restore')
   @HttpCode(HttpStatus.OK)
   async restore(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number
   ): Promise<NearbyInterfaces.Response> {
-    return this.nearbyService.restore({ id });
+    return this.nearbyService.restore({ id, logData: request['userData'] });
   }
 }

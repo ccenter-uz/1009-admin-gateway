@@ -46,12 +46,9 @@ export class LaneService {
     return response;
   }
 
-  async create(
-    data: LaneCreateDto,
-    userNumericId: string
-  ): Promise<LaneInterfaces.Response> {
+  async create(data: LaneCreateDto): Promise<LaneInterfaces.Response> {
     const methodName: string = this.getAll.name;
-    data = { staffNumber: userNumericId, ...data };
+
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(

@@ -19,10 +19,10 @@ export class AdditionalTableService {
     query: AdditionalTableFilterDto
   ): Promise<AdditionalTableInterfaces.Response[]> {
     return lastValueFrom(
-      this.adminClient.send<AdditionalTableInterfaces.Response[], AdditionalTableFilterDto>(
-        { cmd: Commands.GET_ALL_LIST },
-        query
-      )
+      this.adminClient.send<
+        AdditionalTableInterfaces.Response[],
+        AdditionalTableFilterDto
+      >({ cmd: Commands.GET_ALL_LIST }, query)
     );
   }
 
@@ -36,10 +36,8 @@ export class AdditionalTableService {
   }
 
   async create(
-    data: AdditionalTableCreateDto,
-    userNumericId: string
+    data: AdditionalTableCreateDto
   ): Promise<AdditionalTableInterfaces.Response> {
-    data = { staffNumber: userNumericId, ...data };
     return await lastValueFrom(
       this.adminClient.send<
         AdditionalTableInterfaces.Response,
@@ -48,7 +46,9 @@ export class AdditionalTableService {
     );
   }
 
-  async update(data: AdditionalTableUpdateDto): Promise<AdditionalTableInterfaces.Response> {
+  async update(
+    data: AdditionalTableUpdateDto
+  ): Promise<AdditionalTableInterfaces.Response> {
     return lastValueFrom(
       this.adminClient.send<
         AdditionalTableInterfaces.Response,

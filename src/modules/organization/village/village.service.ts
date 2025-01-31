@@ -48,12 +48,9 @@ export class VillageService {
     return response;
   }
 
-  async create(
-    data: VillageCreateDto,
-    userNumericId: string
-  ): Promise<VillageInterfaces.Response> {
+  async create(data: VillageCreateDto): Promise<VillageInterfaces.Response> {
     const methodName: string = this.getAll.name;
-    data = { staffNumber: userNumericId, ...data };
+
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(

@@ -32,19 +32,28 @@ export class AreaController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
+    @Req() request: Request,
     @Query() query: CityRegionFilterDto
   ): Promise<AreaInterfaces.Response[]> {
-    return await this.areaService.getAll(query);
+    return await this.areaService.getAll({
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Get(':id')
   @ApiParam({ name: 'id' })
   @HttpCode(HttpStatus.OK)
   async getById(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query() query: LanguageRequestDto
   ): Promise<AreaInterfaces.Response> {
-    return this.areaService.getById({ id, ...query });
+    return this.areaService.getById({
+      id,
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Post()
@@ -54,36 +63,48 @@ export class AreaController {
     @Body() data: AreaCreateDto,
     @Req() request: Request
   ): Promise<AreaInterfaces.Response> {
-    return this.areaService.create(
-      data,
-      request.body['userData'].user.numericId
-    );
+    return this.areaService.create({
+      ...data,
+      staffNumber: request['userData'].user.numericId,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id')
   @ApiBody({ type: AreaUpdateDto })
   @HttpCode(HttpStatus.OK)
   async update(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Body() data: Omit<AreaUpdateDto, 'id'>
   ): Promise<AreaInterfaces.Response> {
-    return this.areaService.update({ ...data, id });
+    return this.areaService.update({
+      ...data,
+      id,
+      logData: request['userData'],
+    });
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query('delete') deleteQuery?: boolean
   ): Promise<AreaInterfaces.Response> {
-    return this.areaService.delete({ id, delete: deleteQuery });
+    return this.areaService.delete({
+      id,
+      delete: deleteQuery,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id/restore')
   @HttpCode(HttpStatus.OK)
   async restore(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number
   ): Promise<AreaInterfaces.Response> {
-    return this.areaService.restore({ id });
+    return this.areaService.restore({ id, logData: request['userData'] });
   }
 }

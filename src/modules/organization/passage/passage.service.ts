@@ -35,11 +35,7 @@ export class PassageService {
     );
   }
 
-  async create(
-    data: PassageCreateDto,
-    userNumericId: string
-  ): Promise<PassageInterfaces.Response> {
-    data = { staffNumber: userNumericId, ...data };
+  async create(data: PassageCreateDto): Promise<PassageInterfaces.Response> {
     return await lastValueFrom(
       this.adminClient.send<
         PassageInterfaces.Response,
