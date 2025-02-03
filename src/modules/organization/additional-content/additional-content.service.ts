@@ -19,14 +19,16 @@ export class AdditionalContentService {
     query: AdditionalContentFilterDto
   ): Promise<AdditionalContentInterfaces.Response[]> {
     return lastValueFrom(
-      this.adminClient.send<AdditionalContentInterfaces.Response[], AdditionalContentFilterDto>(
-        { cmd: Commands.GET_ALL_LIST },
-        query
-      )
+      this.adminClient.send<
+        AdditionalContentInterfaces.Response[],
+        AdditionalContentFilterDto
+      >({ cmd: Commands.GET_ALL_LIST }, query)
     );
   }
 
-  async getById(data: GetOneDto): Promise<AdditionalContentInterfaces.Response> {
+  async getById(
+    data: GetOneDto
+  ): Promise<AdditionalContentInterfaces.Response> {
     return lastValueFrom(
       this.adminClient.send<AdditionalContentInterfaces.Response, GetOneDto>(
         { cmd: Commands.GET_BY_ID },
@@ -36,10 +38,8 @@ export class AdditionalContentService {
   }
 
   async create(
-    data: AdditionalContentCreateDto,
-    userNumericId: string
+    data: AdditionalContentCreateDto
   ): Promise<AdditionalContentInterfaces.Response> {
-    data = { staffNumber: userNumericId, ...data };
     return await lastValueFrom(
       this.adminClient.send<
         AdditionalContentInterfaces.Response,
@@ -48,7 +48,9 @@ export class AdditionalContentService {
     );
   }
 
-  async update(data: AdditionalContentUpdateDto): Promise<AdditionalContentInterfaces.Response> {
+  async update(
+    data: AdditionalContentUpdateDto
+  ): Promise<AdditionalContentInterfaces.Response> {
     return lastValueFrom(
       this.adminClient.send<
         AdditionalContentInterfaces.Response,
@@ -66,7 +68,9 @@ export class AdditionalContentService {
     );
   }
 
-  async restore(data: GetOneDto): Promise<AdditionalContentInterfaces.Response> {
+  async restore(
+    data: GetOneDto
+  ): Promise<AdditionalContentInterfaces.Response> {
     return lastValueFrom(
       this.adminClient.send<AdditionalContentInterfaces.Response, GetOneDto>(
         { cmd: Commands.RESTORE },

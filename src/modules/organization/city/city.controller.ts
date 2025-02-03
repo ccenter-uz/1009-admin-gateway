@@ -1,23 +1,18 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   HttpCode,
   HttpStatus,
-  Param,
-  ParseIntPipe,
   Post,
-  Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { CityService } from './city.service';
-import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
-import { LanguageRequestDto, ListQueryDto } from 'types/global';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 
 import {
   CityCreateDto,
-  CityUpdateDto,
   CityInterfaces,
 } from 'types/organization/city';
 import { CityFilterDto } from 'types/organization/city/dto/filter-city.dto';
@@ -31,9 +26,13 @@ export class CityController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
+    @Req() request: Request,
     @Query() query: CityFilterDto
   ): Promise<CityInterfaces.Response[]> {
-    return await this.subCategoryService.getAll(query);
+    return await this.subCategoryService.getAll({
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   // @Get(':id')

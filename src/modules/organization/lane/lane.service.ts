@@ -3,6 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
 import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
+import { CityRegionFilterDto } from 'types/global/dto/city-region-filter.dto';
 import {
   LaneCreateDto,
   LaneUpdateDto,
@@ -15,13 +16,13 @@ export class LaneService {
   private logger = new Logger(LaneService.name);
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getAll(query: ListQueryDto): Promise<LaneInterfaces.Response[]> {
+  async getAll(query: CityRegionFilterDto): Promise<LaneInterfaces.Response[]> {
     const methodName: string = this.getAll.name;
 
-    this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
+    this.logger.debug(`Method: ${methodName} - Request: `, CityRegionFilterDto);
 
     const response = lastValueFrom(
-      this.adminClient.send<LaneInterfaces.Response[], ListQueryDto>(
+      this.adminClient.send<LaneInterfaces.Response[], CityRegionFilterDto>(
         { cmd: Commands.GET_ALL_LIST },
         query
       )
@@ -45,12 +46,9 @@ export class LaneService {
     return response;
   }
 
-  async create(
-    data: LaneCreateDto,
-    userNumericId: string
-  ): Promise<LaneInterfaces.Response> {
+  async create(data: LaneCreateDto): Promise<LaneInterfaces.Response> {
     const methodName: string = this.getAll.name;
-    data = { staffNumber: userNumericId, ...data };
+
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(

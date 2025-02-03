@@ -20,6 +20,7 @@ import {
   ResidentialAreaUpdateDto,
   ResidentialAreaInterfaces,
 } from 'types/organization/residential-area';
+import { CityRegionFilterDto } from 'types/global/dto/city-region-filter.dto';
 
 @ApiBearerAuth()
 @ApiTags('residential-area')
@@ -32,19 +33,27 @@ export class ResidentialAreaController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Req() request: Request,
+    @Query() query: CityRegionFilterDto
   ): Promise<ResidentialAreaInterfaces.Response[]> {
-    return await this.residentialAreaService.getAll(query);
+    return await this.residentialAreaService.getAll({
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Get(':id')
   @ApiParam({ name: 'id' })
   @HttpCode(HttpStatus.OK)
   async getById(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query() query: LanguageRequestDto
   ): Promise<ResidentialAreaInterfaces.Response> {
-    return this.residentialAreaService.getById({ id, ...query });
+    return this.residentialAreaService.getById({
+      id,
+      ...query,
+    });
   }
 
   @Post()
@@ -54,33 +63,51 @@ export class ResidentialAreaController {
     @Body() data: ResidentialAreaCreateDto,
     @Req() request: Request
   ): Promise<ResidentialAreaInterfaces.Response> {
-    return this.residentialAreaService.create(data, request['userNumericId']);
+    return this.residentialAreaService.create({
+      ...data,
+      staffNumber: request['userData'].user.numericId,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id')
   @ApiBody({ type: ResidentialAreaUpdateDto })
   @HttpCode(HttpStatus.OK)
   async update(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Body() data: Omit<ResidentialAreaUpdateDto, 'id'>
   ): Promise<ResidentialAreaInterfaces.Response> {
-    return this.residentialAreaService.update({ ...data, id });
+    return this.residentialAreaService.update({
+      ...data,
+      id,
+      logData: request['userData'],
+    });
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query('delete') deleteQuery?: boolean
   ): Promise<ResidentialAreaInterfaces.Response> {
-    return this.residentialAreaService.delete({ id, delete: deleteQuery });
+    return this.residentialAreaService.delete({
+      id,
+      delete: deleteQuery,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id/restore')
   @HttpCode(HttpStatus.OK)
   async restore(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number
   ): Promise<ResidentialAreaInterfaces.Response> {
-    return this.residentialAreaService.restore({ id });
+    return this.residentialAreaService.restore({
+      id,
+      logData: request['userData'],
+    });
   }
 }

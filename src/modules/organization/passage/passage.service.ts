@@ -3,6 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
 import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
+import { CityRegionFilterDto } from 'types/global/dto/city-region-filter.dto';
 import {
   PassageCreateDto,
   PassageUpdateDto,
@@ -14,9 +15,11 @@ import {
 export class PassageService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getAll(query: ListQueryDto): Promise<PassageInterfaces.Response[]> {
+  async getAll(
+    query: CityRegionFilterDto
+  ): Promise<PassageInterfaces.Response[]> {
     return lastValueFrom(
-      this.adminClient.send<PassageInterfaces.Response[], ListQueryDto>(
+      this.adminClient.send<PassageInterfaces.Response[], CityRegionFilterDto>(
         { cmd: Commands.GET_ALL_LIST },
         query
       )
@@ -32,11 +35,7 @@ export class PassageService {
     );
   }
 
-  async create(
-    data: PassageCreateDto,
-    userNumericId: string
-  ): Promise<PassageInterfaces.Response> {
-    data = { staffNumber: userNumericId, ...data };
+  async create(data: PassageCreateDto): Promise<PassageInterfaces.Response> {
     return await lastValueFrom(
       this.adminClient.send<
         PassageInterfaces.Response,

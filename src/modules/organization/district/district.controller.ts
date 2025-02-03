@@ -32,19 +32,28 @@ export class DistrictController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
+    @Req() request: Request,
     @Query() query: DistrictFilterDto
   ): Promise<DistrictInterfaces.Response[]> {
-    return await this.districtService.getAll(query);
+    return await this.districtService.getAll({
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Get(':id')
   @ApiParam({ name: 'id' })
   @HttpCode(HttpStatus.OK)
   async getById(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query() query: LanguageRequestDto
   ): Promise<DistrictInterfaces.Response> {
-    return this.districtService.getById({ id, ...query });
+    return this.districtService.getById({
+      id,
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Post()
@@ -54,33 +63,48 @@ export class DistrictController {
     @Body() data: DistrictCreateDto,
     @Req() request: Request
   ): Promise<DistrictInterfaces.Response> {
-    return this.districtService.create(data, request['userNumericId']);
+    return this.districtService.create({
+      ...data,
+      staffNumber: request['userData'].user.numericId,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id')
   @ApiBody({ type: DistrictUpdateDto })
   @HttpCode(HttpStatus.OK)
   async update(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Body() data: Omit<DistrictUpdateDto, 'id'>
   ): Promise<DistrictInterfaces.Response> {
-    return this.districtService.update({ ...data, id });
+    return this.districtService.update({
+      ...data,
+      id,
+      logData: request['userData'],
+    });
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query('delete') deleteQuery?: boolean
   ): Promise<DistrictInterfaces.Response> {
-    return this.districtService.delete({ id, delete: deleteQuery });
+    return this.districtService.delete({
+      id,
+      delete: deleteQuery,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id/restore')
   @HttpCode(HttpStatus.OK)
   async restore(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number
   ): Promise<DistrictInterfaces.Response> {
-    return this.districtService.restore({ id });
+    return this.districtService.restore({ id, logData: request['userData'] });
   }
 }

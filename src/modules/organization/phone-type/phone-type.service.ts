@@ -3,6 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
 import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
+import { ListQueryWithOrderDto } from 'types/global/dto/list-query-with-order.dto';
 
 import {
   PhoneTypeCreateDto,
@@ -17,14 +18,15 @@ export class PhoneTypeService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
   async getAll(
-    query: ListQueryDto
+    query: ListQueryWithOrderDto
   ): Promise<PhoneTypeInterfaces.Response[]> {
     const methodName: string = this.getAll.name;
 
-    this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
+    
+    this.logger.debug(`Method: ${methodName} - Request: `, ListQueryWithOrderDto);
 
     const response = await lastValueFrom(
-      this.adminClient.send<PhoneTypeInterfaces.Response[], ListQueryDto>(
+      this.adminClient.send<PhoneTypeInterfaces.Response[], ListQueryWithOrderDto>(
         { cmd: Commands.GET_ALL_LIST },
         query
       )
@@ -49,11 +51,10 @@ export class PhoneTypeService {
   }
 
   async create(
-    data: PhoneTypeCreateDto,
-    userNumericId: string
+    data: PhoneTypeCreateDto
   ): Promise<PhoneTypeInterfaces.Response> {
     const methodName: string = this.create.name;
-    data = { staffNumber: userNumericId, ...data };
+
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(

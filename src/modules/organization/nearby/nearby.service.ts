@@ -3,6 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
 import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
+import { CityRegionFilterDto } from 'types/global/dto/city-region-filter.dto';
 
 import {
   NearbyCreateDto,
@@ -19,11 +20,10 @@ export class NearbyService {
 
   async getAll(query: NearbyFilterDto): Promise<NearbyInterfaces.Response[]> {
     const methodName: string = this.getAll.name;
-
-    this.logger.debug(`Method: ${methodName} - Request: `, ListQueryDto);
+    this.logger.debug(`Method: ${methodName} - Request: `, NearbyFilterDto);
 
     const response = await lastValueFrom(
-      this.adminClient.send<NearbyInterfaces.Response[], ListQueryDto>(
+      this.adminClient.send<NearbyInterfaces.Response[], NearbyFilterDto>(
         { cmd: Commands.GET_ALL_LIST },
         query
       )
@@ -47,12 +47,9 @@ export class NearbyService {
     return response;
   }
 
-  async create(
-    data: NearbyCreateDto,
-    userNumericId: string
-  ): Promise<NearbyInterfaces.Response> {
+  async create(data: NearbyCreateDto): Promise<NearbyInterfaces.Response> {
     const methodName: string = this.create.name;
-    data = { staffNumber: userNumericId, ...data };
+
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(

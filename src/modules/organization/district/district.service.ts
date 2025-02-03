@@ -15,7 +15,9 @@ import { DistrictFilterDto } from 'types/organization/district/dto/filter-distri
 export class DistrictService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getAll(query: DistrictFilterDto): Promise<DistrictInterfaces.Response[]> {
+  async getAll(
+    query: DistrictFilterDto
+  ): Promise<DistrictInterfaces.Response[]> {
     return lastValueFrom(
       this.adminClient.send<DistrictInterfaces.Response[], DistrictFilterDto>(
         { cmd: Commands.GET_ALL_LIST },
@@ -33,11 +35,7 @@ export class DistrictService {
     );
   }
 
-  async create(
-    data: DistrictCreateDto,
-    userNumericId: string
-  ): Promise<DistrictInterfaces.Response> {
-    data = { staffNumber: userNumericId, ...data };
+  async create(data: DistrictCreateDto): Promise<DistrictInterfaces.Response> {
     return await lastValueFrom(
       this.adminClient.send<
         DistrictInterfaces.Response,

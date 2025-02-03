@@ -31,13 +31,10 @@ export class OrganizationService {
   ) {}
 
   async getListOrganization(
-    query: OrganizationFilterDto,
-    userNumericId: string,
-    role: string
+    query: OrganizationFilterDto
   ): Promise<OrganizationInterfaces.Response[]> {
     const methodName: string = this.getListOrganization.name;
-    query.staffNumber = userNumericId;
-    query.role = role;
+
     this.logger.debug(
       `Method: ${methodName} - Request: `,
       OrganizationFilterDto
@@ -54,13 +51,10 @@ export class OrganizationService {
   }
 
   async getMyOrganization(
-    query: MyOrganizationFilterDto,
-    userNumericId: string,
-    role: string
+    query: MyOrganizationFilterDto
   ): Promise<OrganizationInterfaces.Response[]> {
     const methodName: string = this.getMyOrganization.name;
-    query.staffNumber = userNumericId;
-    query.role = role;
+
     this.logger.debug(
       `Method: ${methodName} - Request: `,
       MyOrganizationFilterDto
@@ -77,11 +71,10 @@ export class OrganizationService {
   }
 
   async getUnconfirm(
-    query: UnconfirmOrganizationFilterDto,
-    userNumericId: string
+    query: UnconfirmOrganizationFilterDto
   ): Promise<OrganizationInterfaces.Response[]> {
     const methodName: string = this.getUnconfirm.name;
-    query.staffNumber = userNumericId;
+
     this.logger.debug(
       `Method: ${methodName} - Request: `,
       UnconfirmOrganizationFilterDto
@@ -97,14 +90,11 @@ export class OrganizationService {
     return response;
   }
 
-  async getById(
-    data: GetOneDto,
-    role: string
-  ): Promise<OrganizationInterfaces.Response> {
+  async getById(data: GetOneDto): Promise<OrganizationInterfaces.Response> {
     const methodName: string = this.getListOrganization.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
-    data.role = role;
+
     const response = lastValueFrom(
       this.adminClient.send<OrganizationInterfaces.Response, GetOneDto>(
         { cmd: Commands.GET_BY_ID },
@@ -117,8 +107,6 @@ export class OrganizationService {
 
   async create(
     data: OrganizationCreateDto,
-    role: string,
-    userNumericId: string,
     files: Array<Multer.File>
   ): Promise<OrganizationInterfaces.Response> {
     const methodName: string = this.create.name;
@@ -129,8 +117,6 @@ export class OrganizationService {
 
     data = {
       ...data,
-      role,
-      staffNumber: userNumericId,
       PhotoLink: fileLinks,
       phone:
         typeof data.phone == 'string' ? JSON.parse(data.phone) : data.phone,
@@ -156,8 +142,6 @@ export class OrganizationService {
 
   async update(
     data: OrganizationVersionUpdateDto,
-    role: string,
-    userNumericId: string,
     files: Array<Multer.File>
   ): Promise<OrganizationVersionInterfaces.Response> {
     const methodName: string = this.update.name;
@@ -165,8 +149,6 @@ export class OrganizationService {
     const fileLinks = await this.googleCloudStorageService.uploadFiles(files);
     data = {
       ...data,
-      role,
-      staffNumber: userNumericId,
       PhotoLink: fileLinks,
       phone:
         typeof data.phone == 'string' ? JSON.parse(data.phone) : data.phone,
@@ -194,17 +176,9 @@ export class OrganizationService {
     return response;
   }
   async updateCheck(
-    data: ConfirmDto,
-    role: string,
-    userNumericId: string
+    data: ConfirmDto
   ): Promise<OrganizationVersionInterfaces.Response> {
     const methodName: string = this.updateCheck.name;
-
-    data = {
-      ...data,
-      role,
-      staffNumber: userNumericId,
-    };
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 

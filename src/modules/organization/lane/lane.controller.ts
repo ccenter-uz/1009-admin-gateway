@@ -21,6 +21,7 @@ import {
   LaneUpdateDto,
   LaneInterfaces,
 } from 'types/organization/lane';
+import { CityRegionFilterDto } from 'types/global/dto/city-region-filter.dto';
 
 @ApiBearerAuth()
 @ApiTags('lane')
@@ -31,19 +32,28 @@ export class LaneController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getAll(
-    @Query() query: ListQueryDto
+    @Req() request: Request,
+    @Query() query: CityRegionFilterDto
   ): Promise<LaneInterfaces.Response[]> {
-    return await this.laneService.getAll(query);
+    return await this.laneService.getAll({
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Get(':id')
   @ApiParam({ name: 'id' })
   @HttpCode(HttpStatus.OK)
   async getById(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query() query: LanguageRequestDto
   ): Promise<LaneInterfaces.Response> {
-    return this.laneService.getById({ id, ...query });
+    return this.laneService.getById({
+      id,
+      ...query,
+      logData: request['userData'],
+    });
   }
 
   @Post()
@@ -53,33 +63,48 @@ export class LaneController {
     @Body() data: LaneCreateDto,
     @Req() request: Request
   ): Promise<LaneInterfaces.Response> {
-    return this.laneService.create(data, request['userNumericId']);
+    return this.laneService.create({
+      ...data,
+      staffNumber: request['userData'].user.numericId,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id')
   @ApiBody({ type: LaneUpdateDto })
   @HttpCode(HttpStatus.OK)
   async update(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Body() data: Omit<LaneUpdateDto, 'id'>
   ): Promise<LaneInterfaces.Response> {
-    return this.laneService.update({ ...data, id });
+    return this.laneService.update({
+      ...data,
+      id,
+      logData: request['userData'],
+    });
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
     @Query('delete') deleteQuery?: boolean
   ): Promise<LaneInterfaces.Response> {
-    return this.laneService.delete({ id, delete: deleteQuery });
+    return this.laneService.delete({
+      id,
+      delete: deleteQuery,
+      logData: request['userData'],
+    });
   }
 
   @Put(':id/restore')
   @HttpCode(HttpStatus.OK)
   async restore(
+    @Req() request: Request,
     @Param('id', ParseIntPipe) id: number
   ): Promise<LaneInterfaces.Response> {
-    return this.laneService.restore({ id });
+    return this.laneService.restore({ id, logData: request['userData'] });
   }
 }
