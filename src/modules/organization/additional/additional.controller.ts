@@ -34,6 +34,7 @@ export class AdditionalController {
     @Req() request: Request,
     @Query() query: AdditionalFilterDto
   ): Promise<AdditionalInterfaces.Response[]> {
+
     return await this.additionalService.getAll({
       ...query,
       logData: request['userData'],
