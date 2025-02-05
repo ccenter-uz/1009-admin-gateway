@@ -3,6 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
 import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
+import { ListQueryWithOrderDto } from 'types/global/dto/list-query-with-order.dto';
 import {
   SegmentCreateDto,
   SegmentInterfaces,
@@ -14,9 +15,9 @@ import {
 export class SegmentService {
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
-  async getAll(query: ListQueryDto): Promise<SegmentInterfaces.Response[]> {
+  async getAll(query: ListQueryWithOrderDto): Promise<SegmentInterfaces.Response[]> {
     return lastValueFrom(
-      this.adminClient.send<SegmentInterfaces.Response[], ListQueryDto>(
+      this.adminClient.send<SegmentInterfaces.Response[], ListQueryWithOrderDto>(
         { cmd: Commands.GET_ALL_LIST },
         query
       )
