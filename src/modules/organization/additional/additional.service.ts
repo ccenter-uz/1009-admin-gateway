@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
@@ -13,37 +13,55 @@ import { AdditionalFilterDto } from 'types/organization/additional/dto/filter-ad
 
 @Injectable()
 export class AdditionalService {
+  private logger = new Logger(AdditionalService.name);
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
   async getAll(
     query: AdditionalFilterDto
   ): Promise<AdditionalInterfaces.Response[]> {
-    return lastValueFrom(
+    const methodName: string = this.getAll.name;
+
+    this.logger.debug(`Method: ${methodName} - Request: `, AdditionalFilterDto);
+
+    const response = lastValueFrom(
       this.adminClient.send<
         AdditionalInterfaces.Response[],
         AdditionalFilterDto
       >({ cmd: Commands.GET_ALL_LIST }, query)
     );
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+
+    return response;
   }
 
   async getById(data: GetOneDto): Promise<AdditionalInterfaces.Response> {
-    return lastValueFrom(
+    const methodName: string = this.getById.name;
+
+    const response = lastValueFrom(
       this.adminClient.send<AdditionalInterfaces.Response, GetOneDto>(
         { cmd: Commands.GET_BY_ID },
         data
       )
     );
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+
+    return response;
   }
 
   async create(
     data: AdditionalCreateDto
   ): Promise<AdditionalInterfaces.Response> {
-    return await lastValueFrom(
+    const methodName: string = this.create.name;
+
+    const response = await lastValueFrom(
       this.adminClient.send<
         AdditionalInterfaces.Response,
         AdditionalInterfaces.Request
       >({ cmd: Commands.CREATE }, data)
     );
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+
+    return response;
   }
 
   async update(
