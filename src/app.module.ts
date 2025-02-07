@@ -40,6 +40,7 @@ import { AdditionalCategoryModule } from './modules/organization/additional-cate
 import { AdditionalModule } from './modules/organization/additional/additional.module';
 import { OrganizationMonitoringModule } from './modules/organization/monitoring/monitoring.module';
 import { UserMonitoringModule } from './modules/user/monitoring/monitoring.module';
+import { NeighborhoodModule } from './modules/organization/neighborhood/neighborhood.module';
 
 @Module({
   imports: [
@@ -69,6 +70,7 @@ import { UserMonitoringModule } from './modules/user/monitoring/monitoring.modul
     AreaModule,
     AvenueModule,
     ResidentialAreaModule,
+    NeighborhoodModule,
     ImpasseModule,
     VillageModule,
     LaneModule,
