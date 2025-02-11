@@ -32,7 +32,7 @@ export class AreaService {
   }
 
   async getById(data: GetOneDto): Promise<AreaInterfaces.Response> {
-    const methodName: string = this.getAll.name;
+    const methodName: string = this.getById.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
     const response = lastValueFrom(
@@ -46,7 +46,7 @@ export class AreaService {
   }
 
   async create(data: AreaCreateDto): Promise<AreaInterfaces.Response> {
-    const methodName: string = this.getAll.name;
+    const methodName: string = this.create.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
     const response = await lastValueFrom(
