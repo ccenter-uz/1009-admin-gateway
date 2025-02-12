@@ -2,7 +2,6 @@ import {
   ExceptionFilter,
   Catch,
   ArgumentsHost,
-  HttpException,
   HttpStatus,
   Logger,
   UnauthorizedException,
@@ -28,15 +27,23 @@ export class AllExceptionsFilter implements ExceptionFilter {
       status = HttpStatus.UNAUTHORIZED;
       message = exception.message;
     }
+   
+    if (exception?.response) {
+      status =
+        exception?.response?.statusCode || HttpStatus.INTERNAL_SERVER_ERROR;
 
-    status =
-      exception?.response?.statusCode || HttpStatus.INTERNAL_SERVER_ERROR;
+      message =
+        (typeof exception?.response?.message === 'string'
+          ? exception?.response?.message
+          : exception?.response?.message[0]) || 'Internal server error';
+    } else if (exception?.error) {
+      status = exception?.error?.statusCode || HttpStatus.INTERNAL_SERVER_ERROR;
 
-    message =
-      (typeof exception?.response?.message === 'string'
-        ? exception?.response?.message
-        : exception?.response?.message[0]) || 'Internal server error';
-
+      message =
+        (typeof exception?.error?.message === 'string'
+          ? exception?.error?.message
+          : exception?.error?.message[0]) || 'Internal server error';
+    }
     this.logger.debug(
       `Exception Filter: ${JSON.stringify(
         {
