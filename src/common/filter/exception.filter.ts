@@ -27,7 +27,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       status = HttpStatus.UNAUTHORIZED;
       message = exception.message;
     }
-   
+
     if (exception?.response) {
       status =
         exception?.response?.statusCode || HttpStatus.INTERNAL_SERVER_ERROR;
@@ -44,13 +44,26 @@ export class AllExceptionsFilter implements ExceptionFilter {
           ? exception?.error?.message
           : exception?.error?.message[0]) || 'Internal server error';
     }
+    if (!status) {
+      status = 500;
+    }
+    
+    if (!message && exception) {
+      message = 'Internal server error';
+      if (exception && exception?.message && exception?.name) {
+        message = `${exception.name} : ${exception.message}`;
+        status = exception?.status ? exception.status : 400;
+      }
+    }
+
     this.logger.debug(
       `Exception Filter: ${JSON.stringify(
         {
           status: 'error',
           result: null,
           error: {
-            message: typeof message === 'string' ? message : message['message'],
+            message:
+              typeof message === 'string' ? message : 'Internal server error',
           },
         },
         null,
@@ -62,7 +75,8 @@ export class AllExceptionsFilter implements ExceptionFilter {
       status: status,
       result: null,
       error: {
-        message: typeof message === 'string' ? message : message['message'],
+        message:
+          typeof message === 'string' ? message : 'Internal server error',
       },
     });
   }
