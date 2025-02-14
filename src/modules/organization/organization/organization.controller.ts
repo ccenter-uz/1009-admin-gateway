@@ -118,7 +118,7 @@ export class OrganizationController {
     return this.organizationService.create(
       {
         ...data,
-        staffNumber: request['userData'].user.numericI,
+        staffNumber: request['userData'].user.numericId,
         role: request['userData'].user.role,
         logData: request['userData'],
       },
