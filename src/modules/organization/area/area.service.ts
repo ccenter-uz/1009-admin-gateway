@@ -3,7 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
 import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
-import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
+import { CityRegionFilterDto } from 'types/global/dto/city-region-filter.dto';
 import {
   AreaCreateDto,
   AreaUpdateDto,
@@ -32,7 +32,7 @@ export class AreaService {
   }
 
   async getById(data: GetOneDto): Promise<AreaInterfaces.Response> {
-    const methodName: string = this.getAll.name;
+    const methodName: string = this.getById.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
     const response = lastValueFrom(
@@ -46,7 +46,7 @@ export class AreaService {
   }
 
   async create(data: AreaCreateDto): Promise<AreaInterfaces.Response> {
-    const methodName: string = this.getAll.name;
+    const methodName: string = this.create.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
     const response = await lastValueFrom(

@@ -2,7 +2,6 @@ import {
   ExceptionFilter,
   Catch,
   ArgumentsHost,
-  HttpException,
   HttpStatus,
   Logger,
   UnauthorizedException,
@@ -29,13 +28,33 @@ export class AllExceptionsFilter implements ExceptionFilter {
       message = exception.message;
     }
 
-    status =
-      exception?.response?.statusCode || HttpStatus.INTERNAL_SERVER_ERROR;
+    if (exception?.response) {
+      status =
+        exception?.response?.statusCode || HttpStatus.INTERNAL_SERVER_ERROR;
 
-    message =
-      (typeof exception?.response?.message === 'string'
-        ? exception?.response?.message
-        : exception?.response?.message[0]) || 'Internal server error';
+      message =
+        (typeof exception?.response?.message === 'string'
+          ? exception?.response?.message
+          : exception?.response?.message[0]) || 'Internal server error';
+    } else if (exception?.error) {
+      status = exception?.error?.statusCode || HttpStatus.INTERNAL_SERVER_ERROR;
+
+      message =
+        (typeof exception?.error?.message === 'string'
+          ? exception?.error?.message
+          : exception?.error?.message[0]) || 'Internal server error';
+    }
+    if (!status) {
+      status = 500;
+    }
+    
+    if (!message && exception) {
+      message = 'Internal server error';
+      if (exception && exception?.message && exception?.name) {
+        message = `${exception.name} : ${exception.message}`;
+        status = exception?.status ? exception.status : 400;
+      }
+    }
 
     this.logger.debug(
       `Exception Filter: ${JSON.stringify(
@@ -43,7 +62,8 @@ export class AllExceptionsFilter implements ExceptionFilter {
           status: 'error',
           result: null,
           error: {
-            message: typeof message === 'string' ? message : message['message'],
+            message:
+              typeof message === 'string' ? message : 'Internal server error',
           },
         },
         null,
@@ -55,7 +75,8 @@ export class AllExceptionsFilter implements ExceptionFilter {
       status: status,
       result: null,
       error: {
-        message: typeof message === 'string' ? message : message['message'],
+        message:
+          typeof message === 'string' ? message : 'Internal server error',
       },
     });
   }
