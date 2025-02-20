@@ -35,6 +35,7 @@ export class DistrictService {
   }
 
   async getById(data: GetOneDto): Promise<DistrictInterfaces.Response> {
+    
     const methodName: string = this.getById.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
