@@ -37,6 +37,7 @@ export class AdditionalController {
     return await this.additionalService.getAll({
       ...query,
       logData: request['userData'],
+      role: request['userData'].user.role,
     });
   }
 

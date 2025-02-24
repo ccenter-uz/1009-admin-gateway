@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
@@ -13,71 +13,109 @@ import {
 
 @Injectable()
 export class ProductServiceCategoryService {
+  private logger = new Logger(ProductServiceCategoryService.name);
+
   constructor(@Inject(ORGANIZATION) private adminClient: ClientProxy) {}
 
   async getAll(
     query: ListQueryWithOrderDto
   ): Promise<ProductServiseCategoryInterfaces.Response[]> {
-    return lastValueFrom(
+    const methodName: string = this.getAll.name;
+
+    this.logger.debug(`Method: ${methodName} - Request: `, query);
+    const response = lastValueFrom(
       this.adminClient.send<
         ProductServiseCategoryInterfaces.Response[],
         ListQueryWithOrderDto
       >({ cmd: Commands.GET_ALL_LIST }, query)
     );
+
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+    return response;
   }
 
   async getById(
     data: GetOneDto
   ): Promise<ProductServiseCategoryInterfaces.Response> {
-    return lastValueFrom(
+    const methodName: string = this.getById.name;
+    this.logger.debug(`Method: ${methodName} - Request: `, data);
+
+    const response = lastValueFrom(
       this.adminClient.send<
         ProductServiseCategoryInterfaces.Response,
         GetOneDto
       >({ cmd: Commands.GET_BY_ID }, data)
     );
+
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+    return response;
   }
 
   async create(
     data: ProductServiseCategoryCreateDto
   ): Promise<ProductServiseCategoryInterfaces.Response> {
-    return await lastValueFrom(
+    const methodName: string = this.create.name;
+    this.logger.debug(`Method: ${methodName} - Request: `, data);
+
+    const response = await lastValueFrom(
       this.adminClient.send<
         ProductServiseCategoryInterfaces.Response,
         ProductServiseCategoryInterfaces.Request
       >({ cmd: Commands.CREATE }, data)
     );
+
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+    return response;
   }
 
   async update(
     data: ProductServiseCategoryUpdateDto
   ): Promise<ProductServiseCategoryInterfaces.Response> {
-    return lastValueFrom(
+    const methodName: string = this.update.name;
+    this.logger.debug(`Method: ${methodName} - Request: `, data);
+
+    const response = lastValueFrom(
       this.adminClient.send<
         ProductServiseCategoryInterfaces.Response,
         ProductServiseCategoryInterfaces.Update
       >({ cmd: Commands.UPDATE }, data)
     );
+
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+    return response;
   }
 
   async delete(
     data: DeleteDto
   ): Promise<ProductServiseCategoryInterfaces.Response> {
-    return lastValueFrom(
+    const methodName: string = this.delete.name;
+    this.logger.debug(`Method: ${methodName} - Request: `, data);
+
+    const response = lastValueFrom(
       this.adminClient.send<
         ProductServiseCategoryInterfaces.Response,
         DeleteDto
       >({ cmd: Commands.DELETE }, data)
     );
+
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+    return response;
   }
 
   async restore(
     data: GetOneDto
   ): Promise<ProductServiseCategoryInterfaces.Response> {
-    return lastValueFrom(
+    const methodName: string = this.restore.name;
+    this.logger.debug(`Method: ${methodName} - Request: `, data);
+
+    const response = lastValueFrom(
       this.adminClient.send<
         ProductServiseCategoryInterfaces.Response,
         GetOneDto
       >({ cmd: Commands.RESTORE }, data)
     );
+
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+    return response;
   }
 }

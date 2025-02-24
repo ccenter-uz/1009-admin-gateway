@@ -107,7 +107,8 @@ export class OrganizationService {
     files: Array<Multer.File>
   ): Promise<OrganizationInterfaces.Response> {
     const methodName: string = this.create.name;
-
+    this.logger.debug(`Method: ${methodName} - Before Upload File: `, files);
+    
     const fileLinks = await this.googleCloudStorageService.uploadFiles(files);
 
     this.logger.debug(`Method: ${methodName} - Upload File: `, fileLinks);
