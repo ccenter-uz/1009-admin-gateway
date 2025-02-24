@@ -130,7 +130,6 @@ export class OrganizationService {
     };
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
-
     const response = await lastValueFrom(
       this.adminClient.send<
         OrganizationInterfaces.Response,
