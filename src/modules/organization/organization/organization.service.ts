@@ -35,10 +35,7 @@ export class OrganizationService {
   ): Promise<OrganizationInterfaces.Response[]> {
     const methodName: string = this.getListOrganization.name;
 
-    this.logger.debug(
-      `Method: ${methodName} - Request: `,
-      OrganizationFilterDto
-    );
+    this.logger.debug(`Method: ${methodName} - Request: `, query);
 
     const response = lastValueFrom(
       this.adminClient.send<
