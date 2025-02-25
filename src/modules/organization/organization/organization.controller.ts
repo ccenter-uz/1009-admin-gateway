@@ -54,8 +54,6 @@ export class OrganizationController {
     @Query() query: OrganizationFilterDto,
     @Req() request: Request
   ): Promise<OrganizationInterfaces.Response[]> {
-    console.log(query, 'QUERY');
-    console.log(request['userData']);
     return await this.organizationService.getListOrganization({
       ...query,
       staffNumber: request['userData'].user.numericId,
