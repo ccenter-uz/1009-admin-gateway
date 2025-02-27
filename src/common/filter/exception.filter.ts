@@ -21,7 +21,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     let status: number;
     let message: string;
     if (
-      exception instanceof TokenExpiredError &&
+      exception instanceof TokenExpiredError ||
       exception instanceof UnauthorizedException
     ) {
       status = HttpStatus.UNAUTHORIZED;
@@ -47,7 +47,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     if (!status) {
       status = 500;
     }
-    
+
     if (!message && exception) {
       message = 'Internal server error';
       if (exception && exception?.message && exception?.name) {
