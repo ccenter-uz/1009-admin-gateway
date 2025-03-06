@@ -20,10 +20,13 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     let status: number;
     let message: string;
-    if (
-      exception instanceof TokenExpiredError ||
-      exception instanceof UnauthorizedException
-    ) {
+
+    if (exception instanceof TokenExpiredError) {
+      status = HttpStatus.FORBIDDEN;
+      message = exception.message;
+    }
+
+    if (exception instanceof UnauthorizedException) {
       status = HttpStatus.UNAUTHORIZED;
       message = exception.message;
     }

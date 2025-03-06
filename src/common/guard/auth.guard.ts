@@ -35,6 +35,8 @@ export class AuthGuard implements CanActivate {
       exp?: number;
     };*/
 
+    console.log(decoded, 'DECODE');
+
     const rolePermissions = await this.userService.checkPermission({
       userId: decoded.userId,
       roleId: decoded.roleId,

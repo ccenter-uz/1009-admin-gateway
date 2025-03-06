@@ -1,4 +1,3 @@
-import { Storage } from '@google-cloud/storage';
 import { registerAs } from '@nestjs/config';
 import { resolve } from 'path';
 import * as process from 'process';
