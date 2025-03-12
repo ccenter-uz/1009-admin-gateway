@@ -82,6 +82,7 @@ export class ProductServiceCategoryController {
     return this.productServiceCategoryService.update({
       ...data,
       id,
+      staffNumber: request['userData'].user.numericId,
       logData: request['userData'],
     });
   }

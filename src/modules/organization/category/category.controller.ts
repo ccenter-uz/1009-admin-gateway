@@ -80,6 +80,7 @@ export class CategoryController {
     return this.categoryService.update({
       ...data,
       id,
+      staffNumber: request['userData'].user.numericId,
       logData: request['userData'],
     });
   }

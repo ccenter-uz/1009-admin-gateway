@@ -81,6 +81,7 @@ export class AvenueController {
     return this.avenueService.update({
       ...data,
       id,
+      staffNumber: request['userData'].user.numericId,
       logData: request['userData'],
     });
   }

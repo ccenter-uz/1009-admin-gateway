@@ -82,6 +82,7 @@ export class AdditionalCategoryController {
     return this.additionalCategoryService.update({
       ...data,
       id,
+      staffNumber: request['userData'].user.numericId,
       logData: request['userData'],
     });
   }

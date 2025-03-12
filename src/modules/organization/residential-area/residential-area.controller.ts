@@ -81,6 +81,7 @@ export class ResidentialAreaController {
     return this.residentialAreaService.update({
       ...data,
       id,
+      staffNumber: request['userData'].user.numericId,
       logData: request['userData'],
     });
   }
