@@ -21,13 +21,15 @@ import { MyOrganizationFilterDto } from 'types/organization/organization/dto/fil
 import { OrganizationDeleteDto } from 'types/organization/organization/dto/delete-organization.dto';
 import { OrganizationRestoreDto } from 'types/organization/organization/dto/get-restore-organization.dto';
 import { UnconfirmOrganizationFilterDto } from 'types/organization/organization/dto/filter-unconfirm-organization.dto';
+import { MinioService } from 'src/modules/minio/minio.service';
 
 @Injectable()
 export class OrganizationService {
   private logger = new Logger(OrganizationService.name);
   constructor(
     @Inject(ORGANIZATION) private adminClient: ClientProxy,
-    private readonly googleCloudStorageService: GoogleCloudStorageService
+    private readonly googleCloudStorageService: GoogleCloudStorageService,
+    private readonly Minioservice: MinioService
   ) {}
 
   async getListOrganization(
@@ -109,7 +111,7 @@ export class OrganizationService {
     const methodName: string = this.create.name;
     this.logger.debug(`Method: ${methodName} - Before Upload File: `, files);
     
-    const fileLinks = await this.googleCloudStorageService.uploadFiles(files);
+    const fileLinks = await this.Minioservice.uploadFiles(files);
 
     this.logger.debug(`Method: ${methodName} - Upload File: `, fileLinks);
 
@@ -143,7 +145,7 @@ export class OrganizationService {
   ): Promise<OrganizationVersionInterfaces.Response> {
     const methodName: string = this.update.name;
 
-    const fileLinks = await this.googleCloudStorageService.uploadFiles(files);
+    const fileLinks = await this.Minioservice.uploadFiles(files);
     data = {
       ...data,
       PhotoLink: fileLinks,
