@@ -35,10 +35,7 @@ export class OrganizationService {
   ): Promise<OrganizationInterfaces.Response[]> {
     const methodName: string = this.getListOrganization.name;
 
-    this.logger.debug(
-      `Method: ${methodName} - Request: `,
-      OrganizationFilterDto
-    );
+    this.logger.debug(`Method: ${methodName} - Request: `, query);
 
     const response = lastValueFrom(
       this.adminClient.send<
@@ -110,7 +107,8 @@ export class OrganizationService {
     files: Array<Multer.File>
   ): Promise<OrganizationInterfaces.Response> {
     const methodName: string = this.create.name;
-
+    this.logger.debug(`Method: ${methodName} - Before Upload File: `, files);
+    
     const fileLinks = await this.googleCloudStorageService.uploadFiles(files);
 
     this.logger.debug(`Method: ${methodName} - Upload File: `, fileLinks);
@@ -129,7 +127,6 @@ export class OrganizationService {
     };
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
-
     const response = await lastValueFrom(
       this.adminClient.send<
         OrganizationInterfaces.Response,

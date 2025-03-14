@@ -3,7 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { ORGANIZATION } from 'types/config';
 import { DeleteDto, GetOneDto, ListQueryDto } from 'types/global';
-import { CityRegionFilterDto } from 'types/global-filters/city-region-filter';
+import { CityRegionFilterDto } from 'types/global/dto/city-region-filter.dto';
 import {
   AvenueCreateDto,
   AvenueUpdateDto,
@@ -21,7 +21,7 @@ export class AvenueService {
   ): Promise<AvenueInterfaces.Response[]> {
     const methodName: string = this.getAll.name;
 
-    this.logger.debug(`Method: ${methodName} - Request: `, CityRegionFilterDto);
+    this.logger.debug(`Method: ${methodName} - Request: `, query);
 
     const response = lastValueFrom(
       this.adminClient.send<AvenueInterfaces.Response[], CityRegionFilterDto>(
@@ -34,7 +34,7 @@ export class AvenueService {
   }
 
   async getById(data: GetOneDto): Promise<AvenueInterfaces.Response> {
-    const methodName: string = this.getAll.name;
+    const methodName: string = this.getById.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -49,7 +49,7 @@ export class AvenueService {
   }
 
   async create(data: AvenueCreateDto): Promise<AvenueInterfaces.Response> {
-    const methodName: string = this.getAll.name;
+    const methodName: string = this.create.name;
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = await lastValueFrom(
@@ -63,7 +63,7 @@ export class AvenueService {
   }
 
   async update(data: AvenueUpdateDto): Promise<AvenueInterfaces.Response> {
-    const methodName: string = this.getAll.name;
+    const methodName: string = this.update.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -78,7 +78,7 @@ export class AvenueService {
   }
 
   async delete(data: DeleteDto): Promise<AvenueInterfaces.Response> {
-    const methodName: string = this.getAll.name;
+    const methodName: string = this.delete.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -93,7 +93,7 @@ export class AvenueService {
   }
 
   async restore(data: GetOneDto): Promise<AvenueInterfaces.Response> {
-    const methodName: string = this.getAll.name;
+    const methodName: string = this.restore.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 

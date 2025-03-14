@@ -35,16 +35,18 @@ export class AuthGuard implements CanActivate {
       exp?: number;
     };*/
 
-    // const rolePermissions = await this.userService.checkPermission({
-    //   userId: decoded.userId,
-    //   roleId: decoded.roleId,
-    //   method,
-    //   path,
-    // });
+    console.log(decoded, 'DECODE');
 
-    // if (!rolePermissions) {
-    //   throw new ForbiddenException('Access denied');
-    // }
+    const rolePermissions = await this.userService.checkPermission({
+      userId: decoded.userId,
+      roleId: decoded.roleId,
+      method,
+      path,
+    });
+
+    if (!rolePermissions) {
+      throw new ForbiddenException('Access denied');
+    }
 
     const user = await this.userService.getById({ id: decoded.userId });
 

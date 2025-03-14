@@ -38,11 +38,10 @@ import { PhoneTypeModule } from './modules/organization/phone-type/phone-type.mo
 import { FtpModule } from './modules/organization/ftp/ftp.module';
 import { AdditionalCategoryModule } from './modules/organization/additional-category/additional-category.module';
 import { AdditionalModule } from './modules/organization/additional/additional.module';
-import { AdditionalContentModule } from './modules/organization/additional-content/additional-content.module';
-import { AdditionalTableModule } from './modules/organization/additional-table/additional-table.module';
 import { OrganizationMonitoringModule } from './modules/organization/monitoring/monitoring.module';
 import { UserMonitoringModule } from './modules/user/monitoring/monitoring.module';
 import { MinioModule } from './modules/minio/minio.module';
+import { NeighborhoodModule } from './modules/organization/neighborhood/neighborhood.module';
 
 @Module({
   imports: [
@@ -72,6 +71,7 @@ import { MinioModule } from './modules/minio/minio.module';
     AreaModule,
     AvenueModule,
     ResidentialAreaModule,
+    NeighborhoodModule,
     ImpasseModule,
     VillageModule,
     LaneModule,
@@ -82,8 +82,6 @@ import { MinioModule } from './modules/minio/minio.module';
     FtpModule,
     AdditionalCategoryModule,
     AdditionalModule,
-    AdditionalContentModule,
-    AdditionalTableModule,
     OrganizationMonitoringModule,
     UserMonitoringModule,
 
