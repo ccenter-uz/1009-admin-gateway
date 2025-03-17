@@ -32,9 +32,8 @@ export class MinioService implements OnModuleInit {
       { 'Content-Type': contentType }
     );
 
-    // return `http://${process.env.MINIO_ENDPOINT}:${process.env.MINIO_PORT}/${bucketName}/${fileName}`;
+    return `http://${process.env.MINIO_ENDPOINT}:${process.env.MINIO_PORT}/${bucketName}/${fileName}`;
 
-    return `http://localhost:9000/test/${fileName}`;
   }
 
   async uploadFiles(
@@ -57,7 +56,7 @@ export class MinioService implements OnModuleInit {
       );
 
       uploadedLinks.push({
-        link: `http://localhost:9000/test/${fileName}`,
+        link: `http://${process.env.MINIO_ENDPOINT}:${process.env.MINIO_PORT}/${bucketName}/${fileName}`,
       });
     }
 
