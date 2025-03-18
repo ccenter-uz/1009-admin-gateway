@@ -81,6 +81,7 @@ export class StreetController {
     return this.streetService.update({
       ...data,
       id,
+      staffNumber: request['userData'].user.numericId,
       logData: request['userData'],
     });
   }

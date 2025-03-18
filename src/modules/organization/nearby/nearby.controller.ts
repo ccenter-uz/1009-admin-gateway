@@ -80,6 +80,7 @@ export class NearbyController {
     return this.nearbyService.update({
       ...data,
       id,
+      staffNumber: request['userData'].user.numericId,
       logData: request['userData'],
     });
   }

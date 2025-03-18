@@ -6,8 +6,9 @@ import {
   UploadedFile,
   UseInterceptors,
   Param,
+  UploadedFiles,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { MinioService } from './minio.service';
 import * as Multer from 'multer';
 import {
@@ -27,7 +28,31 @@ import {
 export class MinioController {
   constructor(private readonly minioService: MinioService) {}
 
-  // Upload a single file to MinIO
+  @Post('uploadFiles')
+  @ApiOperation({ summary: 'Upload a file to MinIO' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        files: {
+          type: 'array',
+          items: {
+            type: 'string',
+            format: 'binary',
+          },
+        },
+      },
+    },
+  })
+  @ApiResponse({ status: 201, description: 'File uploaded successfully' })
+  @UseInterceptors(FilesInterceptor('files'))
+  async uploadFile(@UploadedFiles() files: Multer.File[]) {
+    const bucketName = 'test';
+    const urls = await this.minioService.uploadFiles( files , bucketName);
+    return { urls };
+  }
+
   @Post('upload')
   @ApiOperation({ summary: 'Upload a file to MinIO' })
   @ApiConsumes('multipart/form-data')
@@ -44,7 +69,7 @@ export class MinioController {
   })
   @ApiResponse({ status: 201, description: 'File uploaded successfully' })
   @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@UploadedFile() file: Multer.File) {
+  async uploadFiles(@UploadedFile() file: Multer.File) {
     const bucketName = 'test';
     const url = await this.minioService.upload(bucketName, file);
     return { url };

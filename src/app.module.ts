@@ -84,7 +84,6 @@ import { NeighborhoodModule } from './modules/organization/neighborhood/neighbor
     AdditionalModule,
     OrganizationMonitoringModule,
     UserMonitoringModule,
-
     MinioModule,
   ],
   providers: [

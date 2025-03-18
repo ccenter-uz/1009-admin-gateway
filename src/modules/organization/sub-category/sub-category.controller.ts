@@ -81,6 +81,7 @@ export class SubCategoryController {
     return this.subCategoryService.update({
       ...data,
       id,
+      staffNumber: request['userData'].user.numericId,
       logData: request['userData'],
     });
   }

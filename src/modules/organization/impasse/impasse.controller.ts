@@ -80,6 +80,7 @@ export class ImpasseController {
     return this.impasseService.update({
       ...data,
       id,
+      staffNumber: request['userData'].user.numericId,
       logData: request['userData'],
     });
   }

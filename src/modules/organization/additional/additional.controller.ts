@@ -81,6 +81,7 @@ export class AdditionalController {
     return this.additionalService.update({
       ...data,
       id,
+      staffNumber: request['userData'].user.numericId,
       logData: request['userData'],
     });
   }
