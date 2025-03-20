@@ -47,7 +47,7 @@ export type RMQConfig = {
 export const appConfig = registerAs(
   CONFIG_APP_TOKEN,
   (): AppConfig => ({
-    host: process.env.APP_HOST || '0.0.0.0',
+    host: process.env.APP_HOST || '192.168.31.168',
     port: parseInt(process.env.APP_PORT) || 3000,
     cors_domains: process.env.CORS_DOMAINS || '*',
   })
@@ -71,4 +71,14 @@ export const keyFilename = resolve(
 export const JwtConfig = {
   secretKey: process.env.SECRET_KEY || 'secret-key',
   expiresIn: process.env.EXPIRES_IN || '10d',
+};
+
+export const MinioConfig = {
+  host: process.env.MINIO_ENDPOINT || 'localhost',
+  port: +process.env.MINIO_PORT || 9000,
+  useSSL: false,
+  accessKey: process.env.MINIO_ACCESS_KEY || 'GgfXa2vCuLrCyOZBmNZE',
+  secretKey:
+    process.env.MINIO_SECRET_KEY || 'APEv4lmHcsjrM9LjonzaUWuws7Ygqrk5eRj4JNpO',
+  bucketName: process.env.MINIO_BUCKET_NAME || 'my-bucket',
 };
