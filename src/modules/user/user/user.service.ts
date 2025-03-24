@@ -127,6 +127,23 @@ export class UserService {
     return response;
   }
 
+  async getByStaffNumberId(data: GetOneDto): Promise<UserInterfaces.Response> {
+    const methodName: string = this.getByStaffNumberId.name;
+
+    this.logger.debug(`Method: ${methodName} - Request: `, data);
+
+    const response: UserInterfaces.Response = await lastValueFrom(
+      this.adminClient.send<UserInterfaces.Response, GetOneDto>(
+        { cmd: Commands.GET_BY_STAFFNUMBER },
+        data
+      )
+    );
+
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+
+    return response;
+  }
+
   async getMeById(data: GetOneDto): Promise<UserInterfaces.Response> {
     const methodName: string = this.getMeById.name;
 

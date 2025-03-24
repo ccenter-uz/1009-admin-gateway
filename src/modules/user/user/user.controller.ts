@@ -61,6 +61,21 @@ export class UserController {
     });
   }
 
+  @Get('get-by-staff-number/:id')
+  @ApiParam({ name: 'id' })
+  @HttpCode(HttpStatus.OK)
+  async getByStaffNumberId(
+    @Req() request: Request,
+    @Param('id', ParseIntPipe) id: number,
+    // @Query() query: LanguageRequestDto
+  ): Promise<UserInterfaces.Response> {
+    return this.userService.getByStaffNumberId({
+      id,
+      // ...query,
+      logData: request.body['userData'],
+    });
+  }
+
   @Put('update-me')
   @ApiBody({ type: UserUpdateMeDto })
   @HttpCode(HttpStatus.OK)
