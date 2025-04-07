@@ -47,7 +47,7 @@ export type RMQConfig = {
 export const appConfig = registerAs(
   CONFIG_APP_TOKEN,
   (): AppConfig => ({
-    host: process.env.APP_HOST || '192.168.31.168',
+    host: process.env.APP_HOST || '0.0.0.0',
     port: parseInt(process.env.APP_PORT) || 3000,
     cors_domains: process.env.CORS_DOMAINS || '*',
   })
