@@ -22,6 +22,7 @@ import { OrganizationDeleteDto } from 'types/organization/organization/dto/delet
 import { OrganizationRestoreDto } from 'types/organization/organization/dto/get-restore-organization.dto';
 import { UnconfirmOrganizationFilterDto } from 'types/organization/organization/dto/filter-unconfirm-organization.dto';
 import { MinioService } from 'src/modules/minio/minio.service';
+import { MinioConfig } from '../../../common/config/app.config';
 
 @Injectable()
 export class OrganizationService {
@@ -110,8 +111,11 @@ export class OrganizationService {
   ): Promise<OrganizationInterfaces.Response> {
     const methodName: string = this.create.name;
     this.logger.debug(`Method: ${methodName} - Before Upload File: `, files);
-    
-    const fileLinks = await this.Minioservice.uploadFiles(files);
+
+    const fileLinks = await this.Minioservice.uploadFiles(
+      files,
+      MinioConfig.bucketName
+    );
 
     this.logger.debug(`Method: ${methodName} - Upload File: `, fileLinks);
 

@@ -2,6 +2,7 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Client } from 'minio';
 import * as Multer from 'multer';
 import * as mime from 'mime-types';
+import { MinioConfig } from '../../common/config/app.config';
 
 @Injectable()
 export class MinioService implements OnModuleInit {
@@ -9,13 +10,11 @@ export class MinioService implements OnModuleInit {
 
   onModuleInit() {
     this.minioClient = new Client({
-      endPoint: process.env.MINIO_ENDPOINT || 'localhost',
-      port: +process.env.MINIO_PORT || 9000,
-      useSSL: false,
-      accessKey: process.env.MINIO_ACCESS_KEY || 'GgfXa2vCuLrCyOZBmNZE',
-      secretKey:
-        process.env.MINIO_SECRET_KEY ||
-        'APEv4lmHcsjrM9LjonzaUWuws7Ygqrk5eRj4JNpO',
+      endPoint: MinioConfig.host,
+      port: MinioConfig.port,
+      useSSL: MinioConfig.useSSL,
+      accessKey: MinioConfig.accessKey,
+      secretKey: MinioConfig.secretKey,
     });
   }
 
@@ -33,12 +32,11 @@ export class MinioService implements OnModuleInit {
     );
 
     return `http://${process.env.MINIO_ENDPOINT}:${process.env.MINIO_PORT}/${bucketName}/${fileName}`;
-
   }
 
   async uploadFiles(
     files: Array<Multer.File>,
-    bucketName: string = 'test',
+    bucketName: string = 'test'
   ): Promise<{ link: string }[]> {
     const uploadedLinks: { link: string }[] = [];
 

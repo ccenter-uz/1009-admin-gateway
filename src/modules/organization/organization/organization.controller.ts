@@ -40,7 +40,6 @@ import { OrganizationFilterDto } from 'types/organization/organization/dto/filte
 import { ConfirmDto } from 'types/organization/organization/dto/confirm-organization.dto';
 import { MyOrganizationFilterDto } from 'types/organization/organization/dto/filter-my-organization.dto';
 import { UnconfirmOrganizationFilterDto } from 'types/organization/organization/dto/filter-unconfirm-organization.dto';
-import { OrganizationDeleteDto } from 'types/organization/organization/dto/delete-organization.dto';
 
 @ApiBearerAuth()
 @ApiTags('Organization')
