@@ -40,6 +40,7 @@ import { OrganizationFilterDto } from 'types/organization/organization/dto/filte
 import { ConfirmDto } from 'types/organization/organization/dto/confirm-organization.dto';
 import { MyOrganizationFilterDto } from 'types/organization/organization/dto/filter-my-organization.dto';
 import { UnconfirmOrganizationFilterDto } from 'types/organization/organization/dto/filter-unconfirm-organization.dto';
+import { ObjectAdressFilterDto } from 'types/organization/organization/dto/filter-object-adress-organization.dto';
 
 @ApiBearerAuth()
 @ApiTags('Organization')
@@ -82,6 +83,18 @@ export class OrganizationController {
     @Req() request: Request
   ): Promise<OrganizationInterfaces.Response[]> {
     return await this.organizationService.getUnconfirm({
+      ...query,
+      staffNumber: request['userData'].user.numericId,
+      logData: request['userData'],
+    });
+  }
+  @Get('object-adress')
+  @HttpCode(HttpStatus.OK)
+  async getByObjectAdress(
+    @Query() query: ObjectAdressFilterDto,
+    @Req() request: Request
+  ): Promise<any> {
+    return await this.organizationService.getByObjectAdress({
       ...query,
       staffNumber: request['userData'].user.numericId,
       logData: request['userData'],

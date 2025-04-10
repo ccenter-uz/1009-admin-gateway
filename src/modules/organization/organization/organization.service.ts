@@ -23,6 +23,7 @@ import { OrganizationRestoreDto } from 'types/organization/organization/dto/get-
 import { UnconfirmOrganizationFilterDto } from 'types/organization/organization/dto/filter-unconfirm-organization.dto';
 import { MinioService } from 'src/modules/minio/minio.service';
 import { MinioConfig } from '../../../common/config/app.config';
+import { ObjectAdressFilterDto } from 'types/organization/organization/dto/filter-object-adress-organization.dto';
 
 @Injectable()
 export class OrganizationService {
@@ -100,6 +101,23 @@ export class OrganizationService {
         { cmd: Commands.GET_BY_ID },
         data
       )
+    );
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+    return response;
+  }
+
+  async getByObjectAdress(
+    data: ObjectAdressFilterDto
+  ): Promise<OrganizationInterfaces.Response> {
+    const methodName: string = this.getByObjectAdress.name;
+
+    this.logger.debug(`Method: ${methodName} - Request: `, data);
+
+    const response = lastValueFrom(
+      this.adminClient.send<
+        OrganizationInterfaces.Response,
+        ObjectAdressFilterDto
+      >({ cmd: Commands.GET_OBJECT_ADDRESS }, data)
     );
     this.logger.debug(`Method: ${methodName} - Response: `, response);
     return response;
