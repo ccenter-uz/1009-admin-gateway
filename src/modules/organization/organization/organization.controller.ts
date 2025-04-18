@@ -88,6 +88,7 @@ export class OrganizationController {
       logData: request['userData'],
     });
   }
+  
   @Get('object-adress')
   @HttpCode(HttpStatus.OK)
   async getByObjectAdress(
