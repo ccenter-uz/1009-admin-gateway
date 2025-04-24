@@ -10,6 +10,7 @@ import {
   ProductServiseCategoryUpdateDto,
   ProductServiceCategoryServiceCommands as Commands,
 } from 'types/organization/product-service-category';
+import { ProductServiceCategoryDeleteDto } from 'types/organization/product-service-category/dto/delete-product-service-category.dto';
 
 @Injectable()
 export class ProductServiceCategoryService {
@@ -86,7 +87,7 @@ export class ProductServiceCategoryService {
   }
 
   async delete(
-    data: DeleteDto
+    data: ProductServiceCategoryDeleteDto
   ): Promise<ProductServiseCategoryInterfaces.Response> {
     const methodName: string = this.delete.name;
     this.logger.debug(`Method: ${methodName} - Request: `, data);

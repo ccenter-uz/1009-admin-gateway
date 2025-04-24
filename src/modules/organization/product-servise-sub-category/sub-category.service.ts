@@ -9,6 +9,7 @@ import {
   ProductServiceSubCategoryServiceCommands as Commands,
   ProductServiceSubCategoryInterfaces,
 } from 'types/organization/product-service-sub-category';
+import { ProductServiceSubCategoryDeleteDto } from 'types/organization/product-service-sub-category/dto/delete-product-service-sub-category.dto';
 import { ProductServiceSubCategoryFilterDto } from 'types/organization/product-service-sub-category/dto/filter-product-service-sub-category.dto';
 
 @Injectable()
@@ -83,7 +84,7 @@ export class ProductServiseSubCategoryService {
   }
 
   async delete(
-    data: DeleteDto
+    data: ProductServiceSubCategoryDeleteDto
   ): Promise<ProductServiceSubCategoryInterfaces.Response> {
     const methodName: string = this.delete.name;
 
