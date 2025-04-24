@@ -21,6 +21,7 @@ import {
   CategoryUpdateDto,
 } from 'types/organization/category';
 import { CityRegionFilterDto } from 'types/global/dto/city-region-filter.dto';
+import { CategoryDeleteQueryDto } from 'types/organization/category/dto/delete-category.dto';
 
 @ApiBearerAuth()
 @ApiTags('category')
@@ -90,11 +91,12 @@ export class CategoryController {
   async delete(
     @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
-    @Query('delete') deleteQuery?: boolean
+    @Query() query: CategoryDeleteQueryDto
   ): Promise<CategoryInterfaces.Response> {
     return this.categoryService.delete({
       id,
-      delete: deleteQuery,
+      delete: query.delete,
+      deleteReason: query.deleteReason,
       logData: request['userData'],
     });
   }

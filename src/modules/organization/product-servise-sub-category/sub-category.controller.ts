@@ -22,6 +22,7 @@ import {
   ProductServiceSubCategoryUpdateDto,
 } from 'types/organization/product-service-sub-category';
 import { ProductServiceSubCategoryFilterDto } from 'types/organization/product-service-sub-category/dto/filter-product-service-sub-category.dto';
+import { ProductServiceSubCategoryDeleteQueryDto } from 'types/organization/product-service-sub-category/dto/delete-product-service-sub-category.dto';
 
 @ApiBearerAuth()
 @ApiTags('product-servise-sub-category')
@@ -93,11 +94,12 @@ export class ProductServiseSubCategoryController {
   async delete(
     @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
-    @Query('delete') deleteQuery?: boolean
+    @Query() query: ProductServiceSubCategoryDeleteQueryDto
   ): Promise<ProductServiceSubCategoryInterfaces.Response> {
     return this.productServiseSubCategoryService.delete({
       id,
-      delete: deleteQuery,
+      delete: query.delete,
+      deleteReason: query.deleteReason,
       logData: request['userData'],
     });
   }
