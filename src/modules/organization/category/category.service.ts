@@ -19,6 +19,8 @@ export class CategoryService {
   async getAll(
     query: CityRegionFilterDto
   ): Promise<CategoryInterfaces.Response[]> {
+    console.log(query, 'CATEGORY SERVICE');
+
     return lastValueFrom(
       this.adminClient.send<CategoryInterfaces.Response[], CityRegionFilterDto>(
         { cmd: Commands.GET_ALL_LIST },
