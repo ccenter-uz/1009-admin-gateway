@@ -80,5 +80,5 @@ export const MinioConfig = {
   accessKey: process.env.MINIO_ACCESS_KEY || 'GgfXa2vCuLrCyOZBmNZE',
   secretKey:
     process.env.MINIO_SECRET_KEY || 'APEv4lmHcsjrM9LjonzaUWuws7Ygqrk5eRj4JNpO',
-  bucketName: process.env.MINIO_BUCKET_NAME || 'my-bucket',
+  bucketName: process.env.MINIO_BUCKET_NAME,
 };
