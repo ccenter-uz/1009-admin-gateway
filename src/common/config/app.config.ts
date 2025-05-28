@@ -76,11 +76,10 @@ export const JwtConfig = {
 console.log(process.env.MINIO_BUCKET_NAME, 'BUCKET NAME');
 
 export const MinioConfig = {
-  host: process.env.MINIO_ENDPOINT || 'localhost',
+  host: process.env.MINIO_ENDPOINT || '10.145.20.10',
   port: +process.env.MINIO_PORT || 9000,
   useSSL: false,
-  accessKey: process.env.MINIO_ACCESS_KEY || 'GgfXa2vCuLrCyOZBmNZE',
-  secretKey:
-    process.env.MINIO_SECRET_KEY || 'APEv4lmHcsjrM9LjonzaUWuws7Ygqrk5eRj4JNpO',
-  bucketName: process.env.MINIO_BUCKET_NAME,
+  accessKey: process.env.MINIO_ACCESS_KEY || 'minioadmin',
+  secretKey: process.env.MINIO_SECRET_KEY || 'minioadmin',
+  bucketName: process.env.MINIO_BUCKET_NAME || '1009-admin',
 };

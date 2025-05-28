@@ -135,7 +135,7 @@ export class OrganizationService {
       MinioConfig.bucketName
     );
 
-    // this.logger.debug(`Method: ${methodName} - Upload File: `, fileLinks);
+    this.logger.debug(`Method: ${methodName} - Upload File: `, fileLinks);
 
     data = {
       ...data,
