@@ -36,7 +36,7 @@ export class MinioService implements OnModuleInit {
 
   async uploadFiles(
     files: Array<Multer.File>,
-    bucketName = MinioConfig.bucketName
+    bucketName = '1009-admin'
   ): Promise<{ link: string }[]> {
     const uploadedLinks: { link: string }[] = [];
 
