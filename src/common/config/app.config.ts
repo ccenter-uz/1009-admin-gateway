@@ -73,6 +73,8 @@ export const JwtConfig = {
   expiresIn: process.env.EXPIRES_IN || '10d',
 };
 
+console.log(process.env.MINIO_BUCKET_NAME, 'BUCKET NAME');
+
 export const MinioConfig = {
   host: process.env.MINIO_ENDPOINT || 'localhost',
   port: +process.env.MINIO_PORT || 9000,
