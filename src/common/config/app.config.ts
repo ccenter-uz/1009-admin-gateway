@@ -74,6 +74,8 @@ export const JwtConfig = {
 };
 
 console.log(process.env.MINIO_BUCKET_NAME, 'BUCKET NAME');
+console.log(process.env.MINIO_ACCESS_KEY, 'MINIO_ACCESS_KEY');
+console.log(process.env.MINIO_SECRET_KEY, 'MINIO_SECRET_KEY');
 
 export const MinioConfig = {
   host: process.env.MINIO_ENDPOINT || '10.145.20.10',
