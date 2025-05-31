@@ -2,7 +2,10 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Client } from 'minio';
 import * as Multer from 'multer';
 import * as mime from 'mime-types';
+import * as dotenv from 'dotenv';
 import { MinioConfig } from '../../common/config/app.config';
+
+dotenv.config();
 
 @Injectable()
 export class MinioService implements OnModuleInit {
