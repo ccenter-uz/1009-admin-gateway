@@ -43,7 +43,7 @@ import { UnconfirmOrganizationFilterDto } from 'types/organization/organization/
 import { ObjectAdressFilterDto } from 'types/organization/organization/dto/filter-object-adress-organization.dto';
 
 @ApiBearerAuth()
-@ApiTags('Organization')
+@ApiTags('organization')
 @Controller('organization')
 export class OrganizationController {
   constructor(private readonly organizationService: OrganizationService) {}
@@ -88,7 +88,7 @@ export class OrganizationController {
       logData: request['userData'],
     });
   }
-  
+
   @Get('object-adress')
   @HttpCode(HttpStatus.OK)
   async getByObjectAdress(
