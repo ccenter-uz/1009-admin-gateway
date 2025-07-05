@@ -125,13 +125,27 @@ export class OrganizationService {
 
   async create(
     data: OrganizationCreateDto,
-    files: Array<Multer.File>
+    files: {
+      photos?: Multer.File[];
+      logo?: Multer.File[];
+      certificate?: Multer.File[];
+    }
   ): Promise<OrganizationInterfaces.Response> {
     const methodName: string = this.create.name;
-    this.logger.debug(`Method: ${methodName} - Before Upload File: `, files);
+    // this.logger.debug(`Method: ${methodName} - Before Upload File: `, files);
 
     const fileLinks = await this.Minioservice.uploadFiles(
-      files,
+      files.photos,
+      MinioConfig.bucketName
+    );
+
+    const logoLinks = await this.Minioservice.uploadFiles(
+      files.logo,
+      MinioConfig.bucketName
+    );
+
+    const certificateLinks = await this.Minioservice.uploadFiles(
+      files.certificate,
       MinioConfig.bucketName
     );
 
@@ -140,6 +154,8 @@ export class OrganizationService {
     data = {
       ...data,
       PhotoLink: fileLinks,
+      logoLink: logoLinks[0]?.link,
+      certificateLink: certificateLinks[0]?.link,
       phone:
         typeof data.phone == 'string' ? JSON.parse(data.phone) : data.phone,
       productService:
@@ -163,14 +179,38 @@ export class OrganizationService {
 
   async update(
     data: OrganizationVersionUpdateDto,
-    files: Array<Multer.File>
+    files: {
+      photos?: Multer.File[];
+      logo?: Multer.File[];
+      certificate?: Multer.File[];
+    }
   ): Promise<OrganizationVersionInterfaces.Response> {
     const methodName: string = this.update.name;
 
-    const fileLinks = await this.Minioservice.uploadFiles(files);
+
+    const fileLinks = await this.Minioservice.uploadFiles(files?.photos || []);
+    let logoLink = data.logoLink;
+    if (files?.logo?.length > 0) {
+      let logoLinks = await this.Minioservice.uploadFiles(
+        files.logo,
+        MinioConfig.bucketName
+      );
+      logoLink = logoLinks[0]?.link;
+    }
+    let certificateLink = data.certificateLink;
+    if (files?.certificate?.length > 0) {
+      let certificateLinks = await this.Minioservice.uploadFiles(
+        files.certificate,
+        MinioConfig.bucketName
+      );
+      certificateLink = certificateLinks[0]?.link;
+    }
+
     data = {
       ...data,
       PhotoLink: fileLinks,
+      logoLink,
+      certificateLink,
       phone:
         typeof data.phone == 'string' ? JSON.parse(data.phone) : data.phone,
       productService:
@@ -187,7 +227,7 @@ export class OrganizationService {
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
-    const response = lastValueFrom(
+    const response = await lastValueFrom(
       this.adminClient.send<
         OrganizationVersionInterfaces.Response,
         OrganizationVersionInterfaces.Update
