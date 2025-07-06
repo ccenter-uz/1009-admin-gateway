@@ -21,7 +21,7 @@ export class MinioService implements OnModuleInit {
     });
   }
 
-  async upload(bucketName: string, file: Multer.File) {
+  async upload(bucketName: string = '1009-admin', file: Multer.File) {
     const fileName = `${Date.now()}-${file.originalname}`;
     const contentType =
       mime.lookup(file.originalname) || 'application/octet-stream';

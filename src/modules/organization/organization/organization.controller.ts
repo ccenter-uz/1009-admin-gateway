@@ -28,7 +28,10 @@ import {
   OrganizationInterfaces,
   OrganizationUpdateDto,
 } from 'types/organization/organization';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import {
+  FileFieldsInterceptor,
+  FilesInterceptor,
+} from '@nestjs/platform-express';
 import * as Multer from 'multer';
 
 import {
@@ -120,13 +123,24 @@ export class OrganizationController {
 
   @Post()
   @ApiBody({ type: OrganizationCreateDto })
-  @UseInterceptors(FilesInterceptor('photos'))
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'photos', maxCount: 10 },
+      { name: 'logo', maxCount: 1 },
+      { name: 'certificate', maxCount: 1 },
+    ])
+  )
   @ApiConsumes('multipart/form-data')
   @HttpCode(HttpStatus.CREATED)
   async create(
     @Req() request: Request,
     @Body() data: OrganizationCreateDto,
-    @UploadedFiles() files: Multer.File[]
+    @UploadedFiles()
+    files: {
+      photos?: Multer.File[];
+      logo?: Multer.File[];
+      certificate?: Multer.File[];
+    }
   ): Promise<OrganizationInterfaces.Response> {
     return this.organizationService.create(
       {
@@ -141,15 +155,28 @@ export class OrganizationController {
 
   @Put(':id')
   @ApiBody({ type: OrganizationVersionUpdateDto })
-  @UseInterceptors(FilesInterceptor('photos'))
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'photos', maxCount: 10 },
+      { name: 'logo', maxCount: 1 },
+      { name: 'certificate', maxCount: 1 },
+    ])
+  )
   @ApiConsumes('multipart/form-data')
   @HttpCode(HttpStatus.OK)
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() data: Omit<OrganizationVersionUpdateDto, 'id'>,
     @Req() request: Request,
-    @UploadedFiles() files: Multer.File[]
+    @UploadedFiles()
+    files: {
+      photos?: Multer.File[];
+      logo?: Multer.File[];
+      certificate?: Multer.File[];
+    }
   ): Promise<OrganizationVersionInterfaces.Response> {
+
+    
     return this.organizationService.update(
       {
         ...data,
