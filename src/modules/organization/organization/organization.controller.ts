@@ -125,9 +125,8 @@ export class OrganizationController {
   @ApiBody({ type: OrganizationCreateDto })
   @UseInterceptors(
     FileFieldsInterceptor([
-      { name: 'photos', maxCount: 10 },
+      { name: 'photos', maxCount: 99 },
       { name: 'logo', maxCount: 1 },
-      { name: 'certificate', maxCount: 1 },
     ])
   )
   @ApiConsumes('multipart/form-data')
@@ -139,7 +138,6 @@ export class OrganizationController {
     files: {
       photos?: Multer.File[];
       logo?: Multer.File[];
-      certificate?: Multer.File[];
     }
   ): Promise<OrganizationInterfaces.Response> {
     return this.organizationService.create(
@@ -157,9 +155,8 @@ export class OrganizationController {
   @ApiBody({ type: OrganizationVersionUpdateDto })
   @UseInterceptors(
     FileFieldsInterceptor([
-      { name: 'photos', maxCount: 10 },
+      { name: 'photos', maxCount: 99 },
       { name: 'logo', maxCount: 1 },
-      { name: 'certificate', maxCount: 1 },
     ])
   )
   @ApiConsumes('multipart/form-data')
@@ -172,7 +169,6 @@ export class OrganizationController {
     files: {
       photos?: Multer.File[];
       logo?: Multer.File[];
-      certificate?: Multer.File[];
     }
   ): Promise<OrganizationVersionInterfaces.Response> {
 

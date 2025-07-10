@@ -126,28 +126,23 @@ export class OrganizationService {
   async create(
     data: OrganizationCreateDto,
     files: {
-      photos?: Multer.File[];
+      photos?: Multer.File[] ;
       logo?: Multer.File[];
-      certificate?: Multer.File[];
     }
   ): Promise<OrganizationInterfaces.Response> {
     const methodName: string = this.create.name;
     // this.logger.debug(`Method: ${methodName} - Before Upload File: `, files);
 
     const fileLinks = await this.Minioservice.uploadFiles(
-      files.photos,
+      files.photos || [],
       MinioConfig.bucketName
     );
 
     const logoLinks = await this.Minioservice.uploadFiles(
-      files.logo,
+      files.logo || [],
       MinioConfig.bucketName
     );
 
-    const certificateLinks = await this.Minioservice.uploadFiles(
-      files.certificate,
-      MinioConfig.bucketName
-    );
 
     this.logger.debug(`Method: ${methodName} - Upload File: `, fileLinks);
 
@@ -155,7 +150,6 @@ export class OrganizationService {
       ...data,
       PhotoLink: fileLinks,
       logoLink: logoLinks[0]?.link,
-      certificateLink: certificateLinks[0]?.link,
       phone:
         typeof data.phone == 'string' ? JSON.parse(data.phone) : data.phone,
       productService:
@@ -182,11 +176,9 @@ export class OrganizationService {
     files: {
       photos?: Multer.File[];
       logo?: Multer.File[];
-      certificate?: Multer.File[];
     }
   ): Promise<OrganizationVersionInterfaces.Response> {
     const methodName: string = this.update.name;
-
 
     const fileLinks = await this.Minioservice.uploadFiles(files?.photos || []);
     let logoLink = data.logoLink;
@@ -197,20 +189,11 @@ export class OrganizationService {
       );
       logoLink = logoLinks[0]?.link;
     }
-    let certificateLink = data.certificateLink;
-    if (files?.certificate?.length > 0) {
-      let certificateLinks = await this.Minioservice.uploadFiles(
-        files.certificate,
-        MinioConfig.bucketName
-      );
-      certificateLink = certificateLinks[0]?.link;
-    }
 
     data = {
       ...data,
       PhotoLink: fileLinks,
       logoLink,
-      certificateLink,
       phone:
         typeof data.phone == 'string' ? JSON.parse(data.phone) : data.phone,
       productService:

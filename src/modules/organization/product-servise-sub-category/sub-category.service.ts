@@ -41,7 +41,7 @@ export class ProductServiseSubCategoryService {
     const methodName: string = this.getById.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
-    const response = lastValueFrom(
+    const response = await lastValueFrom(
       this.adminClient.send<
         ProductServiceSubCategoryInterfaces.Response,
         GetOneDto
