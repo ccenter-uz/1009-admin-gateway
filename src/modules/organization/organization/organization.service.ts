@@ -189,9 +189,9 @@ export class OrganizationService {
       );
       logoLink = logoLinks[0]?.link;
     }
-
     data = {
       ...data,
+      social:data.social,
       PhotoLink: fileLinks,
       logoLink,
       phone:
