@@ -121,6 +121,22 @@ export class OrganizationController {
     });
   }
 
+  @Get('version/:id')
+  @ApiParam({ name: 'id' })
+  @HttpCode(HttpStatus.OK)
+  async getByIdVersion(
+    @Param('id', ParseIntPipe) id: number,
+    @Query() query: LanguageRequestDto,
+    @Req() request: Request
+  ): Promise<OrganizationInterfaces.Response> {
+    return this.organizationService.getByIdVersion({
+      id,
+      ...query,
+      role: request['userData'].user.role,
+      logData: request['userData'],
+    });
+  }
+
   @Post()
   @ApiBody({ type: OrganizationCreateDto })
   @UseInterceptors(
@@ -171,8 +187,6 @@ export class OrganizationController {
       logo?: Multer.File[];
     }
   ): Promise<OrganizationVersionInterfaces.Response> {
-
-    
     return this.organizationService.update(
       {
         ...data,
