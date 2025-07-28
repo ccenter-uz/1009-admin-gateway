@@ -92,13 +92,30 @@ export class OrganizationService {
   }
 
   async getById(data: GetOneDto): Promise<OrganizationInterfaces.Response> {
-    const methodName: string = this.getListOrganization.name;
+    const methodName: string = this.getById.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
     const response = lastValueFrom(
       this.adminClient.send<OrganizationInterfaces.Response, GetOneDto>(
         { cmd: Commands.GET_BY_ID },
+        data
+      )
+    );
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+    return response;
+  }
+
+  async getByIdVersion(
+    data: GetOneDto
+  ): Promise<OrganizationInterfaces.Response> {
+    const methodName: string = this.getByIdVersion.name;
+
+    this.logger.debug(`Method: ${methodName} - Request: `, data);
+
+    const response = lastValueFrom(
+      this.adminClient.send<OrganizationInterfaces.Response, GetOneDto>(
+        { cmd: CommmandsVersion.GET_BY_ID },
         data
       )
     );
@@ -126,7 +143,7 @@ export class OrganizationService {
   async create(
     data: OrganizationCreateDto,
     files: {
-      photos?: Multer.File[] ;
+      photos?: Multer.File[];
       logo?: Multer.File[];
     }
   ): Promise<OrganizationInterfaces.Response> {
@@ -142,7 +159,6 @@ export class OrganizationService {
       files.logo || [],
       MinioConfig.bucketName
     );
-
 
     this.logger.debug(`Method: ${methodName} - Upload File: `, fileLinks);
 
@@ -191,7 +207,7 @@ export class OrganizationService {
     }
     data = {
       ...data,
-      social:data.social,
+      social: data.social,
       PhotoLink: fileLinks,
       logoLink,
       phone:
