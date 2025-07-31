@@ -223,6 +223,7 @@ export class OrganizationService {
           ? JSON.parse(data.picture)
           : data.picture,
     };
+    
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
