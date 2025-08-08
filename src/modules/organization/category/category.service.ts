@@ -10,6 +10,7 @@ import {
   CategoryUpdateDto,
   CategoryServiceCommands as Commands,
 } from 'types/organization/category';
+import { CategoryDeleteDto } from 'types/organization/category/dto/delete-category.dto';
 
 @Injectable()
 export class CategoryService {
@@ -18,6 +19,8 @@ export class CategoryService {
   async getAll(
     query: CityRegionFilterDto
   ): Promise<CategoryInterfaces.Response[]> {
+    console.log(query, 'CATEGORY SERVICE');
+
     return lastValueFrom(
       this.adminClient.send<CategoryInterfaces.Response[], CityRegionFilterDto>(
         { cmd: Commands.GET_ALL_LIST },
@@ -53,7 +56,7 @@ export class CategoryService {
     );
   }
 
-  async delete(data: DeleteDto): Promise<CategoryInterfaces.Response> {
+  async delete(data: CategoryDeleteDto): Promise<CategoryInterfaces.Response> {
     return lastValueFrom(
       this.adminClient.send<CategoryInterfaces.Response, DeleteDto>(
         { cmd: Commands.DELETE },

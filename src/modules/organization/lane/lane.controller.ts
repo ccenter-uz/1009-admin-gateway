@@ -81,6 +81,7 @@ export class LaneController {
     return this.laneService.update({
       ...data,
       id,
+      staffNumber: request['userData'].user.numericId,
       logData: request['userData'],
     });
   }

@@ -89,6 +89,7 @@ export class MainOrganizationController {
     return this.mainOrganizationService.update({
       ...data,
       id,
+      staffNumber: request['userData'].user.numericId,
       logData: request['userData'],
     });
   }

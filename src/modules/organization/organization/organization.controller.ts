@@ -28,7 +28,10 @@ import {
   OrganizationInterfaces,
   OrganizationUpdateDto,
 } from 'types/organization/organization';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import {
+  FileFieldsInterceptor,
+  FilesInterceptor,
+} from '@nestjs/platform-express';
 import * as Multer from 'multer';
 
 import {
@@ -40,10 +43,10 @@ import { OrganizationFilterDto } from 'types/organization/organization/dto/filte
 import { ConfirmDto } from 'types/organization/organization/dto/confirm-organization.dto';
 import { MyOrganizationFilterDto } from 'types/organization/organization/dto/filter-my-organization.dto';
 import { UnconfirmOrganizationFilterDto } from 'types/organization/organization/dto/filter-unconfirm-organization.dto';
-import { OrganizationDeleteDto } from 'types/organization/organization/dto/delete-organization.dto';
+import { ObjectAdressFilterDto } from 'types/organization/organization/dto/filter-object-adress-organization.dto';
 
 @ApiBearerAuth()
-@ApiTags('Organization')
+@ApiTags('organization')
 @Controller('organization')
 export class OrganizationController {
   constructor(private readonly organizationService: OrganizationService) {}
@@ -89,6 +92,19 @@ export class OrganizationController {
     });
   }
 
+  @Get('object-adress')
+  @HttpCode(HttpStatus.OK)
+  async getByObjectAdress(
+    @Query() query: ObjectAdressFilterDto,
+    @Req() request: Request
+  ): Promise<any> {
+    return await this.organizationService.getByObjectAdress({
+      ...query,
+      staffNumber: request['userData'].user.numericId,
+      logData: request['userData'],
+    });
+  }
+
   @Get(':id')
   @ApiParam({ name: 'id' })
   @HttpCode(HttpStatus.OK)
@@ -105,15 +121,40 @@ export class OrganizationController {
     });
   }
 
+  @Get('version/:id')
+  @ApiParam({ name: 'id' })
+  @HttpCode(HttpStatus.OK)
+  async getByIdVersion(
+    @Param('id', ParseIntPipe) id: number,
+    @Query() query: LanguageRequestDto,
+    @Req() request: Request
+  ): Promise<OrganizationInterfaces.Response> {
+    return this.organizationService.getByIdVersion({
+      id,
+      ...query,
+      role: request['userData'].user.role,
+      logData: request['userData'],
+    });
+  }
+
   @Post()
   @ApiBody({ type: OrganizationCreateDto })
-  @UseInterceptors(FilesInterceptor('photos'))
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'photos', maxCount: 99 },
+      { name: 'logo', maxCount: 1 },
+    ])
+  )
   @ApiConsumes('multipart/form-data')
   @HttpCode(HttpStatus.CREATED)
   async create(
     @Req() request: Request,
     @Body() data: OrganizationCreateDto,
-    @UploadedFiles() files: Multer.File[]
+    @UploadedFiles()
+    files: {
+      photos?: Multer.File[];
+      logo?: Multer.File[];
+    }
   ): Promise<OrganizationInterfaces.Response> {
     return this.organizationService.create(
       {
@@ -128,14 +169,23 @@ export class OrganizationController {
 
   @Put(':id')
   @ApiBody({ type: OrganizationVersionUpdateDto })
-  @UseInterceptors(FilesInterceptor('photos'))
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'photos', maxCount: 99 },
+      { name: 'logo', maxCount: 1 },
+    ])
+  )
   @ApiConsumes('multipart/form-data')
   @HttpCode(HttpStatus.OK)
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() data: Omit<OrganizationVersionUpdateDto, 'id'>,
     @Req() request: Request,
-    @UploadedFiles() files: Multer.File[]
+    @UploadedFiles()
+    files: {
+      photos?: Multer.File[];
+      logo?: Multer.File[];
+    }
   ): Promise<OrganizationVersionInterfaces.Response> {
     return this.organizationService.update(
       {

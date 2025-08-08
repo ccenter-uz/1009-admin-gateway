@@ -81,6 +81,7 @@ export class AreaController {
     return this.areaService.update({
       ...data,
       id,
+      staffNumber: request['userData'].user.numericId,
       logData: request['userData'],
     });
   }

@@ -21,13 +21,17 @@ import { MyOrganizationFilterDto } from 'types/organization/organization/dto/fil
 import { OrganizationDeleteDto } from 'types/organization/organization/dto/delete-organization.dto';
 import { OrganizationRestoreDto } from 'types/organization/organization/dto/get-restore-organization.dto';
 import { UnconfirmOrganizationFilterDto } from 'types/organization/organization/dto/filter-unconfirm-organization.dto';
+import { MinioService } from 'src/modules/minio/minio.service';
+import { MinioConfig } from '../../../common/config/app.config';
+import { ObjectAdressFilterDto } from 'types/organization/organization/dto/filter-object-adress-organization.dto';
 
 @Injectable()
 export class OrganizationService {
   private logger = new Logger(OrganizationService.name);
   constructor(
     @Inject(ORGANIZATION) private adminClient: ClientProxy,
-    private readonly googleCloudStorageService: GoogleCloudStorageService
+    private readonly googleCloudStorageService: GoogleCloudStorageService,
+    private readonly Minioservice: MinioService
   ) {}
 
   async getListOrganization(
@@ -88,7 +92,7 @@ export class OrganizationService {
   }
 
   async getById(data: GetOneDto): Promise<OrganizationInterfaces.Response> {
-    const methodName: string = this.getListOrganization.name;
+    const methodName: string = this.getById.name;
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
@@ -102,20 +106,66 @@ export class OrganizationService {
     return response;
   }
 
+  async getByIdVersion(
+    data: GetOneDto
+  ): Promise<OrganizationInterfaces.Response> {
+    const methodName: string = this.getByIdVersion.name;
+
+    this.logger.debug(`Method: ${methodName} - Request: `, data);
+
+    const response = lastValueFrom(
+      this.adminClient.send<OrganizationInterfaces.Response, GetOneDto>(
+        { cmd: CommmandsVersion.GET_BY_ID },
+        data
+      )
+    );
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+    return response;
+  }
+
+  async getByObjectAdress(
+    data: ObjectAdressFilterDto
+  ): Promise<OrganizationInterfaces.Response> {
+    const methodName: string = this.getByObjectAdress.name;
+
+    this.logger.debug(`Method: ${methodName} - Request: `, data);
+
+    const response = lastValueFrom(
+      this.adminClient.send<
+        OrganizationInterfaces.Response,
+        ObjectAdressFilterDto
+      >({ cmd: Commands.GET_OBJECT_ADDRESS }, data)
+    );
+    this.logger.debug(`Method: ${methodName} - Response: `, response);
+    return response;
+  }
+
   async create(
     data: OrganizationCreateDto,
-    files: Array<Multer.File>
+    files: {
+      photos?: Multer.File[];
+      logo?: Multer.File[];
+    }
   ): Promise<OrganizationInterfaces.Response> {
     const methodName: string = this.create.name;
-    this.logger.debug(`Method: ${methodName} - Before Upload File: `, files);
-    
-    const fileLinks = await this.googleCloudStorageService.uploadFiles(files);
+    // this.logger.debug(`Method: ${methodName} - Before Upload File: `, files);
+
+    const fileLinks = await this.Minioservice.uploadFiles(
+      files.photos || [],
+      MinioConfig.bucketName
+    );
+
+    const logoLinks = await this.Minioservice.uploadFiles(
+      files.logo || [],
+      MinioConfig.bucketName
+    );
 
     this.logger.debug(`Method: ${methodName} - Upload File: `, fileLinks);
 
     data = {
       ...data,
       PhotoLink: fileLinks,
+      logoLink: logoLinks[0]?.link,
       phone:
         typeof data.phone == 'string' ? JSON.parse(data.phone) : data.phone,
       productService:
@@ -139,14 +189,27 @@ export class OrganizationService {
 
   async update(
     data: OrganizationVersionUpdateDto,
-    files: Array<Multer.File>
+    files: {
+      photos?: Multer.File[];
+      logo?: Multer.File[];
+    }
   ): Promise<OrganizationVersionInterfaces.Response> {
     const methodName: string = this.update.name;
 
-    const fileLinks = await this.googleCloudStorageService.uploadFiles(files);
+    const fileLinks = await this.Minioservice.uploadFiles(files?.photos || []);
+    let logoLink = data.logoLink;
+    if (files?.logo?.length > 0) {
+      let logoLinks = await this.Minioservice.uploadFiles(
+        files.logo,
+        MinioConfig.bucketName
+      );
+      logoLink = logoLinks[0]?.link;
+    }
     data = {
       ...data,
+      social: data.social,
       PhotoLink: fileLinks,
+      logoLink,
       phone:
         typeof data.phone == 'string' ? JSON.parse(data.phone) : data.phone,
       productService:
@@ -160,10 +223,11 @@ export class OrganizationService {
           ? JSON.parse(data.picture)
           : data.picture,
     };
+    
 
     this.logger.debug(`Method: ${methodName} - Request: `, data);
 
-    const response = lastValueFrom(
+    const response = await lastValueFrom(
       this.adminClient.send<
         OrganizationVersionInterfaces.Response,
         OrganizationVersionInterfaces.Update

@@ -22,6 +22,7 @@ import {
   SubCategoryInterfaces,
   SubCategoryUpdateDto,
 } from 'types/organization/sub-category';
+import { SubCategoryDeleteQueryDto } from 'types/organization/sub-category/dto/delete-sub-category.dto';
 
 @ApiBearerAuth()
 @ApiTags('sub-category')
@@ -81,6 +82,7 @@ export class SubCategoryController {
     return this.subCategoryService.update({
       ...data,
       id,
+      staffNumber: request['userData'].user.numericId,
       logData: request['userData'],
     });
   }
@@ -90,11 +92,12 @@ export class SubCategoryController {
   async delete(
     @Req() request: Request,
     @Param('id', ParseIntPipe) id: number,
-    @Query('delete') deleteQuery?: boolean
+    @Query() query: SubCategoryDeleteQueryDto
   ): Promise<SubCategoryInterfaces.Response> {
     return this.subCategoryService.delete({
       id,
-      delete: deleteQuery,
+      delete: query.delete,
+      deleteReason: query.deleteReason,
       logData: request['userData'],
     });
   }

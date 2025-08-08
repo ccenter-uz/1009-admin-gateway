@@ -1,8 +1,10 @@
 import { registerAs } from '@nestjs/config';
 import { resolve } from 'path';
 import * as process from 'process';
+import * as dotenv from 'dotenv';
 import { CONFIG_APP_TOKEN, CONFIG_SERVICES_RMQ_TOKEN } from 'types/config';
 
+dotenv.config();
 export const servicesRmqConfig = registerAs(
   CONFIG_SERVICES_RMQ_TOKEN,
   (): ServicesRmqConfig => ({
@@ -71,4 +73,17 @@ export const keyFilename = resolve(
 export const JwtConfig = {
   secretKey: process.env.SECRET_KEY || 'secret-key',
   expiresIn: process.env.EXPIRES_IN || '10d',
+};
+
+console.log(process.env.MINIO_BUCKET_NAME, 'BUCKET NAME');
+console.log(process.env.MINIO_ACCESS_KEY, 'MINIO_ACCESS_KEY');
+console.log(process.env.MINIO_SECRET_KEY, 'MINIO_SECRET_KEY');
+
+export const MinioConfig = {
+  host: process.env.MINIO_ENDPOINT || '10.145.20.10',
+  port: +process.env.MINIO_PORT || 9000,
+  useSSL: false,
+  accessKey: process.env.MINIO_ACCESS_KEY || 'minioadmin',
+  secretKey: process.env.MINIO_SECRET_KEY || 'minioadmin',
+  bucketName: process.env.MINIO_BUCKET_NAME || '1009-admin',
 };

@@ -81,6 +81,7 @@ export class DistrictController {
     return this.districtService.update({
       ...data,
       id,
+      staffNumber: request['userData'].user.numericId,
       logData: request['userData'],
     });
   }

@@ -81,6 +81,7 @@ export class VillageController {
     return this.villageService.update({
       ...data,
       id,
+      staffNumber: request['userData'].user.numericId,
       logData: request['userData'],
     });
   }

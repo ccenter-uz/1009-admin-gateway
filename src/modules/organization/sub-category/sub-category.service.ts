@@ -10,6 +10,7 @@ import {
   SubCategoryFilterDto,
 } from 'types/organization/sub-category';
 import { SubCategoryInterfaces } from 'types/organization/sub-category';
+import { SubCategoryDeleteDto } from 'types/organization/sub-category/dto/delete-sub-category.dto';
 
 @Injectable()
 export class SubCategoryService {
@@ -81,7 +82,9 @@ export class SubCategoryService {
     return response;
   }
 
-  async delete(data: DeleteDto): Promise<SubCategoryInterfaces.Response> {
+  async delete(
+    data: SubCategoryDeleteDto
+  ): Promise<SubCategoryInterfaces.Response> {
     const methodName: string = this.delete.name;
     this.logger.debug(`Method: ${methodName} - Request: `, data);
     const response = lastValueFrom(
